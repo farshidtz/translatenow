@@ -23,9 +23,9 @@
       <!--main content area for for text area-->
       <div class="row">
         <div class="col">
-      <form id="nameIt-form6" class="list ">
+      <form id="nameIt-form6" class="list" ng-controller="nameItCtrl">
             <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
-                <textarea class="fullscreen-text-area" placeholder="Search for any word..."></textarea>
+                <textarea class="fullscreen-text-area" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></textarea>
             </label>
 
           <ion-list id="main-search-results">
