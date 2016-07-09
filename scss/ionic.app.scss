@@ -21,18 +21,87 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+//cross app generic styling
+.name-it-list{
+  background-color:rgba(255, 255, 255, 0.1);
+  border: none;
+}
+
+.footer{
+  position:absolute;
+  width:100%;
+  bottom:10pt;
+}
+
+.name-it-list h2, .name-it-list p{
+  color: white;
+}
+.name-it-list h2{
+  font-size:1.1em;
+  font-weight: bold;
+}
+.name-it-list p{
+  font-style: italic;
+  font-size: 0.8em;
+}
+
+.name-it-list img{
+  margin: 0px!important;
+  padding:0px!important;
+}
+
 .fullscreen-text-area {
   color: white!important;
-  height: 70vh;
   background-color: transparent!important;
-  border: none;
-  // opacity: 0.1;
+  border:none;
+  font-size: 20px;
+  line-height: 0.6;
+}
+
+.fullscreen-text-area::-webkit-input-placeholder {
+  font-size: 20px;
+  line-height: 1;
 }
 
 .round-button {
   margin: 0 auto;
-  width: 100px!important;
-  height: 100px;
+  width: 12vh!important;
+  height: 12vh;
   border-radius: 100px;
 }
 
+.horizontal-center{
+  margin: 0 auto!important;
+  text-align: center;
+}
+
+.no-label-select{
+  color: white;
+  width: auto;
+  height:30px;
+  background: transparent!important;
+  background-image: none;
+  font-size: 1.1em;
+  border: none;
+}
+
+//id specific styling
+#language-swap-btn{
+  opacity:0.5;
+  font-size:20pt;
+  background: transparent;
+  color: white;
+  margin:0px;
+}
+
+#nameIt-button2{
+  opacity: 0.7;
+  font-size:40px;
+}
+
+#main-search-results{
+  overflow: scroll;
+}
+#main-search-results ion-scroll{
+  height:60vh;
+}
