@@ -9744,7 +9744,7 @@ a.button {
   color: white; }
 
 .name-it-list h2 {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: bold; }
 
 .name-it-list p {
@@ -9760,7 +9760,7 @@ a.button {
   background-color: transparent !important;
   border: none;
   font-size: 20px;
-  line-height: 0.6; }
+  line-height: 1; }
 
 .fullscreen-text-area::-webkit-input-placeholder {
   font-size: 20px;
@@ -9777,12 +9777,13 @@ a.button {
   text-align: center; }
 
 .no-label-select {
+  margin-top: 5px;
   color: white;
   width: auto;
   height: 30px;
   background: transparent !important;
   background-image: none;
-  font-size: 1.1em;
+  font-size: 1em;
   border: none; }
 
 #language-swap-btn {
@@ -9800,4 +9801,4 @@ a.button {
   overflow: scroll; }
 
 #main-search-results ion-scroll {
-  height: 60vh; }
+  height: 70vh; }

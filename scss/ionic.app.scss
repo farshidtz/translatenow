@@ -37,7 +37,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   color: white;
 }
 .name-it-list h2{
-  font-size:1.1em;
+  font-size:1em;
   font-weight: bold;
 }
 .name-it-list p{
@@ -55,7 +55,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   background-color: transparent!important;
   border:none;
   font-size: 20px;
-  line-height: 0.6;
+  line-height: 1;
 }
 
 .fullscreen-text-area::-webkit-input-placeholder {
@@ -76,12 +76,13 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 .no-label-select{
+  margin-top:5px;
   color: white;
   width: auto;
   height:30px;
   background: transparent!important;
   background-image: none;
-  font-size: 1.1em;
+  font-size: 1em;
   border: none;
 }
 
@@ -103,5 +104,5 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   overflow: scroll;
 }
 #main-search-results ion-scroll{
-  height:60vh;
+  height:70vh;
 }
