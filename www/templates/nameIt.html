@@ -1,10 +1,49 @@
 <ion-view title="Name It " hide-nav-bar="true" id="page1" class=" ">
-    <ion-content padding="true" style="background: url(img/EFtkVRhTImbNaXXaYhbx_blue_bokeh.jpg) no-repeat center;background-size:cover;" class="manual-ios-statusbar-padding">
-        <form id="nameIt-form6" class="list ">
-            <label class="item item-input" id="nameIt-textarea3">
-                <textarea class="fullscreen-text-area" placeholder=""></textarea>
+    <ion-content scroll="false" padding="false" style="background: url(img/EFtkVRhTImbNaXXaYhbx_blue_bokeh.jpg) no-repeat center;background-size:cover;" class="manual-ios-statusbar-padding">
+      <!--header row for translation language selection-->
+      <div class="row">
+        <div class="col col-40 horizontal-center">
+            <select class="no-label-select">
+              <option selected>English</option>
+              <option>German</option>
+              <option>French</option>
+            </select>
+        </div>
+        <div class="col col-20">
+            <button id="language-swap-btn" class="button button-block ion-arrow-swap"></button>
+        </div>
+        <div class="col col-40 horizontal-center">
+          <select class="no-label-select">
+            <option>English</option>
+            <option selected>German</option>
+            <option>French</option>
+          </select>
+        </div>
+      </div>
+      <!--main content area for for text area-->
+      <div class="row">
+        <div class="col">
+      <form id="nameIt-form6" class="list ">
+            <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
+                <textarea class="fullscreen-text-area" placeholder="Search for any word..."></textarea>
             </label>
-        </form>
-        <button id="nameIt-button2" class=" button button-calm  button-block icon ion-ios-loop round-button">Translate</button>
+
+          <ion-list id="main-search-results">
+            <ion-scroll direction="y" height="200px" >
+            <ion-item  class="item item-thumbnail-left name-it-list" ng-repeat="item in list">
+              <img ng-src="{{item.img}}">
+              <h2>{{item.title}}</h2>
+              <p>{{item.snippet}}</p>
+            </ion-item>
+            </ion-scroll>
+          </ion-list>
+      </form>
+        </div>
+      </div>
+
     </ion-content>
+  <!--last row for button-->
+  <div class="footer">
+  <button id="nameIt-button2" class=" button button-dark button-block ion-ios-keypad-outline round-button"></button>
+  </div>
 </ion-view>
