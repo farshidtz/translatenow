@@ -12,7 +12,7 @@ angular.module('app.controllers', [])
   // Local vars
   $scope.list = [];
   $scope.languages = languages;
-  //window.local = new Storage(LocalStorage);
+
   //window.localStorage['lang-from'] = 'en';
   //window.localStorage['lang-to'] = 'de';
   //console.log(window.localStorage['lang-from']);
@@ -21,15 +21,16 @@ angular.module('app.controllers', [])
 
 
   $scope.langFromChanged = function(code){
-    window.localStorage['lang-from'] = code;
-    //$scope.langFrom = langcode;
     console.log(code);
+    window.localStorage['lang-from'] = code;
+    //$scope.textArea = "";
+    //$scope.list = [];
   }
 
   $scope.langToChanged = function(code){
+    console.log(code, $scope.textArea);
     window.localStorage['lang-to'] = code;
-    //$scope.langFrom = langcode;
-    console.log(code);
+    //$scope.updateList($scope.textArea);
   }
 
   $scope.updateList = function(text){
