@@ -9741,7 +9741,7 @@ a.button {
 
 .footer {
   position: relative;
-  top: 5px;
+  top: 0;
   background: red; }
 
 .footer-content {
@@ -9770,8 +9770,7 @@ a.button {
   background-color: transparent !important;
   border: none;
   font-size: 20px;
-  line-height: 1;
-  margin-bottom: 10pt; }
+  line-height: 1; }
 
 .fullscreen-text-area::-webkit-input-placeholder {
   font-size: 20px;

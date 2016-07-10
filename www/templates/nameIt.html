@@ -24,7 +24,9 @@
             <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
                 <input class="fullscreen-text-area" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></input>
             </label>
-
+        <div class="horizontal-center">
+          <ion-spinner icon="dots" class="spinner-energized"></ion-spinner>
+        </div>
           <ion-list id="main-search-results">
             <ion-scroll direction="y" height="200px" >
             <ion-item  class="item item-thumbnail-left name-it-list" ng-repeat="item in list">
