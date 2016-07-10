@@ -10,8 +10,6 @@ angular.module('app.controllers', [])
   // Local vars
   $scope.list = [];
   $scope.languages = languages;
-  $scope.spinner = "hidden";
-
 
   $scope.updateList = function(text){
     console.log(text);
@@ -95,7 +93,7 @@ angular.module('app.controllers', [])
           } else {
             if($scope.textArea != ""){
               $scope.list[i].trans.push("No match");
-              $scope.spinner = "hidden";
+              angular.element('loading').addClass("invisible");
             }
           }
           $scope.$apply();
@@ -126,7 +124,7 @@ angular.module('app.controllers', [])
             //console.log(backlink.title);
             if($scope.textArea != ""){
               $scope.list[i].trans.push(backlink.title);
-              $scope.spinner = "hidden";
+              angular.element('loading').addClass("invisible");
               $scope.$apply();
             }
           });
@@ -141,10 +139,10 @@ angular.module('app.controllers', [])
   $scope.inputChanged = function() {
 
     if($scope.textArea == ""){
-      $scope.spinner = "hidden";
+      //$scope.spinner = "hidden";
       $scope.list = [];
     } else {
-      $scope.spinner = "";
+      angular.element('loading').removeClass("invisible");
     }
 
     clearTimeout($scope.inputChangedResponse);
