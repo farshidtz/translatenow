@@ -13,8 +13,8 @@ angular.module('app.controllers', [])
   $scope.list = [];
   $scope.languages = languages;
   //window.local = new Storage(LocalStorage);
-  window.localStorage['lang-from'] = 'en';
-  window.localStorage['lang-to'] = 'de';
+  //window.localStorage['lang-from'] = 'en';
+  //window.localStorage['lang-to'] = 'de';
   //console.log(window.localStorage['lang-from']);
   $scope.langFromSelected = window.localStorage['lang-from'];
   $scope.langToSelected = window.localStorage['lang-to'];
