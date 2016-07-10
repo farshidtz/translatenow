@@ -9735,10 +9735,19 @@ a.button {
   background-color: rgba(255, 255, 255, 0.1);
   border: none; }
 
+.main-bg {
+  background: url("../img/background_login.jpg") no-repeat;
+  -webkit-background-size: 280% auto; }
+
 .footer {
-  position: absolute;
+  position: relative;
+  top: 5px;
+  background: red; }
+
+.footer-content {
   width: 100%;
-  bottom: 10pt; }
+  position: absolute;
+  bottom: 0; }
 
 .name-it-list h2, .name-it-list p {
   color: white; }
@@ -9767,7 +9776,6 @@ a.button {
   line-height: 1; }
 
 .round-button {
-  margin: 0 auto;
   width: 12vh !important;
   height: 12vh;
   border-radius: 100px; }
@@ -9794,6 +9802,7 @@ a.button {
   margin: 0px; }
 
 #nameIt-button2 {
+  margin: 0 auto !important;
   opacity: 0.7;
   font-size: 40px; }
 
