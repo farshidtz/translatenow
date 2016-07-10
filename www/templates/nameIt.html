@@ -4,9 +4,7 @@
       <div class="row">
         <div class="col col-40 horizontal-center">
             <select class="no-label-select">
-              <option selected>English</option>
-              <option>German</option>
-              <option>French</option>
+              <option ng-repeat="lang in languages"  value="{{lang.lang}}">{{lang.langname}}</option>
             </select>
         </div>
         <div class="col col-20">
@@ -14,9 +12,7 @@
         </div>
         <div class="col col-40 horizontal-center">
           <select class="no-label-select">
-            <option>English</option>
-            <option selected>German</option>
-            <option>French</option>
+            <option ng-repeat="lang in languages"  value="{{lang.lang}}">{{lang.langname}}</option>
           </select>
         </div>
       </div>
