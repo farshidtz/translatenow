@@ -26,11 +26,20 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   background-color:rgba(255, 255, 255, 0.1);
   border: none;
 }
-
+.main-bg{
+  background: url('../img/background_login.jpg') no-repeat;
+  -webkit-background-size: 280% auto;
+}
 .footer{
-  position:absolute;
+  position:relative;
+  top:0;
+  background:red;
+}
+
+.footer-content{
   width:100%;
-  bottom:10pt;
+  position: absolute;
+  bottom:0;
 }
 
 .name-it-list h2, .name-it-list p{
@@ -51,6 +60,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 .fullscreen-text-area {
+  text-align: center;
   color: white!important;
   background-color: transparent!important;
   border:none;
@@ -64,7 +74,6 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 .round-button {
-  margin: 0 auto;
   width: 12vh!important;
   height: 12vh;
   border-radius: 100px;
@@ -87,6 +96,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 //id specific styling
+#language-from{
+  text-align: right!important;
+}
 #language-swap-btn{
   opacity:0.5;
   font-size:20pt;
@@ -96,6 +108,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 #nameIt-button2{
+  margin:0 auto!important;
   opacity: 0.7;
   font-size:40px;
 }
@@ -103,6 +116,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 #main-search-results{
   overflow: scroll;
 }
+
 #main-search-results ion-scroll{
   height:70vh;
 }

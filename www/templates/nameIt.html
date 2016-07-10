@@ -1,9 +1,10 @@
+
 <ion-view title="Name It " hide-nav-bar="true" id="page1" class=" ">
-    <ion-content scroll="false" padding="false" style="background: url(img/EFtkVRhTImbNaXXaYhbx_blue_bokeh.jpg) no-repeat center;background-size:cover;" class="manual-ios-statusbar-padding">
+    <ion-content scroll="false" padding="false" style="background: url(img/EFtkVRhTImbNaXXaYhbx_blue_bokeh.jpg) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
       <!--header row for translation language selection-->
       <div class="row">
         <div class="col col-40 horizontal-center">
-            <select class="no-label-select">
+            <select dir="rtl" class="no-label-select">
               <option ng-repeat="lang in languages"  value="{{lang.lang}}">{{lang.langname}}</option>
             </select>
         </div>
@@ -11,7 +12,7 @@
             <button id="language-swap-btn" class="button button-block ion-arrow-swap"></button>
         </div>
         <div class="col col-40 horizontal-center">
-          <select class="no-label-select">
+          <select id="language-to" class="no-label-select">
             <option ng-repeat="lang in languages"  value="{{lang.lang}}">{{lang.langname}}</option>
           </select>
         </div>
@@ -21,9 +22,11 @@
         <div class="col">
       <form id="nameIt-form6" class="list" ng-controller="nameItCtrl">
             <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
-                <textarea class="fullscreen-text-area" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></textarea>
+                <input class="fullscreen-text-area" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></input>
             </label>
-
+        <div class="horizontal-center">
+          <ion-spinner icon="dots" class="spinner-energized"></ion-spinner>
+        </div>
           <ion-list id="main-search-results">
             <ion-scroll direction="y" height="200px" >
             <ion-item  class="item item-thumbnail-left name-it-list" ng-repeat="item in list">
@@ -37,9 +40,13 @@
         </div>
       </div>
 
+        <div class="footer hide-on-keyboard-open">
+          <div class="footer-content">
+            <button id="nameIt-button2"  class=" button button-dark button-block ion-ios-keypad-outline round-button"></button>
+          </div>
+        </div>
+
     </ion-content>
   <!--last row for button-->
-  <div class="footer">
-  <button id="nameIt-button2" class=" button button-dark button-block ion-ios-keypad-outline round-button"></button>
-  </div>
+
 </ion-view>
