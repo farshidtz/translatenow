@@ -4,16 +4,14 @@
       <!--header row for translation language selection-->
       <div class="row">
         <div class="col col-40 horizontal-center">
-            <select dir="rtl" class="no-label-select">
-              <option ng-repeat="lang in languages"  value="{{lang.lang}}">{{lang.langname}}</option>
+            <select dir="rtl" class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langFromSelected" ng-change="langFromChanged(langFromSelected)">
             </select>
         </div>
         <div class="col col-20">
             <button id="language-swap-btn" class="button button-block ion-arrow-swap"></button>
         </div>
         <div class="col col-40 horizontal-center">
-          <select id="language-to" class="no-label-select">
-            <option ng-repeat="lang in languages"  value="{{lang.lang}}">{{lang.langname}}</option>
+          <select dir="rtl" class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langToSelected" ng-change="langToChanged(langToSelected)">
           </select>
         </div>
       </div>
