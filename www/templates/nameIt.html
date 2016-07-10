@@ -4,7 +4,7 @@
       <!--header row for translation language selection-->
       <div class="row">
         <div class="col col-40 horizontal-center">
-            <select class="no-label-select">
+            <select dir="rtl" class="no-label-select">
               <option ng-repeat="lang in languages"  value="{{lang.lang}}">{{lang.langname}}</option>
             </select>
         </div>
@@ -12,7 +12,7 @@
             <button id="language-swap-btn" class="button button-block ion-arrow-swap"></button>
         </div>
         <div class="col col-40 horizontal-center">
-          <select class="no-label-select">
+          <select id="language-to" class="no-label-select">
             <option ng-repeat="lang in languages"  value="{{lang.lang}}">{{lang.langname}}</option>
           </select>
         </div>
@@ -22,7 +22,7 @@
         <div class="col">
       <form id="nameIt-form6" class="list" ng-controller="nameItCtrl">
             <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
-                <textarea class="fullscreen-text-area" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></textarea>
+                <input class="fullscreen-text-area" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></input>
             </label>
 
           <ion-list id="main-search-results">

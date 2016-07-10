@@ -9765,11 +9765,13 @@ a.button {
   padding: 0px !important; }
 
 .fullscreen-text-area {
+  text-align: center;
   color: white !important;
   background-color: transparent !important;
   border: none;
   font-size: 20px;
-  line-height: 1; }
+  line-height: 1;
+  margin-bottom: 10pt; }
 
 .fullscreen-text-area::-webkit-input-placeholder {
   font-size: 20px;
@@ -9793,6 +9795,9 @@ a.button {
   background-image: none;
   font-size: 1em;
   border: none; }
+
+#language-from {
+  text-align: right !important; }
 
 #language-swap-btn {
   opacity: 0.5;
