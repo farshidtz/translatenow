@@ -25,7 +25,8 @@
                 <input class="fullscreen-text-area" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></input>
             </label>
         <div class="horizontal-center">
-          <ion-spinner icon="dots" class="spinner-energized"></ion-spinner>
+          <ion-spinner icon="dots" class="spinner-energized {{spinner}}"></ion-spinner>
+
         </div>
           <ion-list id="main-search-results">
             <ion-scroll direction="y" height="200px" >
@@ -33,6 +34,7 @@
               <img ng-src="{{item.img}}">
               <h2>{{item.title}}</h2>
               <p>{{item.snippet}}</p>
+              <p><cpan ng-repeat="tran in item.trans">{{tran}}{{$last ? '' : ', '}}</span></p>
             </ion-item>
             </ion-scroll>
           </ion-list>
