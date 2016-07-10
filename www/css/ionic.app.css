@@ -9731,12 +9731,8 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
-.name-it-list {
-  background-color: rgba(255, 255, 255, 0.1);
-  border: none; }
-
-.hidden {
-  display: none; }
+.invisible {
+  visibility: hidden; }
 
 .main-bg {
   background: url("../img/background_login.jpg") no-repeat;
@@ -9752,17 +9748,35 @@ a.button {
   position: absolute;
   bottom: 0; }
 
+.name-it-list {
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-background-clip: padding-box;
+  /* for Safari */
+  background-clip: padding-box;
+  /* for IE9+, Firefox 4+, Opera, Chrome */ }
+
 .name-it-list h2, .name-it-list p {
   color: white; }
 
 .name-it-list h2 {
+  opacity: 0.5;
   font-size: 1em;
-  font-weight: bold; }
+  margin-bottom: 5pt; }
 
 .name-it-list p {
+  display: inline;
   font-style: italic;
-  color: #000066;
-  background-color: Orange;
+  font-size: 1em; }
+
+.name-it-list p span {
+  display: block;
+  font-style: italic;
+  margin: 2pt;
+  font-weight: bold;
+  padding: 5px !important;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
   font-size: 1em; }
 
 .name-it-list img {
@@ -9820,3 +9834,6 @@ a.button {
 
 #main-search-results ion-scroll {
   height: 70vh; }
+
+#nameIt-form6 ion-spinner {
+  font-size: 11pt !important; }

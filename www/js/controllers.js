@@ -93,7 +93,7 @@ angular.module('app.controllers', [])
           } else {
             if($scope.textArea != ""){
               $scope.list[i].trans.push("No match");
-              angular.element('loading').addClass("invisible");
+              $('#loading').addClass("invisible");
             }
           }
           $scope.$apply();
@@ -124,7 +124,7 @@ angular.module('app.controllers', [])
             //console.log(backlink.title);
             if($scope.textArea != ""){
               $scope.list[i].trans.push(backlink.title);
-              angular.element('loading').addClass("invisible");
+              $('#loading').addClass("invisible");
               $scope.$apply();
             }
           });
@@ -141,8 +141,9 @@ angular.module('app.controllers', [])
     if($scope.textArea == ""){
       //$scope.spinner = "hidden";
       $scope.list = [];
+      $("#loading").addClass("invisible");
     } else {
-      angular.element('loading').removeClass("invisible");
+      $('#loading').removeClass("invisible");
     }
 
     clearTimeout($scope.inputChangedResponse);
