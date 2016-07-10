@@ -15,6 +15,8 @@
     <preference name="SplashScreenDelay" value="2000" />
     <preference name="FadeSplashScreenDuration" value="2000"/>
 
+    <allow-navigation href="*" />
+
     <!-- Ionic supports Android Jellybean and up -->
     <preference name="android-minSdkVersion" value="16" />
 
