@@ -9807,19 +9807,23 @@ a.button {
 .no-label-select {
   margin-top: 5px;
   color: white;
-  width: auto;
+  width: 60pt;
   height: 30px;
   background: transparent !important;
   background-image: none;
   font-size: 1em;
-  border: none; }
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: ''; }
 
 #language-from {
-  text-align: right !important; }
+  direction: rtl; }
 
 #language-swap-btn {
   opacity: 0.5;
-  font-size: 20pt;
+  font-size: 15pt;
   background: transparent;
   color: white;
   margin: 0px; }
