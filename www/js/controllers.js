@@ -7,7 +7,7 @@ let onChangeTimeout = 300; // ms
 
 angular.module('app.controllers', [])
 
-.controller('nameItCtrl', function($scope) {
+.controller('nameItCtrl', function($scope, focus) {
 
   // Local vars
   $scope.list = [];
@@ -42,6 +42,10 @@ angular.module('app.controllers', [])
     $scope.langFromSelected = window.localStorage['lang-from'];
     $scope.langToSelected = window.localStorage['lang-to'];
     $scope.updateList($scope.textArea);
+  }
+
+  $scope.focusOnTextArea = function(){
+    focus('focusMe');
   }
 
   $scope.updateList = function(text){
