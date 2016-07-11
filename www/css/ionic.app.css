@@ -9802,6 +9802,7 @@ a.button {
   font-size: 25px;
   line-height: 1;
   margin-bottom: 0pt;
+  padding-top: 5pt;
   padding-bottom: 0pt; }
 
 .fullscreen-text-area::-webkit-input-placeholder {
