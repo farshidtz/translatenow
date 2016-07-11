@@ -49,7 +49,7 @@ angular.module('app.controllers', [])
     $scope.updateList($scope.textArea);
   }
 
-  $scope.focusOnTextArea = function(){
+  $scope.kbButtonClicked = function(){
     focus('input');
   }
 
