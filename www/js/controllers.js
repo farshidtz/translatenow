@@ -29,6 +29,7 @@ angular.module('app.controllers', [])
     localStorage['lang-from'] = code;
     $scope.textArea = "";
     $scope.list = [];
+    focus('input');
   }
 
   $scope.langToChanged = function(code){
@@ -49,7 +50,7 @@ angular.module('app.controllers', [])
   }
 
   $scope.focusOnTextArea = function(){
-    focus('focusMe');
+    focus('input');
   }
 
   $scope.updateList = function(text){
