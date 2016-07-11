@@ -2,16 +2,16 @@
 <ion-view title="Name It " hide-nav-bar="true" id="page1" class=" ">
     <ion-content ng-controller="nameItCtrl" scroll="false" padding="false" style="background: url(img/EFtkVRhTImbNaXXaYhbx_blue_bokeh.jpg) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
       <!--header row for translation language selection-->
-      <div class="row">
+      <div id="translation-pannel" class="row">
         <div class="col col-40 horizontal-center">
-            <select dir="rtl" class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langFromSelected" ng-change="langFromChanged(langFromSelected)">
+            <select id="language-from" class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langFromSelected" ng-change="langFromChanged(langFromSelected)">
             </select>
         </div>
         <div class="col col-20">
             <button id="language-swap-btn" ng-click="swapLanguages()" class="button button-block ion-arrow-swap"></button>
         </div>
         <div class="col col-40 horizontal-center">
-          <select dir="rtl" class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langToSelected" ng-change="langToChanged(langToSelected)">
+          <select  class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langToSelected" ng-change="langToChanged(langToSelected)">
           </select>
         </div>
       </div>

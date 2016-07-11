@@ -119,7 +119,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 //id specific styling
 #language-from{
-  direction:rtl;
+  direction: rtl!important;
 }
 #language-swap-btn{
   opacity:0.5;
@@ -145,4 +145,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 #nameIt-form6 ion-spinner{
 font-size: 11pt!important;
+}
+#translation-pannel{
+  padding: 0pt 0pt 5pt 0pt;
 }
