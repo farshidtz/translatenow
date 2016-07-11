@@ -9782,13 +9782,16 @@ a.button {
 
 .name-it-list p span {
   display: block;
+  width: 100%;
   font-style: italic;
   margin: 2pt;
   font-weight: bold;
   padding: 5px !important;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 4px;
-  font-size: 1em; }
+  font-size: 1em;
+  word-wrap: break-word !important;
+  white-space: normal; }
 
 .name-it-list img {
   margin: 0px !important;

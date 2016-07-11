@@ -80,6 +80,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 .name-it-list p span{
   display: block;
+  width: 100%;
   font-style: italic;
   margin:2pt;
   font-weight: bold;
@@ -87,6 +88,8 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   background: rgba(255,255,255,0.2);
   border-radius: 4px;
   font-size: 1em;
+  word-wrap: break-word!important;
+  white-space: normal
 }
 
 .name-it-list img{
