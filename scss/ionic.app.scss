@@ -14,6 +14,23 @@ $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
+//fontAwesome include
+@font-face {
+  font-family: 'fontawesome';
+  src:url('../fonts/fontawesome-webfont.eot');
+  src:url('../fonts/fontawesome-webfont.eot') format('embedded-opentype'),
+  url('../fonts/fontawesome-webfont.woff') format('woff'),
+  url('../fonts/fontawesome-webfont.ttf') format('truetype'),
+  url('../fonts/fontawesome-webfont.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+//glyph icons to include
+.icon-keyboard:before {
+  font-family: "fontawesome";
+  content: "\f11c";
+}
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -82,18 +99,18 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   color: white!important;
   background-color: transparent!important;
   border:none;
-  font-size: 20px;
+  font-size: 25px;
   line-height: 1;
+  margin-bottom: 0pt;
+  padding-bottom: 0pt;
 }
 
 .fullscreen-text-area::-webkit-input-placeholder {
-  font-size: 20px;
+  font-size: 25px;
   line-height: 1;
 }
 
 .round-button {
-  width: 12vh!important;
-  height: 12vh;
   border-radius: 100px;
 }
 
@@ -103,14 +120,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 .no-label-select{
-  margin-top:5px;
   color: white;
-  width: 60pt;
+  width: auto;
   height:30px;
   background: transparent!important;
   background-image: none;
   font-size: 1em;
   border: none;
+  padding-bottom: 0px;
+  margin-bottom:0px;
   -webkit-appearance: none;
   -moz-appearance: none;
   text-indent: 1px;
@@ -118,21 +136,25 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 //id specific styling
-#language-from{
+#language-to{
   direction: rtl!important;
 }
 #language-swap-btn{
+  width: 100%;
+  margin:0 auto;
+  text-align: center;
   opacity:0.5;
   font-size:15pt;
-  background: transparent;
+  background: black;
   color: white;
-  margin:0px;
 }
 
 #nameIt-button2{
+  width: 55pt;
+  height: 55pt;
   margin:0 auto!important;
   opacity: 0.7;
-  font-size:40px;
+  font-size:30pt;
 }
 
 #main-search-results{
@@ -144,8 +166,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 #nameIt-form6 ion-spinner{
+  background: transparent;
 font-size: 11pt!important;
 }
 #translation-pannel{
-  padding: 0pt 0pt 5pt 0pt;
+  margin-bottom: 5pt;
+  background: rgba(0,0,0,0.2);
+  padding: 0pt 0pt 0pt 0pt;
 }

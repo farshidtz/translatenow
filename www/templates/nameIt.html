@@ -8,10 +8,10 @@
             </select>
         </div>
         <div class="col col-20">
-            <button id="language-swap-btn" ng-click="swapLanguages()" class="button button-block ion-arrow-swap"></button>
+            <button id="language-swap-btn" ng-click="swapLanguages()" class="button button-small ion-arrow-swap"></button>
         </div>
         <div class="col col-40 horizontal-center">
-          <select  class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langToSelected" ng-change="langToChanged(langToSelected)">
+          <select id="language-to" class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langToSelected" ng-change="langToChanged(langToSelected)">
           </select>
         </div>
       </div>
@@ -20,10 +20,10 @@
         <div class="col">
       <form id="nameIt-form6" class="list">
             <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
-                <input class="fullscreen-text-area" focus-on="focusMe" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></input>
+                <input class="fullscreen-text-area" focus-on="focusMe" ng-model="textArea" ng-change="inputChanged()" placeholder="Search anything..."></input>
             </label>
         <div class="horizontal-center">
-          <ion-spinner id="loading" icon="dots" class="spinner-energized invisible"></ion-spinner>
+          <ion-spinner id="loading" icon="dots" class="horizontal-center spinner-energized invisible"></ion-spinner>
         </div>
           <ion-list id="main-search-results">
             <ion-scroll direction="y" height="200px" >
@@ -41,7 +41,7 @@
 
         <div class="footer hide-on-keyboard-open">
           <div class="footer-content">
-            <button id="nameIt-button2" ng-click="focusOnTextArea()" class=" button button-dark button-block ion-ios-keypad-outline round-button"></button>
+            <button id="nameIt-button2" ng-click="focusOnTextArea()" class=" button button-dark button-block icon-keyboard round-button"></button>
           </div>
         </div>
 
