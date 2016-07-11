@@ -23,14 +23,14 @@ angular.module('app.controllers', [])
   $scope.langFromChanged = function(code){
     console.log(code);
     window.localStorage['lang-from'] = code;
-    //$scope.textArea = "";
-    //$scope.list = [];
+    $scope.textArea = "";
+    $scope.list = [];
   }
 
   $scope.langToChanged = function(code){
     console.log(code, $scope.textArea);
     window.localStorage['lang-to'] = code;
-    //$scope.updateList($scope.textArea);
+    $scope.updateList($scope.textArea);
   }
 
   $scope.updateList = function(text){

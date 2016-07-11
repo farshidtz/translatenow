@@ -1,6 +1,6 @@
 
 <ion-view title="Name It " hide-nav-bar="true" id="page1" class=" ">
-    <ion-content scroll="false" padding="false" style="background: url(img/EFtkVRhTImbNaXXaYhbx_blue_bokeh.jpg) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
+    <ion-content ng-controller="nameItCtrl" scroll="false" padding="false" style="background: url(img/EFtkVRhTImbNaXXaYhbx_blue_bokeh.jpg) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
       <!--header row for translation language selection-->
       <div class="row">
         <div class="col col-40 horizontal-center">
@@ -18,7 +18,7 @@
       <!--main content area for for text area-->
       <div class="row">
         <div class="col">
-      <form id="nameIt-form6" class="list" ng-controller="nameItCtrl">
+      <form id="nameIt-form6" class="list">
             <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
                 <input class="fullscreen-text-area" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></input>
             </label>
