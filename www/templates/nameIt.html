@@ -8,7 +8,7 @@
             </select>
         </div>
         <div class="col col-20">
-            <button id="language-swap-btn" class="button button-block ion-arrow-swap"></button>
+            <button id="language-swap-btn" ng-click="swapLanguages()" class="button button-block ion-arrow-swap"></button>
         </div>
         <div class="col col-40 horizontal-center">
           <select dir="rtl" class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langToSelected" ng-change="langToChanged(langToSelected)">

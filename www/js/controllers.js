@@ -28,13 +28,27 @@ angular.module('app.controllers', [])
   }
 
   $scope.langToChanged = function(code){
-    console.log(code, $scope.textArea);
+    console.log(code);
     window.localStorage['lang-to'] = code;
     $scope.updateList($scope.textArea);
   }
 
+  $scope.swapLanguages = function(){
+    // Swap language selection in memory
+    let lf = window.localStorage['lang-from'];
+    window.localStorage['lang-from'] = window.localStorage['lang-to'];
+    window.localStorage['lang-to'] = lf;
+
+    $scope.langFromSelected = window.localStorage['lang-from'];
+    $scope.langToSelected = window.localStorage['lang-to'];
+    $scope.updateList($scope.textArea);
+  }
+
   $scope.updateList = function(text){
+    if(text=="" || typeof text == "undefined")
+      return;
     console.log(text);
+    $('#loading').removeClass("invisible");
     let url = "https://"+window.localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&search="+text+"&namespace=0&format=json";
     $.ajax({
       url: url,
