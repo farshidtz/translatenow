@@ -13,34 +13,38 @@ angular.module('app.controllers', [])
   $scope.list = [];
   $scope.languages = languages;
 
-  //window.localStorage['lang-from'] = 'en';
-  //window.localStorage['lang-to'] = 'de';
-  //console.log(window.localStorage['lang-from']);
-  $scope.langFromSelected = window.localStorage['lang-from'];
-  $scope.langToSelected = window.localStorage['lang-to'];
-
+  // Initialize the language selection
+  $scope.initLangSelection = function(){
+    if(!('lang-from' in localStorage)){
+      // defaults
+      localStorage['lang-from'] = 'en';
+      localStorage['lang-to'] = 'de';
+    }
+    $scope.langFromSelected = localStorage['lang-from'];
+    $scope.langToSelected = localStorage['lang-to'];
+  }();
 
   $scope.langFromChanged = function(code){
     console.log(code);
-    window.localStorage['lang-from'] = code;
+    localStorage['lang-from'] = code;
     $scope.textArea = "";
     $scope.list = [];
   }
 
   $scope.langToChanged = function(code){
     console.log(code);
-    window.localStorage['lang-to'] = code;
+    localStorage['lang-to'] = code;
     $scope.updateList($scope.textArea);
   }
 
   $scope.swapLanguages = function(){
     // Swap language selection in memory
-    let lf = window.localStorage['lang-from'];
-    window.localStorage['lang-from'] = window.localStorage['lang-to'];
-    window.localStorage['lang-to'] = lf;
+    let lf = localStorage['lang-from'];
+    localStorage['lang-from'] = localStorage['lang-to'];
+    localStorage['lang-to'] = lf;
 
-    $scope.langFromSelected = window.localStorage['lang-from'];
-    $scope.langToSelected = window.localStorage['lang-to'];
+    $scope.langFromSelected = localStorage['lang-from'];
+    $scope.langToSelected = localStorage['lang-to'];
     $scope.updateList($scope.textArea);
   }
 
@@ -53,7 +57,7 @@ angular.module('app.controllers', [])
       return;
     console.log(text);
     $('#loading').removeClass("invisible");
-    let url = "https://"+window.localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&search="+text+"&namespace=0&format=json";
+    let url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&search="+text+"&namespace=0&format=json";
     $.ajax({
       url: url,
       dataType: "jsonp",
@@ -74,7 +78,7 @@ angular.module('app.controllers', [])
     titles.forEach(function(title, i){
       //titles.push(title);
       $.ajax({
-        url: "https://"+window.localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&titles="+title+"&prop=pageimages&format=json&pithumbsize=100",
+        url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&titles="+title+"&prop=pageimages&format=json&pithumbsize=100",
         dataType: "jsonp",
         success: function(res) {
 
@@ -113,7 +117,7 @@ angular.module('app.controllers', [])
     let results = new Array(titles.length);
     titles.forEach(function(title, i){
       $.ajax({
-        url: "https://"+window.localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=langlinks&lllang="+window.localStorage['lang-to']+"&format=json&titles="+title,
+        url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=langlinks&lllang="+localStorage['lang-to']+"&format=json&titles="+title,
         dataType: "jsonp",
         success: function(res) {
           //console.log(res.query.pages);
@@ -156,7 +160,7 @@ angular.module('app.controllers', [])
 
       //console.log(title);
       $.ajax({
-        url: "https://"+window.localStorage['lang-to']+".wikipedia.org/w/api.php?action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+title,
+        url: "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+title,
         dataType: "jsonp",
         success: function(res) {
           //console.log("done", res, i);
