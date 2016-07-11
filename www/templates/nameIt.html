@@ -20,7 +20,7 @@
         <div class="col">
       <form id="nameIt-form6" class="list">
             <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
-                <input class="fullscreen-text-area" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></input>
+                <input class="fullscreen-text-area" focus-on="focusMe" ng-model="textArea" ng-change="inputChanged()" placeholder="Search for any word..."></input>
             </label>
         <div class="horizontal-center">
           <ion-spinner id="loading" icon="dots" class="spinner-energized invisible"></ion-spinner>
@@ -41,7 +41,7 @@
 
         <div class="footer hide-on-keyboard-open">
           <div class="footer-content">
-            <button id="nameIt-button2"  class=" button button-dark button-block ion-ios-keypad-outline round-button"></button>
+            <button id="nameIt-button2" ng-click="focusOnTextArea()" class=" button button-dark button-block ion-ios-keypad-outline round-button"></button>
           </div>
         </div>
 
