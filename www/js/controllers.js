@@ -79,12 +79,23 @@ angular.module('app.controllers', [])
     titles.forEach(function(title, i){
       //titles.push(title);
       $.ajax({
-        url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&titles="+title+"&prop=pageimages&format=json&pithumbsize=100",
+        url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&titles="+title+"&prop=pageterms|pageimages&redirects&format=json&pithumbsize=100",
         dataType: "jsonp",
         success: function(res) {
 
+          // Handle redirect
+          if(res.query.hasOwnProperty('redirects') && res.query.redirects.length>0){
+            titles[i] =  res.query.redirects[0].to;
+          }
 
-          let thumbnail = first(res.query.pages).thumbnail;
+          let page = first(res.query.pages)
+          // Get page description
+          let descr = "no description";
+          if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
+            descr = page.terms.description[0];
+          }
+          // Get thumbnail
+          let thumbnail = page.thumbnail;
           let image;
           if(typeof thumbnail != "undefined"){
             image = thumbnail.source;
@@ -93,8 +104,9 @@ angular.module('app.controllers', [])
           }
 
           list[i] = {
-            title: title,
-            snippet: snippets[i],
+            title: titles[i],
+            //snippet: snippets[i],
+            descr: descr,
             img: image,
             trans: []
           };
