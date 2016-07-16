@@ -58,7 +58,7 @@ angular.module('app.controllers', [])
       return;
     console.log(text);
     $('#loading').removeClass("invisible");
-    let url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&search="+text+"&namespace=0&format=json";
+    let url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&redirects=resolve&limit=10&search="+text;
     $.ajax({
       url: url,
       dataType: "jsonp",
@@ -79,14 +79,9 @@ angular.module('app.controllers', [])
     titles.forEach(function(title, i){
       //titles.push(title);
       $.ajax({
-        url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&titles="+title+"&prop=pageterms|pageimages&redirects&format=json&pithumbsize=100",
+        url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&titles="+title+"&prop=pageterms|pageimages&format=json&pithumbsize=100",
         dataType: "jsonp",
         success: function(res) {
-
-          // Handle redirect
-          if(res.query.hasOwnProperty('redirects') && res.query.redirects.length>0){
-            titles[i] =  res.query.redirects[0].to;
-          }
 
           let page = first(res.query.pages)
           // Get page description
