@@ -10,7 +10,7 @@ angular.module('app.controllers', [])
 .controller('nameItCtrl', function($scope, focus) {
 
   // Local vars
-  $scope.list = [];
+  $scope.list = {};
   $scope.languages = languages;
 
   // Initialize the language selection
@@ -28,7 +28,7 @@ angular.module('app.controllers', [])
     console.log(code);
     localStorage['lang-from'] = code;
     $scope.textArea = "";
-    $scope.list = [];
+    $scope.list = {};
     focus('input');
   }
 
@@ -63,127 +63,146 @@ angular.module('app.controllers', [])
       url: url,
       dataType: "jsonp",
       success: function( result ) {
-
-        $scope.getImages(result[1], result[2]);
-
+        $scope.getProperties(result[1], result[2]);
       }
     });
   }
 
+  $scope.disambiguate = function(ambiguousTitle, links, rank){
+    links.forEach(function(link, i){
+      let title = link['title'];
+      //console.log(title);
+      let re = new RegExp("^"+ambiguousTitle+" [(][a-z|A-Z]+[)]$");
+      let matched = re.test(title);
+      if(matched){
+        //console.warn(title);
+        $.ajax({
+          url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=pageterms|pageimages&format=json&pithumbsize=100&titles="+title,
+          dataType: "jsonp",
+          success: function(res) {
+            let page = first(res.query.pages)
+            // Get page description
+            let descr = "no description";
+            if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
+              descr = page.terms.description[0];
+            }
+            // Get thumbnail
+            let thumb = "";
+            if(page.hasOwnProperty('thumbnail')){
+              thumb = page.thumbnail.source;
+            }
 
-  $scope.getImages = function(titles, snippets){
-    let list = new Array(titles.length);
+            $scope.list[title] = {
+              rank: rank,
+              title: title,
+              //snippet: snippets[i],
+              descr: descr,
+              img: thumb,
+              trans: []
+            } ;
+            $scope.$apply();
+            $scope.getTranslations(title);
+          }
+        });
+      }
+    });
+  }
+
+  $scope.getProperties = function(titles, snippets){
+    $scope.list = {};
     let pending = titles.length;
-    //let titles = [];
 
-    titles.forEach(function(title, i){
-      //titles.push(title);
+    function seq(i){
+      console.log(i);
       $.ajax({
-        url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&titles="+title+"&prop=pageterms|pageimages&format=json&pithumbsize=100",
+        url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=pageterms|pageimages|links&format=json&pithumbsize=100&&pllimit=max&titles="+titles[i],
         dataType: "jsonp",
         success: function(res) {
-
           let page = first(res.query.pages)
           // Get page description
           let descr = "no description";
           if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
             descr = page.terms.description[0];
           }
-          // Get thumbnail
-          let thumbnail = page.thumbnail;
-          let image;
-          if(typeof thumbnail != "undefined"){
-            image = thumbnail.source;
+          // Check if this is Wikipedia disambiguation page
+          let links = [];
+          if(descr.includes("disambiguation")){
+            $scope.disambiguate(titles[i], page.links, i);
           } else {
-            image = "";
+            // Get thumbnail
+            let thumb = "";
+            if(page.hasOwnProperty('thumbnail')){
+              thumb = page.thumbnail.source;
+            }
+
+            $scope.list[titles[i]] = {
+              rank: i,
+              title: titles[i],
+              //snippet: snippets[i],
+              descr: descr,
+              img: thumb,
+              trans: []
+            };
+            $scope.$apply();
+            $scope.getTranslations(titles[i]);
           }
 
-          list[i] = {
-            title: titles[i],
-            //snippet: snippets[i],
-            descr: descr,
-            img: image,
-            trans: []
-          };
-
           pending--;
-          if(pending<=0){
-            if($scope.textArea != ""){
-              $scope.list = list;
-              $scope.$apply();
-              $scope.getTranslations(titles);
-            }
+          if(pending>0){
+            seq(i+1);
           }
         }
       });
 
+    };
+    seq(0);
+  }
+
+  $scope.getTranslations = function(title) {
+    $.ajax({
+      url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=langlinks&lllang="+localStorage['lang-to']+"&format=json&titles="+title,
+      dataType: "jsonp",
+      success: function(res) {
+        let page = first(res.query.pages);
+        let word = "";
+        if(page.hasOwnProperty('langlinks') && page.langlinks.length>0 && page.langlinks[0].hasOwnProperty('*')){
+          word = page.langlinks[0]['*'];
+        }
+
+        if(word != ""){
+          if($scope.textArea != ""){
+            console.warn("***", title, $scope.list[title]);
+            $scope.list[title].trans.push(word);
+            $scope.getSynonyms(title, word);
+          }
+        } else {
+          // No match in the destination language
+          if($scope.textArea != ""){
+            console.warn("***", title, $scope.list[title]);
+            //delete $scope.list[title];
+            $scope.list[title].trans.push("No match");
+            $('#loading').addClass("invisible");
+          }
+        }
+        $scope.$apply();
+      }
     });
   }
 
-  $scope.getTranslations = function(titles) {
-    let pending = titles.length;
-    let results = new Array(titles.length);
-    titles.forEach(function(title, i){
-      $.ajax({
-        url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=langlinks&lllang="+localStorage['lang-to']+"&format=json&titles="+title,
-        dataType: "jsonp",
-        success: function(res) {
-          //console.log(res.query.pages);
-          let page = first(res.query.pages);
-          let word;
-          if(typeof page.langlinks != "undefined"){
-            word = page.langlinks[0]['*'];
+
+  $scope.getSynonyms = function(title, word){
+    $.ajax({
+      url: "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+word,
+      dataType: "jsonp",
+      success: function(res) {
+        res.query.backlinks.forEach(function(backlink){
+          if($scope.textArea != ""){
+            $scope.list[title].trans.push(backlink.title);
+            $('#loading').addClass("invisible");
+            $scope.$apply();
           }
-
-          //console.log(word);
-          if(typeof word != "undefined"){
-            results[i] = word;
-            //console.log(word, i);
-            if($scope.textArea != ""){
-              $scope.list[i].trans.push(word);
-            }
-          } else {
-            if($scope.textArea != ""){
-              $scope.list[i].trans.push("No match");
-              $('#loading').addClass("invisible");
-            }
-          }
-          $scope.$apply();
-
-          pending--;
-          if(pending<=0){
-            $scope.getSynonyms(results);
-          }
-        }
-      });
-    });
-
-  }
-
-
-  $scope.getSynonyms = function(titles){
-    //console.log("getting syns");
-
-    titles.forEach(function(title, i){
-
-      //console.log(title);
-      $.ajax({
-        url: "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+title,
-        dataType: "jsonp",
-        success: function(res) {
-          //console.log("done", res, i);
-          res.query.backlinks.forEach(function(backlink){
-            //console.log(backlink.title);
-            if($scope.textArea != ""){
-              $scope.list[i].trans.push(backlink.title);
-              $('#loading').addClass("invisible");
-              $scope.$apply();
-            }
-          });
-        }
-      });
-
-
+        });
+      }
     });
   }
 
