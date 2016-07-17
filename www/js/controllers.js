@@ -10,15 +10,8 @@ angular.module('app.controllers', [])
 .filter('listSortFilter', function () {
   return function (items) {
     var sortable = [];
-    for (var key in items){
-      sortable.push(items[key]);
-    }
-
-    sortable.sort(
-      function(a, b) {
-        return a.rank - b.rank;
-      }
-    )
+    for (var key in items){ sortable.push(items[key]); }
+    sortable.sort( function(a, b) { return a.rank - b.rank; } );
     return sortable;
   };
 })
@@ -71,18 +64,76 @@ angular.module('app.controllers', [])
 
   $scope.updateList = function(text){
     if(text=="" || typeof text == "undefined")
-      return;
+    return;
     console.log(text);
     $('#loading').removeClass("invisible");
     var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=opensearch&redirects=resolve&limit=10&search="+text;
     $http.jsonp(url).
     success(function(result, status, headers, config) {
-       $scope.getProperties(result[1], result[2]);
+      if($scope.textArea != ""){
+        $scope.getProperties(result[1], result[2]);
+      }
     }).
     error(function(data, status, headers, config) {
-       $scope.showError(status, data);
+      $scope.showError(status, data);
     });
 
+  }
+
+  $scope.getProperties = function(titles, snippets){
+    $scope.list = {};
+    var pending = titles.length;
+
+    function seq(i){
+      //console.log(i);
+      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages|links&format=json&pithumbsize=100&&pllimit=max&titles="+titles[i];
+      $http.jsonp(url).
+      success(function(res, status, headers, config) {
+        var page = first(res.query.pages)
+        // Get page description
+        var descr = "no description";
+        if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
+          descr = page.terms.description[0];
+        }
+        // Check if this is Wikipedia disambiguation page
+        var links = [];
+        if(descr.includes("disambiguation")){
+          if($scope.textArea != ""){
+            $scope.disambiguate(titles[i], page.links, i);
+          }
+        } else {
+          // Get thumbnail
+          var thumb = "";
+          if(page.hasOwnProperty('thumbnail')){
+            thumb = page.thumbnail.source;
+          }
+
+          if($scope.textArea != ""){
+            $scope.list[titles[i]] = {
+              rank: i,
+              title: titles[i],
+              //snippet: snippets[i],
+              descr: descr,
+              img: thumb,
+              trans: []
+            };
+            //$scope.$apply();
+
+            $scope.getTranslations(titles[i]);
+          }
+        }
+
+        pending--;
+        if(pending>0){
+          seq(i+1);
+        }
+      }).
+      error(function(data, status, headers, config) {
+        $scope.showError(status, data);
+      });
+
+    };
+    seq(0);
   }
 
   $scope.disambiguate = function(ambiguousTitle, links, rank){
@@ -108,74 +159,26 @@ angular.module('app.controllers', [])
             thumb = page.thumbnail.source;
           }
 
-          $scope.list[title] = {
-            rank: rank,
-            title: title,
-            //snippet: snippets[i],
-            descr: descr,
-            img: thumb,
-            trans: []
-          } ;
-          //$scope.$apply();
-          $scope.getTranslations(title);
+          if($scope.textArea != ""){
+            $scope.list[title] = {
+              rank: rank,
+              title: title,
+              //snippet: snippets[i],
+              descr: descr,
+              img: thumb,
+              trans: []
+            } ;
+            //$scope.$apply();
+
+            $scope.getTranslations(title);
+          }
         }).
         error(function(data, status, headers, config) {
-           $scope.showError(status, data);
+          $scope.showError(status, data);
         });
 
       }
     });
-  }
-
-  $scope.getProperties = function(titles, snippets){
-    $scope.list = {};
-    var pending = titles.length;
-
-    function seq(i){
-      //console.log(i);
-      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages|links&format=json&pithumbsize=100&&pllimit=max&titles="+titles[i];
-      $http.jsonp(url).
-      success(function(res, status, headers, config) {
-        var page = first(res.query.pages)
-        // Get page description
-        var descr = "no description";
-        if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
-          descr = page.terms.description[0];
-        }
-        // Check if this is Wikipedia disambiguation page
-        var links = [];
-        if(descr.includes("disambiguation")){
-          $scope.disambiguate(titles[i], page.links, i);
-        } else {
-          // Get thumbnail
-          var thumb = "";
-          if(page.hasOwnProperty('thumbnail')){
-            thumb = page.thumbnail.source;
-          }
-
-          $scope.list[titles[i]] = {
-            rank: i,
-            title: titles[i],
-            //snippet: snippets[i],
-            descr: descr,
-            img: thumb,
-            trans: []
-          };
-          //$scope.$apply();
-          $scope.getTranslations(titles[i]);
-        }
-
-        pending--;
-        if(pending>0){
-          seq(i+1);
-        }
-      }).
-      error(function(data, status, headers, config) {
-         $scope.showError(status, data);
-      });
-
-    };
-    seq(0);
   }
 
   $scope.getTranslations = function(title) {
@@ -189,15 +192,13 @@ angular.module('app.controllers', [])
       }
 
       if(word != ""){
-        if($scope.textArea != ""){
-          //console.warn("***", title, $scope.list[title]);
+        if($scope.textArea != "" && $scope.list.hasOwnProperty(title)){
           $scope.list[title].trans.push(word);
           $scope.getSynonyms(title, word);
         }
       } else {
         // No match in the destination language
-        if($scope.textArea != ""){
-          //console.warn("***", title, $scope.list[title]);
+        if($scope.textArea != "" && $scope.list.hasOwnProperty(title)){
           //delete $scope.list[title];
           $scope.list[title].trans.push("No match");
           $('#loading').addClass("invisible");
@@ -206,7 +207,7 @@ angular.module('app.controllers', [])
       //$scope.$apply();
     }).
     error(function(data, status, headers, config) {
-       $scope.showError(status, data);
+      $scope.showError(status, data);
     });
 
   }
@@ -217,7 +218,7 @@ angular.module('app.controllers', [])
     $http.jsonp(url).
     success(function(res, status, headers, config) {
       res.query.backlinks.forEach(function(backlink){
-        if($scope.textArea != ""){
+        if($scope.textArea != "" && $scope.list.hasOwnProperty(title)){
           $scope.list[title].trans.push(backlink.title);
           $('#loading').addClass("invisible");
           //$scope.$apply();
@@ -225,7 +226,7 @@ angular.module('app.controllers', [])
       });
     }).
     error(function(data, status, headers, config) {
-       $scope.showError(status, data);
+      $scope.showError(status, data);
     });
 
   }
@@ -247,27 +248,27 @@ angular.module('app.controllers', [])
     }, onChangeTimeout);
   }
 
-    //popUp for showing details of list item
-    $scope.showAlert = function() {
-      var htmlTemplate = $('#ni-popup-template').html();
-      $ionicPopup.alert({
-        title: 'Farshid!',
-        template: htmlTemplate
-      }).then(function(res) {
-        console.log('Alert showed.');
-      });
-    };
+  //popUp for showing details of list item
+  $scope.showAlert = function() {
+    var htmlTemplate = $('#ni-popup-template').html();
+    $ionicPopup.alert({
+      title: 'Farshid!',
+      template: htmlTemplate
+    }).then(function(res) {
+      console.log('Alert showed.');
+    });
+  };
 
-    $scope.showError = function(title, message) {
-      $scope.list = [];
-      $("#loading").addClass("invisible");
-      $ionicPopup.alert({
-        title: title,
-        template: message
-      }).then(function(res) {
-        console.warn("App Error "+title+": ", message);
-      });
-    };
+  $scope.showError = function(title, message) {
+    $scope.list = [];
+    $("#loading").addClass("invisible");
+    $ionicPopup.alert({
+      title: 'Error ' + title,
+      template: message
+    }).then(function(res) {
+      console.warn("App Error "+title+": ", message);
+    });
+  };
 
 }) // end controller
 
@@ -292,14 +293,14 @@ var x = {};
 var z = {};
 var keys = [];
 for(var i=0; i<languages.length; i++){
-  x[languages[i].lang] = languages[i].langname;
-  z[languages[i].langname] = languages[i].lang;
-  keys.push(languages[i].langname);
+x[languages[i].lang] = languages[i].langname;
+z[languages[i].langname] = languages[i].lang;
+keys.push(languages[i].langname);
 }
 keys.sort();
 var y = {};
 for(var i=0; i<languages.length; i++){
-  y[z[keys[i]]] = x[z[keys[i]]];
+y[z[keys[i]]] = x[z[keys[i]]];
 }
 y['en'] = 'English';
 console.log(JSON.stringify(y));
