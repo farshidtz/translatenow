@@ -23,7 +23,7 @@ angular.module('app.controllers', [])
   };
 })
 
-.controller('nameItCtrl', function($scope,$ionicPopup, focus) {
+.controller('nameItCtrl', function($scope, $http, $ionicPopup, focus) {
 
   // Local vars
   $scope.list = {};
@@ -74,14 +74,15 @@ angular.module('app.controllers', [])
       return;
     console.log(text);
     $('#loading').removeClass("invisible");
-    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&redirects=resolve&limit=10&search="+text;
-    $.ajax({
-      url: url,
-      dataType: "jsonp",
-      success: function( result ) {
-        $scope.getProperties(result[1], result[2]);
-      }
+    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=opensearch&redirects=resolve&limit=10&search="+text;
+    $http.jsonp(url).
+    success(function(result, status, headers, config) {
+       $scope.getProperties(result[1], result[2]);
+    }).
+    error(function(data, status, headers, config) {
+       $scope.showError(status, data);
     });
+
   }
 
   $scope.disambiguate = function(ambiguousTitle, links, rank){
@@ -92,34 +93,36 @@ angular.module('app.controllers', [])
       var matched = re.test(title);
       if(matched){
         //console.warn(title);
-        $.ajax({
-          url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=pageterms|pageimages&format=json&pithumbsize=100&titles="+title,
-          dataType: "jsonp",
-          success: function(res) {
-            var page = first(res.query.pages)
-            // Get page description
-            var descr = "no description";
-            if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
-              descr = page.terms.description[0];
-            }
-            // Get thumbnail
-            var thumb = "";
-            if(page.hasOwnProperty('thumbnail')){
-              thumb = page.thumbnail.source;
-            }
-
-            $scope.list[title] = {
-              rank: rank,
-              title: title,
-              //snippet: snippets[i],
-              descr: descr,
-              img: thumb,
-              trans: []
-            } ;
-            $scope.$apply();
-            $scope.getTranslations(title);
+        var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages&format=json&pithumbsize=100&titles="+title;
+        $http.jsonp(url).
+        success(function(res, status, headers, config) {
+          var page = first(res.query.pages)
+          // Get page description
+          var descr = "no description";
+          if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
+            descr = page.terms.description[0];
           }
+          // Get thumbnail
+          var thumb = "";
+          if(page.hasOwnProperty('thumbnail')){
+            thumb = page.thumbnail.source;
+          }
+
+          $scope.list[title] = {
+            rank: rank,
+            title: title,
+            //snippet: snippets[i],
+            descr: descr,
+            img: thumb,
+            trans: []
+          } ;
+          //$scope.$apply();
+          $scope.getTranslations(title);
+        }).
+        error(function(data, status, headers, config) {
+           $scope.showError(status, data);
         });
+
       }
     });
   }
@@ -130,44 +133,45 @@ angular.module('app.controllers', [])
 
     function seq(i){
       //console.log(i);
-      $.ajax({
-        url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=pageterms|pageimages|links&format=json&pithumbsize=100&&pllimit=max&titles="+titles[i],
-        dataType: "jsonp",
-        success: function(res) {
-          var page = first(res.query.pages)
-          // Get page description
-          var descr = "no description";
-          if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
-            descr = page.terms.description[0];
-          }
-          // Check if this is Wikipedia disambiguation page
-          var links = [];
-          if(descr.includes("disambiguation")){
-            $scope.disambiguate(titles[i], page.links, i);
-          } else {
-            // Get thumbnail
-            var thumb = "";
-            if(page.hasOwnProperty('thumbnail')){
-              thumb = page.thumbnail.source;
-            }
-
-            $scope.list[titles[i]] = {
-              rank: i,
-              title: titles[i],
-              //snippet: snippets[i],
-              descr: descr,
-              img: thumb,
-              trans: []
-            };
-            $scope.$apply();
-            $scope.getTranslations(titles[i]);
-          }
-
-          pending--;
-          if(pending>0){
-            seq(i+1);
-          }
+      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages|links&format=json&pithumbsize=100&&pllimit=max&titles="+titles[i];
+      $http.jsonp(url).
+      success(function(res, status, headers, config) {
+        var page = first(res.query.pages)
+        // Get page description
+        var descr = "no description";
+        if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
+          descr = page.terms.description[0];
         }
+        // Check if this is Wikipedia disambiguation page
+        var links = [];
+        if(descr.includes("disambiguation")){
+          $scope.disambiguate(titles[i], page.links, i);
+        } else {
+          // Get thumbnail
+          var thumb = "";
+          if(page.hasOwnProperty('thumbnail')){
+            thumb = page.thumbnail.source;
+          }
+
+          $scope.list[titles[i]] = {
+            rank: i,
+            title: titles[i],
+            //snippet: snippets[i],
+            descr: descr,
+            img: thumb,
+            trans: []
+          };
+          //$scope.$apply();
+          $scope.getTranslations(titles[i]);
+        }
+
+        pending--;
+        if(pending>0){
+          seq(i+1);
+        }
+      }).
+      error(function(data, status, headers, config) {
+         $scope.showError(status, data);
       });
 
     };
@@ -175,51 +179,55 @@ angular.module('app.controllers', [])
   }
 
   $scope.getTranslations = function(title) {
-    $.ajax({
-      url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=langlinks&lllang="+localStorage['lang-to']+"&format=json&titles="+title,
-      dataType: "jsonp",
-      success: function(res) {
-        var page = first(res.query.pages);
-        var word = "";
-        if(page.hasOwnProperty('langlinks') && page.langlinks.length>0 && page.langlinks[0].hasOwnProperty('*')){
-          word = page.langlinks[0]['*'];
-        }
-
-        if(word != ""){
-          if($scope.textArea != ""){
-            //console.warn("***", title, $scope.list[title]);
-            $scope.list[title].trans.push(word);
-            $scope.getSynonyms(title, word);
-          }
-        } else {
-          // No match in the destination language
-          if($scope.textArea != ""){
-            //console.warn("***", title, $scope.list[title]);
-            //delete $scope.list[title];
-            $scope.list[title].trans.push("No match");
-            $('#loading').addClass("invisible");
-          }
-        }
-        $scope.$apply();
+    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=langlinks&lllang="+localStorage['lang-to']+"&format=json&titles="+title;
+    $http.jsonp(url).
+    success(function(res, status, headers, config) {
+      var page = first(res.query.pages);
+      var word = "";
+      if(page.hasOwnProperty('langlinks') && page.langlinks.length>0 && page.langlinks[0].hasOwnProperty('*')){
+        word = page.langlinks[0]['*'];
       }
+
+      if(word != ""){
+        if($scope.textArea != ""){
+          //console.warn("***", title, $scope.list[title]);
+          $scope.list[title].trans.push(word);
+          $scope.getSynonyms(title, word);
+        }
+      } else {
+        // No match in the destination language
+        if($scope.textArea != ""){
+          //console.warn("***", title, $scope.list[title]);
+          //delete $scope.list[title];
+          $scope.list[title].trans.push("No match");
+          $('#loading').addClass("invisible");
+        }
+      }
+      //$scope.$apply();
+    }).
+    error(function(data, status, headers, config) {
+       $scope.showError(status, data);
     });
+
   }
 
 
   $scope.getSynonyms = function(title, word){
-    $.ajax({
-      url: "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+word,
-      dataType: "jsonp",
-      success: function(res) {
-        res.query.backlinks.forEach(function(backlink){
-          if($scope.textArea != ""){
-            $scope.list[title].trans.push(backlink.title);
-            $('#loading').addClass("invisible");
-            $scope.$apply();
-          }
-        });
-      }
+    var url = "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+word;
+    $http.jsonp(url).
+    success(function(res, status, headers, config) {
+      res.query.backlinks.forEach(function(backlink){
+        if($scope.textArea != ""){
+          $scope.list[title].trans.push(backlink.title);
+          $('#loading').addClass("invisible");
+          //$scope.$apply();
+        }
+      });
+    }).
+    error(function(data, status, headers, config) {
+       $scope.showError(status, data);
     });
+
   }
 
 
@@ -242,12 +250,22 @@ angular.module('app.controllers', [])
     //popUp for showing details of list item
     $scope.showAlert = function() {
       var htmlTemplate = $('#ni-popup-template').html();
-      var alertPopup = $ionicPopup.alert({
+      $ionicPopup.alert({
         title: 'Farshid!',
         template: htmlTemplate
+      }).then(function(res) {
+        console.log('Alert showed.');
       });
-      alertPopup.then(function(res) {
-        console.log('Thank you for not eating my delicious ice cream cone');
+    };
+
+    $scope.showError = function(title, message) {
+      $scope.list = [];
+      $("#loading").addClass("invisible");
+      $ionicPopup.alert({
+        title: title,
+        template: message
+      }).then(function(res) {
+        console.warn("App Error "+title+": ", message);
       });
     };
 
