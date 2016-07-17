@@ -27,11 +27,11 @@
         </div>
           <ion-list id="main-search-results">
             <ion-scroll direction="y" height="200px" >
-            <ion-item  class="item  item-thumbnail-left name-it-list" ng-repeat="(key, item) in list| orderBy: item.rank">
+            <ion-item  class="item  item-thumbnail-left name-it-list" ng-repeat="item in list| listSortFilter">
               <img align="middle" ng-src="{{item.img}}">
               <h2>{{item.title}}</h2>
               <!--<p>{{item.snippet}}</p>-->
-              <p>{{item.descr}}</p>
+              <p>{{item.rank}}. {{item.descr}}</p>
               <p><span ng-repeat="tran in item.trans">{{tran}}</span></p>
             </ion-item>
             </ion-scroll>

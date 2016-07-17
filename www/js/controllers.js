@@ -7,6 +7,22 @@ let onChangeTimeout = 300; // ms
 
 angular.module('app.controllers', [])
 
+.filter('listSortFilter', function () {
+  return function (items) {
+    var sortable = [];
+    for (let key in items){
+      sortable.push(items[key]);
+    }
+
+    sortable.sort(
+      function(a, b) {
+        return a.rank - b.rank;
+      }
+    )
+    return sortable;
+  };
+})
+
 .controller('nameItCtrl', function($scope, focus) {
 
   // Local vars
@@ -113,7 +129,7 @@ angular.module('app.controllers', [])
     let pending = titles.length;
 
     function seq(i){
-      console.log(i);
+      //console.log(i);
       $.ajax({
         url: "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=pageterms|pageimages|links&format=json&pithumbsize=100&&pllimit=max&titles="+titles[i],
         dataType: "jsonp",
@@ -171,14 +187,14 @@ angular.module('app.controllers', [])
 
         if(word != ""){
           if($scope.textArea != ""){
-            console.warn("***", title, $scope.list[title]);
+            //console.warn("***", title, $scope.list[title]);
             $scope.list[title].trans.push(word);
             $scope.getSynonyms(title, word);
           }
         } else {
           // No match in the destination language
           if($scope.textArea != ""){
-            console.warn("***", title, $scope.list[title]);
+            //console.warn("***", title, $scope.list[title]);
             //delete $scope.list[title];
             $scope.list[title].trans.push("No match");
             $('#loading').addClass("invisible");
