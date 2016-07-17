@@ -20,19 +20,25 @@
         <div class="col">
       <form id="nameIt-form6" class="list">
             <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
-                <input class="fullscreen-text-area" focus-on="input" ng-model="textArea" ng-change="inputChanged()" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search1 anything...'" placeholder="Search anything..."></input>
+                <input class="fullscreen-text-area" focus-on="input" ng-model="textArea" ng-change="inputChanged()" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search anything...'" placeholder="Search anything..."></input>
             </label>
         <div class="horizontal-center">
           <ion-spinner id="loading" icon="dots" class="horizontal-center spinner-energized invisible"></ion-spinner>
         </div>
-          <ion-list id="main-search-results">
+          <ion-list overflow-scroll="false" id="main-search-results">
             <ion-scroll direction="y" height="200px" >
-            <ion-item ng-click="showAlert()"  class="item  item-thumbnail-left name-it-list" ng-repeat="item in list| listSortFilter">
-              <img align="middle" ng-src="{{item.img}}">
+            <ion-item ng-click="showAlert()"  class="item item-thumbnail-left name-it-list" ng-repeat="item in list| listSortFilter">
+              <img ng-src="{{item.img}}">
+              <div class="ni-item-header">
+                <p style="float: right">en</p>
               <h2>{{item.title}}</h2>
               <!--<p>{{item.snippet}}</p>-->
-              <p>{{item.rank}}. {{item.descr}}</p>
-              <p><span ng-repeat="tran in item.trans">{{tran}}</span></p>
+              <p>{{item.descr}}</p>
+              </div>
+              <div class="ni-item-translations">
+                <p style="float: right">de</p>
+                <p><span ng-repeat="tran in item.trans">{{tran}}</span></p>
+              </div>
             </ion-item>
             </ion-scroll>
           </ion-list>
