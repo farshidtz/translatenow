@@ -23,7 +23,7 @@ angular.module('app.controllers', [])
   };
 })
 
-.controller('nameItCtrl', function($scope, focus) {
+.controller('nameItCtrl', function($scope,$ionicPopup, focus) {
 
   // Local vars
   $scope.list = {};
@@ -238,6 +238,18 @@ angular.module('app.controllers', [])
       $scope.updateList($scope.textArea);
     }, onChangeTimeout);
   }
+
+    //popUp for showing details of list item
+    $scope.showAlert = function() {
+      var htmlTemplate = $('#ni-popup-template').html();
+      var alertPopup = $ionicPopup.alert({
+        title: 'Farshid!',
+        template: htmlTemplate
+      });
+      alertPopup.then(function(res) {
+        console.log('Thank you for not eating my delicious ice cream cone');
+      });
+    };
 
 }) // end controller
 
