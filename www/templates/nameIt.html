@@ -1,6 +1,6 @@
 
 <ion-view title="Name It " hide-nav-bar="true" id="page1" class=" ">
-    <ion-content ng-controller="nameItCtrl" scroll="false" padding="false" style="background: url(img/EFtkVRhTImbNaXXaYhbx_blue_bokeh.jpg) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
+    <ion-content ng-controller="nameItCtrl" scroll="false" padding="false" style="background: url(img/2.jpg) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
       <!--header row for translation language selection-->
       <div id="translation-pannel" class="row">
         <div class="col col-40 horizontal-center">
@@ -27,9 +27,9 @@
         </div>
           <ion-list overflow-scroll="false" id="main-search-results">
             <ion-scroll direction="y" height="200px" >
-            <ion-item ng-click="showAlert()"  class="item item-thumbnail-left name-it-list" ng-repeat="item in list| listSortFilter">
+            <ion-item  class="item item-thumbnail-left name-it-list" ng-repeat="item in list| listSortFilter">
               <img ng-src="{{item.img}}">
-              <div class="ni-item-header">
+              <div ng-click="showAlert()" class="ni-item-header">
                 <p style="float: right">en</p>
               <h2>{{item.title}}</h2>
               <!--<p>{{item.snippet}}</p>-->
