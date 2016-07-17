@@ -29,7 +29,7 @@
             <ion-scroll overflow-scroll="false" direction="y" height="200px" >
             <ion-item class="item item-thumbnail-left name-it-list" ng-repeat="item in list| listSortFilter">
               <img ng-src="{{item.img}}">
-              <div ng-click="showAlert()" class="ni-item-header">
+              <div ng-click="showAlert(item.title)" class="ni-item-header">
                 <p style="float: right">en</p>
               <h2>{{item.title}}</h2>
               <!--<p>{{item.snippet}}</p>-->
@@ -55,8 +55,8 @@
 
       <div id="ni-popup-template" style="display:none"  >
         <div class="item-avatar">
-        <img src="https://pbs.twimg.com/profile_images/3356080200/ede0fa338ce6196bb5478aef88f2a373_400x400.jpeg"/>
-        <p>Roughly translates to a fucker.</p>
+        <img ng-src="{{article.img}}"/>
+        <p>{{article.summary}}</p>
         </div>
       </div>
 

@@ -249,14 +249,33 @@ angular.module('app.controllers', [])
   }
 
   //popUp for showing details of list item
-  $scope.showAlert = function() {
-    var htmlTemplate = $('#ni-popup-template').html();
-    $ionicPopup.alert({
-      title: 'Farshid!',
-      template: htmlTemplate
-    }).then(function(res) {
-      console.log('Alert showed.');
+  $scope.showAlert = function(title) {
+
+    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&format=json&action=query&prop=extracts&exintro=&explaintext=&titles="+title;
+    url = encodeURI(url);
+    $http.jsonp(url).
+    success(function(res, status, headers, config) {
+      var page = first(res.query.pages);
+      $scope.article = {
+        img: $scope.list[title].img,
+        summary: page.extract
+      };
+      $scope.$apply();
+      var htmlTemplate = $('#ni-popup-template').html();
+      $ionicPopup.alert({
+        title: title,
+        template: htmlTemplate
+      }).then(function(res) {
+
+      });
+
+    }).
+    error(function(data, status, headers, config) {
+      $scope.showError(status, data);
     });
+
+
+
   };
 
   $scope.showError = function(title, message) {
