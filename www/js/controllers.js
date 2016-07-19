@@ -71,9 +71,7 @@ angular.module('app.controllers', [])
     var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=opensearch&redirects=resolve&limit=10&search="+text;
     $http.jsonp(url, {timeout: canceler.promise}).
     success(function(result, status, headers, config) {
-      if($scope.textArea != ""){
-        $scope.getProperties(result[1], result[2]);
-      }
+      $scope.getProperties(result[1], result[2]);
     }).
     error(function(data, status, headers, config) {
       $scope.showError(status, data);
@@ -109,19 +107,16 @@ angular.module('app.controllers', [])
             thumb = page.thumbnail.source;
           }
 
-          if($scope.textArea != ""){
-            $scope.list[titles[i]] = {
-              rank: i,
-              title: titles[i],
-              //snippet: snippets[i],
-              descr: descr,
-              img: thumb,
-              trans: []
-            };
-            //$scope.$apply();
+          $scope.list[titles[i]] = {
+            rank: i,
+            title: titles[i],
+            //snippet: snippets[i],
+            descr: descr,
+            img: thumb,
+            trans: []
+          };
 
-            $scope.getTranslations(titles[i]);
-          }
+          $scope.getTranslations(titles[i]);
         }
 
         pending--;
@@ -160,19 +155,16 @@ angular.module('app.controllers', [])
             thumb = page.thumbnail.source;
           }
 
-          if($scope.textArea != ""){
-            $scope.list[title] = {
-              rank: rank,
-              title: title,
-              //snippet: snippets[i],
-              descr: descr,
-              img: thumb,
-              trans: []
-            } ;
-            //$scope.$apply();
+          $scope.list[title] = {
+            rank: rank,
+            title: title,
+            //snippet: snippets[i],
+            descr: descr,
+            img: thumb,
+            trans: []
+          } ;
 
-            $scope.getTranslations(title);
-          }
+          $scope.getTranslations(title);
         }).
         error(function(data, status, headers, config) {
           $scope.showError(status, data);
@@ -199,13 +191,12 @@ angular.module('app.controllers', [])
         }
       } else {
         // No match in the destination language
-        if($scope.textArea != "" && $scope.list.hasOwnProperty(title)){
+        if($scope.list.hasOwnProperty(title)){
           //delete $scope.list[title];
           $scope.list[title].trans.push("No match");
           $('#loading').addClass("invisible");
         }
       }
-      //$scope.$apply();
     }).
     error(function(data, status, headers, config) {
       $scope.showError(status, data);
@@ -219,10 +210,9 @@ angular.module('app.controllers', [])
     $http.jsonp(url, {timeout: canceler.promise}).
     success(function(res, status, headers, config) {
       res.query.backlinks.forEach(function(backlink){
-        if($scope.textArea != "" && $scope.list.hasOwnProperty(title)){
+        if($scope.list.hasOwnProperty(title)){
           $scope.list[title].trans.push(backlink.title);
           $('#loading').addClass("invisible");
-          //$scope.$apply();
         }
       });
     }).
@@ -234,17 +224,18 @@ angular.module('app.controllers', [])
 
 
   $scope.inputChanged = function() {
+    clearTimeout($scope.inputChangedResponse);
     canceler.resolve();
     canceler = $q.defer();
+    $('#loading').addClass("invisible");
+
     if($scope.textArea == ""){
       $scope.list = [];
-      $("#loading").addClass("invisible");
-    } else {
-      $('#loading').removeClass("invisible");
+      return;
     }
 
-    clearTimeout($scope.inputChangedResponse);
     $scope.inputChangedResponse = setTimeout(function(){
+      $('#loading').removeClass("invisible");
       $scope.updateList($scope.textArea);
     }, onChangeTimeout);
   }
@@ -274,8 +265,6 @@ angular.module('app.controllers', [])
     error(function(data, status, headers, config) {
       $scope.showError(status, data);
     });
-
-
 
   };
 
