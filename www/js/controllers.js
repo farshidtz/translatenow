@@ -16,11 +16,12 @@ angular.module('app.controllers', [])
   };
 })
 
-.controller('nameItCtrl', function($scope, $http, $ionicPopup, focus) {
+.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, focus) {
 
   // Local vars
   $scope.list = {};
   $scope.languages = LANGUAGES;
+  var canceler = $q.defer();
 
   // Initialize the language selection
   $scope.initLangSelection = function(){
@@ -68,7 +69,7 @@ angular.module('app.controllers', [])
     console.log(text);
     $('#loading').removeClass("invisible");
     var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=opensearch&redirects=resolve&limit=10&search="+text;
-    $http.jsonp(url).
+    $http.jsonp(url, {timeout: canceler.promise}).
     success(function(result, status, headers, config) {
       if($scope.textArea != ""){
         $scope.getProperties(result[1], result[2]);
@@ -87,7 +88,7 @@ angular.module('app.controllers', [])
     function seq(i){
       //console.log(i);
       var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages|links&format=json&pithumbsize=100&&pllimit=max&titles="+titles[i];
-      $http.jsonp(url).
+      $http.jsonp(url, {timeout: canceler.promise}).
       success(function(res, status, headers, config) {
         var page = first(res.query.pages)
         // Get page description
@@ -145,7 +146,7 @@ angular.module('app.controllers', [])
       if(matched){
         //console.warn(title);
         var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages&format=json&pithumbsize=100&titles="+title;
-        $http.jsonp(url).
+        $http.jsonp(url, {timeout: canceler.promise}).
         success(function(res, status, headers, config) {
           var page = first(res.query.pages)
           // Get page description
@@ -183,7 +184,7 @@ angular.module('app.controllers', [])
 
   $scope.getTranslations = function(title) {
     var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=langlinks&lllang="+localStorage['lang-to']+"&format=json&titles="+title;
-    $http.jsonp(url).
+    $http.jsonp(url, {timeout: canceler.promise}).
     success(function(res, status, headers, config) {
       var page = first(res.query.pages);
       var word = "";
@@ -215,7 +216,7 @@ angular.module('app.controllers', [])
 
   $scope.getSynonyms = function(title, word){
     var url = "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+word;
-    $http.jsonp(url).
+    $http.jsonp(url, {timeout: canceler.promise}).
     success(function(res, status, headers, config) {
       res.query.backlinks.forEach(function(backlink){
         if($scope.textArea != "" && $scope.list.hasOwnProperty(title)){
@@ -233,9 +234,9 @@ angular.module('app.controllers', [])
 
 
   $scope.inputChanged = function() {
-
+    canceler.resolve();
+    canceler = $q.defer();
     if($scope.textArea == ""){
-      //$scope.spinner = "hidden";
       $scope.list = [];
       $("#loading").addClass("invisible");
     } else {
@@ -279,6 +280,10 @@ angular.module('app.controllers', [])
   };
 
   $scope.showError = function(title, message) {
+    if(title==0){
+      console.log("App Error "+title+": ", message);
+      return;
+    }
     $scope.list = [];
     $("#loading").addClass("invisible");
     $ionicPopup.alert({
