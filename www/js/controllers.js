@@ -19,7 +19,7 @@ angular.module('app.controllers', [])
   };
 })
 
-.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $templateRequest, $sce,$interpolate, $compile, focus) {
+.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, focus) {
 
   // Local vars
   $scope.list = {};
@@ -72,7 +72,7 @@ angular.module('app.controllers', [])
     console.log(text);
     $('#loading').removeClass("invisible");
     var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=opensearch&redirects=resolve&limit=10&search="+text;
-    $http.jsonp(url, {timeout: canceler.promise}).
+    $http.jsonp(url, {timeout: canceler.promise, cache: true}).
     success(function(result, status, headers, config) {
       $scope.getProperties(result[1], result[2]);
     }).
@@ -89,7 +89,7 @@ angular.module('app.controllers', [])
     function seq(i){
       //console.log(i);
       var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages|links&format=json&pithumbsize="+ListThumbSize+"&pllimit=max&titles="+titles[i];
-      $http.jsonp(url, {timeout: canceler.promise}).
+      $http.jsonp(url, {timeout: canceler.promise, cache: true}).
       success(function(res, status, headers, config) {
         var page = first(res.query.pages)
         // Get page description
@@ -144,7 +144,7 @@ angular.module('app.controllers', [])
       if(matched){
         //console.warn(title);
         var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&redirects&prop=pageterms|pageimages&format=json&pithumbsize="+ListThumbSize+"&titles="+title;
-        $http.jsonp(url, {timeout: canceler.promise}).
+        $http.jsonp(url, {timeout: canceler.promise, cache: true}).
         success(function(res, status, headers, config) {
           var page = first(res.query.pages)
           // Get page description
@@ -179,7 +179,7 @@ angular.module('app.controllers', [])
 
   $scope.getTranslations = function(title) {
     var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=langlinks&lllang="+localStorage['lang-to']+"&format=json&titles="+title;
-    $http.jsonp(url, {timeout: canceler.promise}).
+    $http.jsonp(url, {timeout: canceler.promise, cache: true}).
     success(function(res, status, headers, config) {
       var page = first(res.query.pages);
       var word = "";
@@ -210,7 +210,7 @@ angular.module('app.controllers', [])
 
   $scope.getSynonyms = function(title, word){
     var url = "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+word;
-    $http.jsonp(url, {timeout: canceler.promise}).
+    $http.jsonp(url, {timeout: canceler.promise, cache: true}).
     success(function(res, status, headers, config) {
       res.query.backlinks.forEach(function(backlink){
         if($scope.list.hasOwnProperty(title)){
@@ -254,7 +254,7 @@ angular.module('app.controllers', [])
 
     var url = "https://"+localStorage['lang-'+lang]+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&format=json&action=query&redirects&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize="+PopupThumbSize+"&titles="+title;
     url = encodeURI(url);
-    $http.jsonp(url).
+    $http.jsonp(url, {timeout: canceler.promise, cache: true}).
     success(function(res, status, headers, config) {
       var page = first(res.query.pages);
       // Get thumbnail
@@ -281,7 +281,7 @@ angular.module('app.controllers', [])
             type: 'button-clear button-dark',
             onTap: function(e) {
               var url = "https://"+localStorage['lang-'+lang]+".wikipedia.org/wiki/"+title;
-              window.open(url,"_blank");
+              window.open(url, '_system');
             }
           }
         ]
@@ -296,7 +296,7 @@ angular.module('app.controllers', [])
 
   $scope.showError = function(title, message) {
     if(title==0){
-      console.log("App Error "+title+": ", message);
+      console.log("http "+title+": ", message);
       return;
     }
     $scope.list = [];
