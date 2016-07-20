@@ -28,14 +28,14 @@
           <ion-list id="main-search-results">
             <ion-scroll overflow-scroll="false" direction="y" height="200px" >
             <ion-item class="item item-thumbnail-left name-it-list" ng-repeat="item in list| listSortFilter">
-              <img ng-src="{{item.img}}">
-              <div ng-click="showAlert(item.title)" class="ni-item-header">
+              <img ng-click="showPopup(item.title, 'from')" ng-src="{{item.img}}">
+              <div ng-click="showPopup(item.title, 'from')" class="ni-item-header">
                 <p style="float: right">en</p>
               <h2>{{item.title}}</h2>
               <!--<p>{{item.snippet}}</p>-->
               <p>{{item.descr}}</p>
               </div>
-              <div class="ni-item-translations">
+              <div ng-click="showPopup(item.title, 'to')" class="ni-item-translations">
                 <p style="float: right">de</p>
                 <p><span ng-repeat="tran in item.trans">{{tran}}</span></p>
               </div>
@@ -53,14 +53,16 @@
           </div>
         </div>
 
-      <div id="ni-popup-template" style="display:none"  >
-        <div class="item-avatar">
-        <img ng-src="{{article.img}}"/>
-        <p>{{article.summary}}</p>
-        </div>
-      </div>
-
     </ion-content>
   <!--last row for button-->
 
 </ion-view>
+
+<script id="popup-template.html" type="text/ng-template">
+  <div id="ni-popup-template"  >
+    <div class="item-avatar">
+    <img ng-src="{{article.img}}"/>
+    <p>{{article.summary}}</p>
+    </div>
+  </div>
+</script>

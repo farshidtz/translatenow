@@ -2,7 +2,10 @@
 
 
 // Global
-var onChangeTimeout = 300; // ms
+var OnChangeTimeout = 300; // ms
+var ListThumbSize = 100;
+var PopupThumbSize = 100;
+var DefaultThumb = "";
 
 
 angular.module('app.controllers', [])
@@ -16,7 +19,7 @@ angular.module('app.controllers', [])
   };
 })
 
-.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, focus) {
+.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $templateRequest, $sce,$interpolate, $compile, focus) {
 
   // Local vars
   $scope.list = {};
@@ -85,7 +88,7 @@ angular.module('app.controllers', [])
 
     function seq(i){
       //console.log(i);
-      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages|links&format=json&pithumbsize=100&&pllimit=max&titles="+titles[i];
+      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages|links&format=json&pithumbsize="+ListThumbSize+"&pllimit=max&titles="+titles[i];
       $http.jsonp(url, {timeout: canceler.promise}).
       success(function(res, status, headers, config) {
         var page = first(res.query.pages)
@@ -102,7 +105,7 @@ angular.module('app.controllers', [])
           }
         } else {
           // Get thumbnail
-          var thumb = "";
+          var thumb = DefaultThumb;
           if(page.hasOwnProperty('thumbnail')){
             thumb = page.thumbnail.source;
           }
@@ -140,7 +143,7 @@ angular.module('app.controllers', [])
       var matched = re.test(title);
       if(matched){
         //console.warn(title);
-        var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages&format=json&pithumbsize=100&titles="+title;
+        var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&redirects&prop=pageterms|pageimages&format=json&pithumbsize="+ListThumbSize+"&titles="+title;
         $http.jsonp(url, {timeout: canceler.promise}).
         success(function(res, status, headers, config) {
           var page = first(res.query.pages)
@@ -150,7 +153,7 @@ angular.module('app.controllers', [])
             descr = page.terms.description[0];
           }
           // Get thumbnail
-          var thumb = "";
+          var thumb = DefaultThumb;
           if(page.hasOwnProperty('thumbnail')){
             thumb = page.thumbnail.source;
           }
@@ -237,28 +240,51 @@ angular.module('app.controllers', [])
     $scope.inputChangedResponse = setTimeout(function(){
       $('#loading').removeClass("invisible");
       $scope.updateList($scope.textArea);
-    }, onChangeTimeout);
+    }, OnChangeTimeout);
   }
 
   //popUp for showing details of list item
-  $scope.showAlert = function(title) {
+  $scope.showPopup = function(title, lang) {
 
-    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&format=json&action=query&prop=extracts&exintro=&explaintext=&titles="+title;
+    if(lang=='to' && $scope.list[title].trans.length>0 && $scope.list[title].trans[0] != 'No match'){
+      title = $scope.list[title].trans[0];
+    } else if (lang=='to') {
+      return;
+    }
+
+    var url = "https://"+localStorage['lang-'+lang]+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&format=json&action=query&redirects&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize="+PopupThumbSize+"&titles="+title;
     url = encodeURI(url);
     $http.jsonp(url).
     success(function(res, status, headers, config) {
       var page = first(res.query.pages);
+      // Get thumbnail
+      var thumb = "";
+      if(page.hasOwnProperty('thumbnail')){
+        thumb = page.thumbnail.source;
+      }
       $scope.article = {
-        img: $scope.list[title].img,
+        img: thumb,
         summary: page.extract
       };
-      $scope.$apply();
-      var htmlTemplate = $('#ni-popup-template').html();
+
       $ionicPopup.alert({
         title: title,
-        template: htmlTemplate
-      }).then(function(res) {
-
+        templateUrl: 'popup-template.html',
+        scope: $scope,
+        buttons: [
+          {
+            text: 'Close',
+            type: 'button-clear button-positive',
+          },
+          {
+            text: 'Goto Wikipedia',
+            type: 'button-clear button-dark',
+            onTap: function(e) {
+              var url = "https://"+localStorage['lang-'+lang]+".wikipedia.org/wiki/"+title;
+              window.open(url,"_blank");
+            }
+          }
+        ]
       });
 
     }).
