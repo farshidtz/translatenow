@@ -9893,5 +9893,15 @@ a.button {
   background: rgba(0, 0, 0, 0.1);
   padding: 0pt 0pt 0pt 0pt; }
 
-body.keyboard-open .has-footer {
-  bottom: 0; }
+#ni-popup-template {
+  width: 90%;
+  display: block;
+  margin: 0 auto; }
+
+#ni-popup-template img {
+  width: 100%; }
+
+#ni-popup-template p {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto; }

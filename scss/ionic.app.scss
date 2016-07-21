@@ -211,6 +211,18 @@ font-size: 11pt!important;
 //  bottom: 0;
 //}
 
+#ni-popup-template{
+  width:90%;
+  display:block;
+  margin:0 auto;
+}
+
 #ni-popup-template img{
-    border-radius: 50px;
+    width:100%;
+}
+
+#ni-popup-template p{
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }

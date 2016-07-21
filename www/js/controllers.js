@@ -4,7 +4,7 @@
 // Global
 var OnChangeTimeout = 300; // ms
 var ListThumbSize = 100;
-var PopupThumbSize = 100;
+var PopupThumbSize = 400;
 var DefaultThumb = "";
 
 
