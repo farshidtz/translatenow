@@ -136,6 +136,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   border-radius: 100px;
 }
 
+.bulg-button{
+  border-radius: 50px 50px 0px 50px;
+}
+
 .horizontal-center{
   margin: 0 auto!important;
   text-align: center;
@@ -161,6 +165,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 #language-from{
   direction: rtl!important;
 }
+
 #language-swap-btn{
   width: 100%;
   margin:0 auto;
@@ -170,11 +175,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   background: transparent;
   color: white;
 }
-
+//keyboard button
 #nameIt-button2{
+  margin-bottom:0px;
+  position: absolute;
+  right:0;
+  bottom:1px;
   width: 55pt;
   height: 55pt;
-  margin:0 auto!important;
   opacity: 0.5;
   border:1px solid rgba(255,255,255,0.5);
   background: rgba(0,0,0,0.7);
@@ -186,7 +194,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 #main-search-results ion-scroll{
-  height:70vh;
+  height: 80vh;
 }
 
 #nameIt-form6 ion-spinner{
@@ -197,4 +205,12 @@ font-size: 11pt!important;
   margin-bottom: 5pt;
   background: rgba(0,0,0,0.1);
   padding: 0pt 0pt 0pt 0pt;
+}
+//
+//body.keyboard-open .has-footer{
+//  bottom: 0;
+//}
+
+#ni-popup-template img{
+    border-radius: 50px;
 }
