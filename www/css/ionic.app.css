@@ -9893,8 +9893,11 @@ a.button {
   background: rgba(0, 0, 0, 0.1);
   padding: 0pt 0pt 0pt 0pt; }
 
+.ni-details-alert .popup-body {
+  padding: 0px !important; }
+
 .ni-details-alert .popup {
-  width: 100%;
+  width: 80%;
   height: 100%; }
 
 .ni-details-alert .popup-head {
@@ -9944,6 +9947,7 @@ a.button {
   max-height: 400px; }
 
 .ni-details-alert p {
+  padding: 10px;
   position: relative;
   z-index: 300 !important;
   text-align: justify;

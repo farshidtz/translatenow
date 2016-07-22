@@ -212,10 +212,13 @@ font-size: 11pt!important;
 //}
 
 .ni-details-alert{
-}
 
+}
+.ni-details-alert .popup-body{
+  padding:0px!important;
+}
 .ni-details-alert .popup{
-  width: 100%;
+  width: 80%;
   height: 100%;
 }
 .ni-details-alert .popup-head{
@@ -256,6 +259,7 @@ font-size: 11pt!important;
   max-height:400px;
 }
 .ni-details-alert p{
+  padding:10px;
   position: relative;
   z-index: 300!important;
   text-align: justify;
