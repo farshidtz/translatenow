@@ -267,12 +267,13 @@ angular.module('app.controllers', [])
         thumb = page.thumbnail.source;
       }
       $scope.article = {
+        title: title,
         img: thumb,
         summary: page.extract
       };
 
       $ionicPopup.alert({
-        title: title,
+        //title: title,
         cssClass:'ni-details-alert',
         templateUrl: 'popup-template.html',
         scope: $scope,

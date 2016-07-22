@@ -222,15 +222,22 @@ font-size: 11pt!important;
   height: 100%;
 }
 .ni-details-alert .popup-head{
-  position: absolute;
-  z-index: 10;
-  width: 100%;
-  border: none;
+  display: none;
+  // position: absolute;
+  // z-index: 10;
+  // width: 100%;
+  // border: none;
 }
-.ni-details-alert .popup-head h3{
-  color:white;
+// .ni-details-alert .popup-head h3{
+//   color:white;
+//   font-size: 2em;
+//   text-align: center;
+// }
+.ni-details-alert h3{
+  color:red;
   font-size: 2em;
   text-align: center;
+  vertical-align: bottom;
 }
 .ni-details-alert .ni-alert-img-wrapper{
   position:relative;
