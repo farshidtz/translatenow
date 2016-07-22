@@ -269,6 +269,7 @@ angular.module('app.controllers', [])
 
       $ionicPopup.alert({
         title: title,
+        cssClass:'ni-details-alert',
         templateUrl: 'popup-template.html',
         scope: $scope,
         buttons: [
