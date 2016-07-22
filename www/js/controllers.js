@@ -19,7 +19,7 @@ angular.module('app.controllers', [])
   };
 })
 
-.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, focus) {
+.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScrollDelegate, focus) {
 
   // Local vars
   $scope.list = {};
@@ -42,12 +42,14 @@ angular.module('app.controllers', [])
     localStorage['lang-from'] = code;
     $scope.textArea = "";
     $scope.list = {};
+    $ionicScrollDelegate.scrollTop();
     focus('input');
   }
 
   $scope.langToChanged = function(code){
     console.log(code);
     localStorage['lang-to'] = code;
+    $ionicScrollDelegate.scrollTop();
     $scope.updateList($scope.textArea);
   }
 
@@ -233,12 +235,14 @@ angular.module('app.controllers', [])
     $('#loading').addClass("invisible");
 
     if($scope.textArea == ""){
-      $scope.list = [];
+      $ionicScrollDelegate.scrollTop();
+      $scope.list = {};
       return;
     }
 
     $scope.inputChangedResponse = setTimeout(function(){
       $('#loading').removeClass("invisible");
+      $ionicScrollDelegate.scrollTop();
       $scope.updateList($scope.textArea);
     }, OnChangeTimeout);
   }
