@@ -92,7 +92,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   margin-top: 10px;
 }
 
-.name-it-list .ni-item-translations span{
+.name-it-list .ni-item-translations span,#bing{
   color:white;
   opacity: 0.9;
   display: block;
@@ -103,8 +103,18 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 //  background: rgba(255,255,255,0.0);
   font-size: 1.2em;
   word-wrap: break-word!important;
-  white-space: normal
+  white-space: normal;
 }
+
+.name-it-list .ni-item-translations #bing {
+    color: #AAAAAA;
+    font-style: italic;
+}
+//.name-it-list  .ni-item-translations #bing:before {
+//     content: "\f3e8   ";
+//     font-size: 1em;
+//     font-family: "Ionicons";
+// }
 
 .name-it-list img{
   background: white;

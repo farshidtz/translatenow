@@ -6,6 +6,8 @@ var OnChangeTimeout = 300; // ms
 var ListThumbSize = 100;
 var PopupThumbSize = 400;
 var DefaultThumb = "";
+var BingClientSec = "q3w6XS7A6qk9asSBePAJr6ZhkrG7YRFZrt4zGad9zPWQ7TgtrWVeSM9wpr6WF4ty";
+var BingClientID = "nameit-translator";
 
 
 angular.module('app.controllers', [])
@@ -166,7 +168,8 @@ angular.module('app.controllers', [])
             //snippet: snippets[i],
             descr: descr,
             img: thumb,
-            trans: []
+            trans: [],
+            bing: "",
           } ;
 
           $scope.getTranslations(title);
@@ -190,17 +193,18 @@ angular.module('app.controllers', [])
       }
 
       if(word != ""){
-        if($scope.textArea != "" && $scope.list.hasOwnProperty(title)){
+        if($scope.list.hasOwnProperty(title)){
           $scope.list[title].trans.push(word);
           $scope.getSynonyms(title, word);
         }
       } else {
         // No match in the destination language
-        if($scope.list.hasOwnProperty(title)){
-          //delete $scope.list[title];
-          $scope.list[title].trans.push("No match");
-          $('#loading').addClass("invisible");
-        }
+        // if($scope.list.hasOwnProperty(title)){
+        //   //delete $scope.list[title];
+        //   $scope.list[title].trans.push("No match");
+        //   $('#loading').addClass("invisible");
+        // }
+        $scope.getBingTranslation(title, word);
       }
     }).
     error(function(data, status, headers, config) {
@@ -217,9 +221,10 @@ angular.module('app.controllers', [])
       res.query.backlinks.forEach(function(backlink){
         if($scope.list.hasOwnProperty(title)){
           $scope.list[title].trans.push(backlink.title);
-          $('#loading').addClass("invisible");
+          //$('#loading').addClass("invisible");
         }
       });
+      $scope.getBingTranslation(title, word);
     }).
     error(function(data, status, headers, config) {
       $scope.showError(status, data);
@@ -227,6 +232,60 @@ angular.module('app.controllers', [])
 
   }
 
+  $scope.getBingToken = function(){
+    console.log("Renewing bing token");
+    var url = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/";
+    $http({
+      method: 'POST',
+      url: url,
+      timeout: canceler.promise,
+      cache: true,
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      transformRequest: function(obj) {
+        var str = [];
+        for(var p in obj){
+          str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+        }
+        return str.join("&");
+      },
+      data: {
+        'client_id': BingClientID,
+        'client_secret': BingClientSec,
+        'scope': "http://api.microsofttranslator.com",
+        'grant_type': 'client_credentials'
+      }
+    }).
+    success(function(res, status, headers, config) {
+      localStorage['bingToken'] = res.access_token;
+    }).
+    error(function(data, status, headers, config) {
+      //$scope.showError("bing token "+status, data);
+    });
+  }();
+  setInterval(function(){
+    $scope.getBingToken();
+  }, 9*60*1000);
+
+  $scope.getBingTranslation = function(title, word){
+    var token = encodeURIComponent("Bearer "+localStorage['bingToken']);
+    var url = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId="+token+"&from="+localStorage['lang-from']+"&to="+localStorage['lang-to']+"&text="+title;
+    console.log(url);
+    $http.get(url, {timeout: canceler.promise, cache: true}).
+    success(function(res, status, headers, config) {
+      if($scope.list.hasOwnProperty(title)){
+        if(res.includes("Exception")){
+          $scope.list[title].bing = "bing";
+        } else {
+          $scope.list[title].bing = res.replace(/['"]+/g, '');
+        }
+        $('#loading').addClass("invisible");
+      }
+    }).
+    error(function(data, status, headers, config) {
+      $scope.showError("bing "+status, data);
+    });
+
+  }
 
   $scope.inputChanged = function() {
     clearTimeout($scope.inputChangedResponse);
