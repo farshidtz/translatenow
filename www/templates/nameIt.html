@@ -20,7 +20,7 @@
         <div class="col">
       <form id="nameIt-form6" class="list">
             <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
-                <input class="fullscreen-text-area" focus-on="input" ng-model="textArea" ng-change="inputChanged()" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search anything...'" placeholder="Search anything..."></input>
+                <input class="fullscreen-text-area" focus-on="input" ng-model="textArea" ng-change="inputChanged()" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tap to type text...'" placeholder="Tap to type text..."></input>
             </label>
         <div class="horizontal-center" style="height: 20px;">
           <ion-spinner id="loading" icon="dots" class="horizontal-center spinner-energized invisible"></ion-spinner>
@@ -61,8 +61,8 @@
 <script id="popup-template.html" type="text/ng-template">
   <div id="ni-popup-template"  >
     <div class="ni-alert-img-wrapper">
-      <h3>{{article.title}}</h3>
       <img ng-src="{{article.img}}"/>
+      <h3>{{article.title}}</h3>
     </div>
     <p>{{article.summary}}</p>
   </div>
