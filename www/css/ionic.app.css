@@ -9915,7 +9915,11 @@ a.button {
 
 .ni-details-alert img {
   display: block;
-  width: 100%; }
+  width: 100%;
+  min-height: 4em !important; }
+
+.ni-details-alert img:not([src]) {
+  visibility: hidden; }
 
 .ni-details-alert p {
   padding: 10px;
