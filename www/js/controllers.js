@@ -27,6 +27,8 @@ angular.module('app.controllers', [])
   $scope.list = {};
   $scope.languages = LANGUAGES;
   var canceler = $q.defer();
+  $scope.log = [];
+  localStorage['bingToken-expires'] = new Date();
 
   // Initialize the language selection
   $scope.initLangSelection = function(){
@@ -232,8 +234,7 @@ angular.module('app.controllers', [])
 
   }
 
-  $scope.getBingToken = function(hasCallback, title){
-    console.log("Renewing bing token");
+  $scope.getBingToken = function(){
     var url = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/";
     $http({
       method: 'POST',
@@ -256,27 +257,29 @@ angular.module('app.controllers', [])
       }
     }).
     success(function(res, status, headers, config) {
+      console.log("Renewed bing token");
+      //$scope.log.push("renewed"); $scope.$apply();
       localStorage['bingToken'] = res.access_token;
       var expires = parseInt(res.expires_in);
-      localStorage['bingToken-expires'] = new Date(new Date().getTime() + (expires-30)*1000);
-      if(hasCallback){
-        $scope.getBingTranslation(title);
-      }
+      localStorage['bingToken-expires'] = new Date(new Date().getTime() + (expires-60)*1000);
     }).
     error(function(data, status, headers, config) {
-      //$scope.showError("bing token "+status, data);
+      $scope.showError(status, data);
     });
-  }(false);
-  // setInterval(function(){
-  //   $scope.getBingToken();
-  // }, 9*60*1000);
+  };
+  setInterval(function(){
+    if(Date.parse(localStorage['bingToken-expires']) < new Date() && ionic.Platform.platforms[0] != "browser"){
+      //$scope.log.push("Expired @"+ localStorage['bingToken-expires']);
+      $scope.getBingToken();
+    }
+  }, 1000);
+
 
   $scope.getBingTranslation = function(title){
-    if(Date.parse(localStorage['bingToken-expires']) < new Date()){
-      $scope.getBingToken(true, title);
+    if(typeof localStorage['bingToken'] == "undefined"){
+      $scope.list[title].bing = "bing translation";
       return;
     }
-
     var token = encodeURIComponent("Bearer "+localStorage['bingToken']);
     var url = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId="+token+"&from="+localStorage['lang-from']+"&to="+localStorage['lang-to']+"&text="+title;
     console.log(url);
@@ -284,7 +287,7 @@ angular.module('app.controllers', [])
     success(function(res, status, headers, config) {
       if($scope.list.hasOwnProperty(title)){
         if(res.includes("Exception")){
-          $scope.list[title].bing = "bing translation";
+          $scope.list[title].bing = "bing exception";
         } else {
           $scope.list[title].bing = res.replace(/['"]+/g, '');
         }
@@ -292,7 +295,9 @@ angular.module('app.controllers', [])
       }
     }).
     error(function(data, status, headers, config) {
-      $scope.showError("bing "+status, data);
+      //$scope.showError("bing "+status, data);
+      //$scope.log.push("getBingTranslation:"+status);
+      $('#loading').addClass("invisible");
     });
 
   }

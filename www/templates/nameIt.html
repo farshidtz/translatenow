@@ -1,6 +1,7 @@
 
 <ion-view title="Name It " hide-nav-bar="true" id="page1" class=" ">
     <ion-content ng-controller="nameItCtrl" scroll="false" padding="false" style="background: url(img/2.jpg) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
+      <p class="row" style="color:yellow;font-size:6pt;padding:0;margin:0;line-height:1em;" ng-repeat="line in log track by $index">{{line}}</p>
       <!--header row for translation language selection-->
       <div id="translation-pannel" class="row">
         <div class="col col-40 horizontal-center">
