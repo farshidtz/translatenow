@@ -29,6 +29,7 @@ angular.module('app.controllers', [])
   var canceler = $q.defer();
   $scope.log = [];
   localStorage['bingToken-expires'] = new Date();
+  var popupManager;
 
   // Initialize the language selection
   $scope.initLangSelection = function(){
@@ -240,7 +241,6 @@ angular.module('app.controllers', [])
       method: 'POST',
       url: url,
       timeout: canceler.promise,
-      cache: true,
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       transformRequest: function(obj) {
         var str = [];
@@ -288,6 +288,7 @@ angular.module('app.controllers', [])
       if($scope.list.hasOwnProperty(title)){
         if(res.includes("Exception")){
           $scope.list[title].bing = "bing exception";
+          $scope.showError("Bing", res);
         } else {
           $scope.list[title].bing = res.replace(/['"]+/g, '');
         }
@@ -379,13 +380,16 @@ angular.module('app.controllers', [])
       console.log("http "+title+": ", message);
       return;
     }
-    $scope.list = [];
+    // Close any open error popup
+    if(typeof popupManager != "undefined"){
+      popupManager.close();
+    }
+    //$scope.list = [];
     $("#loading").addClass("invisible");
-    $ionicPopup.alert({
+    console.warn("App Error "+title+": ", message);
+    popupManager = $ionicPopup.alert({
       title: 'Error ' + title,
       template: message
-    }).then(function(res) {
-      console.warn("App Error "+title+": ", message);
     });
   };
 
