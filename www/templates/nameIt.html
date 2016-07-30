@@ -19,9 +19,14 @@
       <!--main content area for for text area-->
       <div class="row">
         <div class="col">
-      <form id="nameIt-form6" class="list">
+      <form id="nameIt-form6" ng-click="bringFocusToSearch()" class="list">
             <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
-                <input class="fullscreen-text-area" focus-on="input" ng-model="textArea" ng-change="inputChanged()" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tap to type text...'" placeholder="Tap to type text..."></input>
+                <input id="ni-search-input" class="fullscreen-text-area" focus-on="input"
+                          ng-model="textArea" ng-change="inputChanged()"
+                          onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tap to type text...'"
+                          placeholder="Tap to type text...">
+
+                </input>
             </label>
         <div class="horizontal-center" style="height: 20px;">
           <ion-spinner id="loading" icon="dots" class="horizontal-center spinner-energized invisible"></ion-spinner>
@@ -51,7 +56,7 @@
 
         <!--<div class="footer hide-on-keyboard-open">-->
           <!--<div class="footer-content">-->
-            <button id="nameIt-button2" ng-click="kbButtonClicked()" class="hide-on-keyboard-open button button-dark button-block icon-keyboard bulg-button"></button>
+            <!--<button id="nameIt-button2" ng-click="kbButtonClicked()" class="hide-on-keyboard-open button button-dark button-block icon-keyboard bulg-button"></button>-->
           <!--</div>-->
         <!--</div>-->
 

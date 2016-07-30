@@ -69,8 +69,11 @@ angular.module('app.controllers', [])
     $scope.updateList($scope.textArea);
   }
 
-  $scope.kbButtonClicked = function(){
-    focus('input');
+  $scope.bringFocusToSearch = function(){
+    //bring focus to input only if list object is empty
+    if(Object.keys($scope.list).length === 0 && $scope.list.constructor === Object){
+      focus('input');
+    }
   }
 
   $scope.updateList = function(text){
@@ -355,11 +358,11 @@ angular.module('app.controllers', [])
         buttons: [
           {
             text: 'Close',
-            type: 'button-clear button-positive',
+            type: 'button-assertive'
           },
           {
-            text: 'Goto Wikipedia',
-            type: 'button-clear button-dark',
+            text: 'Wikipedia',
+            type: 'button-calm',
             onTap: function(e) {
               var url = "https://"+localStorage['lang-'+lang]+".wikipedia.org/wiki/"+title;
               window.open(url, '_system');
@@ -392,7 +395,6 @@ angular.module('app.controllers', [])
       template: message
     });
   };
-
 }) // end controller
 
 

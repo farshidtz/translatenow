@@ -9920,7 +9920,8 @@ a.button {
 .ni-details-alert img {
   display: block;
   width: 100%;
-  min-height: 4em !important; }
+  min-height: 4em !important;
+  max-height: 300px !important; }
 
 .ni-details-alert img:not([src]) {
   visibility: hidden; }
