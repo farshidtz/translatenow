@@ -29,7 +29,7 @@ angular.module('app.controllers', [])
   var canceler = $q.defer();
   $scope.log = [];
   localStorage['bingToken-expires'] = new Date();
-  var popupManager;
+  var errorPopped = false;
 
   // Initialize the language selection
   $scope.initLangSelection = function(){
@@ -281,6 +281,7 @@ angular.module('app.controllers', [])
   $scope.getBingTranslation = function(title){
     if(typeof localStorage['bingToken'] == "undefined"){
       $scope.list[title].bing = "bing translation";
+      $('#loading').addClass("invisible");
       return;
     }
     var token = encodeURIComponent("Bearer "+localStorage['bingToken']);
@@ -292,15 +293,18 @@ angular.module('app.controllers', [])
         if(res.includes("Exception")){
           $scope.list[title].bing = "bing exception";
           $scope.showError("Bing", res);
-        } else {
-          $scope.list[title].bing = res.replace(/['"]+/g, '');
+          return;
         }
+
+        // Success
+        $scope.list[title].bing = res.replace(/['"]+/g, '');
         $('#loading').addClass("invisible");
       }
     }).
     error(function(data, status, headers, config) {
       //$scope.showError("bing "+status, data);
       //$scope.log.push("getBingTranslation:"+status);
+      console.warn("bing translation error:", data, status);
       $('#loading').addClass("invisible");
     });
 
@@ -383,16 +387,19 @@ angular.module('app.controllers', [])
       console.log("http "+title+": ", message);
       return;
     }
-    // Close any open error popup
-    if(typeof popupManager != "undefined"){
-      popupManager.close();
+    // Don't show if there is a popup shown
+    if(errorPopped){
+      return;
     }
     //$scope.list = [];
     $("#loading").addClass("invisible");
     console.warn("App Error "+title+": ", message);
-    popupManager = $ionicPopup.alert({
+    errorPopped = true;
+    $ionicPopup.alert({
       title: 'Error ' + title,
       template: message
+    }).then(function(){
+      errorPopped = false;
     });
   };
 }) // end controller
