@@ -7,9 +7,11 @@ app.popupCtrl = function($scope, $ionicPopup, $http){
   $scope.showPopup = function(item, lang) {
     var title = item.title;
 
-    if(lang=='to' && (item.type=='bing' || item.type=='nomatch')){
+    if(item.type=='bing'){
       return;
-    } else if (lang=='to') {
+    } else if(lang=='to' && item.type=='nomatch'){
+      return;
+    } else if(lang=='to') {
       title = item.trans[0];
     }
 
