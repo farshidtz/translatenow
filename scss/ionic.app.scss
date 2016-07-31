@@ -106,11 +106,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   white-space: normal;
 }
 
-.ni-bing .ni-item-translations span{
+.name-it-list.ni-bing .ni-item-translations span{
     color: #AAAAAA !important;
     font-style: italic;
 }
-.name-it-list .ni-nomatch span{
+.name-it-list .ni-item-translations.ni-nomatch span{
     color: #AAAAAA !important;
     font-style: italic;
 }
