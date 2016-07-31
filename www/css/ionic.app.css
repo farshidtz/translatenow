@@ -9794,7 +9794,7 @@ a.button {
 .name-it-list .ni-item-translations {
   margin-top: 10px; }
 
-.name-it-list .ni-item-translations span, #bing {
+.name-it-list .ni-item-translations span {
   color: white;
   opacity: 0.9;
   display: block;
@@ -9806,8 +9806,12 @@ a.button {
   word-wrap: break-word !important;
   white-space: normal; }
 
-.name-it-list .ni-item-translations #bing {
-  color: #AAAAAA;
+.ni-bing .ni-item-translations span {
+  color: #AAAAAA !important;
+  font-style: italic; }
+
+.name-it-list .ni-nomatch span {
+  color: #AAAAAA !important;
   font-style: italic; }
 
 .name-it-list img {

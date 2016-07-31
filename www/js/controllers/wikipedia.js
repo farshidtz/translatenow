@@ -1,15 +1,9 @@
 /* Wikipedia Controller */
 app.wikipediaCtrl = function($scope, $http)
 {
-  // Local vars
-  $scope.languages = LANGUAGES;
 
   $scope.updateList = function(text){
-    if(text=="" || typeof text == "undefined"){
-      return;
-    }
     console.log(text);
-    $('#loading').removeClass("invisible");
     var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=opensearch&redirects=resolve&limit=10&search="+text;
     $http.jsonp(url, {timeout: $scope.canceler.promise, cache: true}).
     success(function(result, status, headers, config) {
@@ -22,8 +16,8 @@ app.wikipediaCtrl = function($scope, $http)
   }
 
   $scope.getProperties = function(titles, snippets){
-    $scope.list = {};
     var pending = titles.length;
+    $scope.wait.add(pending-1); // already have one in queue for the parent function
 
     function seq(i){
       //console.log(i);
@@ -37,11 +31,9 @@ app.wikipediaCtrl = function($scope, $http)
           descr = page.terms.description[0];
         }
         // Check if this is Wikipedia disambiguation page
-        var links = [];
         if(descr.toLowerCase().includes(DISAMBIGUATIONS[localStorage['lang-from']].toLowerCase())){
-          if($scope.textArea != ""){
-            $scope.disambiguate(titles[i], page.links, i);
-          }
+          $scope.wait.done("getProperties"); // no need to wait for this title
+          $scope.disambiguate(titles[i], page.links, i);
         } else {
           // Get thumbnail
           var thumb = DefaultThumb;
@@ -52,7 +44,6 @@ app.wikipediaCtrl = function($scope, $http)
           $scope.list[titles[i]] = {
             rank: i,
             title: titles[i],
-            //snippet: snippets[i],
             descr: descr,
             img: thumb,
             trans: []
@@ -81,7 +72,7 @@ app.wikipediaCtrl = function($scope, $http)
       var re = new RegExp("^"+ambiguousTitle+" [(][a-z|A-Z]+[)]$");
       var matched = re.test(title);
       if(matched){
-        //console.warn(title);
+        $scope.wait.add(1);
         var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&redirects&prop=pageterms|pageimages&format=json&pithumbsize="+ListThumbSize+"&titles="+title;
         $http.jsonp(url, {timeout: $scope.canceler.promise, cache: true}).
         success(function(res, status, headers, config) {
@@ -100,11 +91,9 @@ app.wikipediaCtrl = function($scope, $http)
           $scope.list[title] = {
             rank: rank,
             title: title,
-            //snippet: snippets[i],
             descr: descr,
             img: thumb,
             trans: [],
-            bing: "",
           } ;
 
           $scope.getTranslations(title);
@@ -133,13 +122,15 @@ app.wikipediaCtrl = function($scope, $http)
           $scope.getSynonyms(title, word);
         }
       } else {
+
         // No match in the destination language
-        // if($scope.list.hasOwnProperty(title)){
-        //   //delete $scope.list[title];
-        //   $scope.list[title].trans.push("No match");
-        //   $('#loading').addClass("invisible");
-        // }
-        $scope.getBingTranslation(title, word);
+        if($scope.list.hasOwnProperty(title)){
+          //delete $scope.list[title];
+          $scope.list[title].trans.push("No match in "+LANGUAGES[localStorage['lang-to']]+" Wikipedia");
+          $scope.list[title].type = 'nomatch';
+        }
+        $scope.wait.done("getTranslations");
+        //$scope.getBingTranslation(title, word);
       }
     }).
     error(function(data, status, headers, config) {
@@ -156,10 +147,10 @@ app.wikipediaCtrl = function($scope, $http)
       res.query.backlinks.forEach(function(backlink){
         if($scope.list.hasOwnProperty(title)){
           $scope.list[title].trans.push(backlink.title);
-          //$('#loading').addClass("invisible");
         }
       });
-      $scope.getBingTranslation(title, word);
+      $scope.wait.done("getSynonyms");
+      //$scope.getBingTranslation(title, word);
     }).
     error(function(data, status, headers, config) {
       $scope.showError(status, data);

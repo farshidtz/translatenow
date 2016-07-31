@@ -1,4 +1,4 @@
-app.filter('listSortFilter', function () {
+app.filter('sortByRankFilter', function () {
   return function (items) {
     var sortable = [];
     for (var key in items){ sortable.push(items[key]); }

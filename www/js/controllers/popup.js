@@ -4,12 +4,13 @@ app.popupCtrl = function($scope, $ionicPopup, $http){
   var errorPopped = false;
 
   // Show popup for wikipedia article
-  $scope.showPopup = function(title, lang) {
+  $scope.showPopup = function(item, lang) {
+    var title = item.title;
 
-    if(lang=='to' && $scope.list[title].trans.length>0 && $scope.list[title].trans[0] != 'No match'){
-      title = $scope.list[title].trans[0];
-    } else if (lang=='to') {
+    if(lang=='to' && (item.type=='bing' || item.type=='nomatch')){
       return;
+    } else if (lang=='to') {
+      title = item.trans[0];
     }
 
     var url = "https://"+localStorage['lang-'+lang]+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&format=json&action=query&redirects&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize="+PopupThumbSize+"&titles="+title;
@@ -57,16 +58,17 @@ app.popupCtrl = function($scope, $ionicPopup, $http){
   };
 
   $scope.showError = function(title, message) {
+    $scope.wait.done("showError");
     if(title==0){
       console.log("http "+title+": ", message);
       return;
     }
+
     // Don't show if there is a popup shown
     if(errorPopped){
       return;
     }
-    //$scope.list = [];
-    $("#loading").addClass("invisible");
+
     console.warn("App Error "+title+": ", message);
     errorPopped = true;
     $ionicPopup.alert({

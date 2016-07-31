@@ -28,51 +28,64 @@ app.bingCtrl = function($scope, $http)
     }).
     success(function(res, status, headers, config) {
       console.log("Renewed bing token");
-      //$scope.log.push("renewed"); $scope.$apply();
       localStorage['bingToken'] = res.access_token;
       var expires = parseInt(res.expires_in);
       localStorage['bingToken-expires'] = new Date(new Date().getTime() + (expires-60)*1000);
     }).
     error(function(data, status, headers, config) {
-      $scope.showError(status, data);
+      if(ionic.Platform.isWebView()){
+        $scope.showError(status, data);
+      }
     });
   };
   setInterval(function(){
-    if(Date.parse(localStorage['bingToken-expires']) < new Date() && ionic.Platform.platforms[0] != "browser"){
+    if(ionic.Platform.isWebView() && Date.parse(localStorage['bingToken-expires']) < new Date()){
       //$scope.log.push("Expired @"+ localStorage['bingToken-expires']);
       $scope.getBingToken();
     }
   }, 1000);
 
 
-  $scope.getBingTranslation = function(title){
-    if(typeof localStorage['bingToken'] == "undefined"){
-      $scope.list[title].bing = "bing translation";
-      $('#loading').addClass("invisible");
+  $scope.getBingTranslation = function(text){
+    console.log("bing", text);
+    if(!ionic.Platform.isWebView()){
+      $scope.list["bing:"+text] = {
+        rank: -1,
+        title: text,
+        descr: "translated by Bing",
+        img: BingThumb,
+        type: 'bing',
+        trans: ["bing translation"]
+      };
+      $scope.wait.done("getBingTranslation");
       return;
     }
     var token = encodeURIComponent("Bearer "+localStorage['bingToken']);
-    var url = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId="+token+"&from="+localStorage['lang-from']+"&to="+localStorage['lang-to']+"&text="+title;
+    var url = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId="+token+"&from="+localStorage['lang-from']+"&to="+localStorage['lang-to']+"&text="+text;
     console.log(url);
     $http.get(url, {timeout: $scope.canceler.promise, cache: true}).
     success(function(res, status, headers, config) {
-      if($scope.list.hasOwnProperty(title)){
         if(res.includes("Exception")){
-          $scope.list[title].bing = "bing exception";
           $scope.showError("Bing", res);
           return;
         }
 
         // Success
-        $scope.list[title].bing = res.replace(/['"]+/g, '');
-        $('#loading').addClass("invisible");
-      }
+        $scope.list["bing:"+text] = {
+          rank: -1,
+          title: text,
+          descr: "translated by Bing",
+          img: BingThumb,
+          type: 'bing',
+          trans: [res.replace(/['"]+/g, '')]
+        };
+        $scope.wait.done("getBingTranslation");
     }).
     error(function(data, status, headers, config) {
       //$scope.showError("bing "+status, data);
       //$scope.log.push("getBingTranslation:"+status);
       console.warn("bing translation error:", data, status);
-      $('#loading').addClass("invisible");
+      $scope.wait.done("getBingTranslation");
     });
 
   }
