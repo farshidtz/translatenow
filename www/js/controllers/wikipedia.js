@@ -21,7 +21,7 @@ app.wikipediaCtrl = function($scope, $http)
 
     function seq(i){
       //console.log(i);
-      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages|links&format=json&pithumbsize="+ListThumbSize+"&pllimit=max&titles="+titles[i];
+      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages|links|categories&format=json&pithumbsize="+ListThumbSize+"&pllimit=max&titles="+titles[i];
       $http.jsonp(url, {timeout: $scope.canceler.promise, cache: true}).
       success(function(res, status, headers, config) {
         var page = first(res.query.pages)
@@ -30,8 +30,8 @@ app.wikipediaCtrl = function($scope, $http)
         if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
           descr = page.terms.description[0];
         }
-        // Check if this is Wikipedia disambiguation page
-        if(descr.toLowerCase().includes(DISAMBIGUATIONS[localStorage['lang-from']].toLowerCase())){
+        // Check if this is a Wikipedia disambiguation page
+        if(isDisambiguous(page)){
           $scope.wait.done("getProperties"); // no need to wait for this title
           $scope.disambiguate(titles[i], page.links, i);
         } else {
@@ -157,6 +157,19 @@ app.wikipediaCtrl = function($scope, $http)
     });
 
   }
+
+  var isDisambiguous = function(page) {
+    var disambiguation = DISAMBIGUATIONS[localStorage['lang-from']].toLowerCase();
+    // Check the description
+    if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
+      return page.terms.description[0].toLowerCase().includes(disambiguation);
+    }
+    // Check the categories
+    for(var i=0; i<page.categories.length; i++){
+      return page.categories[i].title.toLowerCase().includes(disambiguation);
+    }
+  }
+
 }
 
 // Returns value of the first object
