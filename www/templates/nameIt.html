@@ -37,12 +37,12 @@
                 ng-repeat="item in list| sortByRankFilter" ng-class="{'ni-wikipedia': item.type!='bing', 'ni-bing': item.type=='bing'}">
               <img ng-click="showPopup(item, 'from')" ng-src="{{item.img}}">
               <div ng-click="showPopup(item, 'from')" class="ni-item-header">
-                <p style="float: right">en</p>
-              <h2>{{item.title}}</h2>
-              <p>{{item.descr}}</p>
+                <p style="float: right">{{langFromSelected}}</p>
+                <h2>{{item.title}}</h2>
+                <p>{{item.descr}}</p>
               </div>
               <div ng-click="showPopup(item, 'to')" class="ni-item-translations" ng-class="{'ni-nomatch': item.type=='nomatch'}">
-                <p style="float: right">de</p>
+                <p style="float: right">{{langToSelected}}</p>
                 <p><span ng-repeat="tran in item.trans">{{tran}}</span></p>
               </div>
             </ion-item>
