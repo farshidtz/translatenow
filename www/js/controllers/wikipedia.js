@@ -159,15 +159,14 @@ app.wikipediaCtrl = function($scope, $http)
   }
 
   var isDisambiguous = function(page) {
-    var disambiguation = DISAMBIGUATIONS[localStorage['lang-from']].toLowerCase();
-    // Check the description
-    if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
-      return page.terms.description[0].toLowerCase().includes(disambiguation);
-    }
+    var category = DISAMBIGUATIONS[localStorage['lang-from']];
     // Check the categories
     for(var i=0; i<page.categories.length; i++){
-      return page.categories[i].title.toLowerCase().includes(disambiguation);
+      if(page.categories[i].title === category){
+        return true;
+      }
     }
+    return false;
   }
 
 }

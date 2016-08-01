@@ -57,92 +57,204 @@ var LANGUAGES = {
 };
 
 var DISAMBIGUATIONS = {
-  "ar":"توضيح", //+
-  "hy": "Բազմիմաստության փարատման", //+
-  "az":"Dəqiqləşdirm", //+
-  "eu":"argipen orriak", //+
-  "bs":"Čvor članci", //+
-  "bg":"Пояснителни", //+*
-  "ca":"desambiguació", //+
-  "ceb": "Pagklaro paghimo", //+
-  "zh":"消歧义", //+
-  "hr":"Razdvojba", //+
-  "cs":"Rozcestníky", //+
-  "da":"Flertydig", //+
-  "nl":"Doorverwijspagina", //+
-  "en":"Disambiguation", //+
-  "eo":"Apartigiloj", //+
-  "et":"Täpsustusleheküljed", //+*
-  "fi":"Täsmennyssivut", //+ Täsmennyssivu
-  "fr":"Homonymie", //+
-  "gl":"Homónimos", //+
-  "ka":"მრავალმნიშვნელოვანი", //+
-  "de":"Begriffsklärung", //+
-  "el":"Αποσαφήνιση", //+ αποσαφήνισης
-  "he":"פירושונים", //+
-  "hu":"Egyértelműsítő", //+
-  "id":"Disambiguasi", //+
-  "it":"disambiguazione", //+
-  "ja":"曖昧さ回避", //+
-  "ko":"동음이의어", //+
-  "lv":"Nozīmju atdalīšana", //+
-  "lt":"Nuorodiniai", //+
-  "ms":"Laman nyahkekaburan", //+
-  "no":"Pekere", //+* Flertydige
-  "nn":"Fleirtydingssider", //+
-  "fa":"ابهام‌زدایی", //+
-  "pl":"ujednoznaczniające", //+*
-  "pt":"Desambiguação", //+
-  "ro":"Dezambiguizare", //+
-  "ru":"неоднозначностей", //+*
-  "sr":"Вишезначна", //+
-  "sh":"Razvrstavanje", //+
-  "sk":"Rozlišovacie", //+*
-  "sl":"Razločitev", //+
-  "es":"Desambiguación", //+
-  "sv":"Förgreningssidor", //+ Förgreningssida, Särskiljning
-  "tt":"мәкаләләр", //+
-  "th":"การแก้ความกำกวม", //+
-  "tr":"Anlam ayrımı", //+
-  "uk":"неоднозначності", //+ Неоднозначність
-  "ur": "ضد ابہام", //+
-  "vi":"Trang định hướng", //+
-  "war": "Pansayod", //+
-  // Extended (not in languages)
-  "als": "Begriffsklärung", //+
-  "az": "Dəqiqləşdirmə", //+
-  "bn": "দ্ব্যর্থতা", //+
-  "is": "Aðgreiningarsíður", //+
-  "si": "වක්‍රෝත්තිහරණ", //+
-  "wuu": "消歧义", //+
-  "zh-yue": "搞清楚", //+
-  "br": "Lec'hanvadurezh c'hallek", //+
-  "cy": "Gwahaniaethu", //+
-  "hi": "बहुविकल्पी", //+
-  "sw": "zinazotofautisha", //+
-  "lb": "Homonymie", //+
-  "ml": "വിവക്ഷകൾ", //+
-  "pa": "ਗੁੰਝਲ ਖੋਲ੍ਹ ਸਫ਼ੇ", //+* Disambiguation
-  "sco": "disambiguation", //+
-  "vo": "Telplänovapads", //+ Telplänov"
-  "yi": "באדייטן", //+*
-  "ht": "Menm non" //+
+	"en" : "Category:Disambiguation pages",
+	"af" : "Kategorie:Dubbelsinnig",
+	"als" : "Kategorie:Begriffsklärung",
+	"am" : "መደብ:መንታ መንገዶች",
+	"an" : "Categoría:Desambigación",
+	"ang" : "Flocc:Scīrung",
+	"ar" : "تصنيف:صفحات توضيح",
+	"arc" : "ܣܕܪܐ:ܬܘܚܡܐ ܐܚܪܢܐ",
+	"arz" : "تصنيف:صفحات توضيح",
+	"ast" : "Categoría:Wikipedia:Dixebra",
+	"ay" : "Categoría:Wikipedia:Desambiguación",
+	"az" : "Kateqoriya:Vikipediya:Dəqiqləşdirmə",
+	"ba" : "Категория:Күп мәғәнәле төшөнсәләр",
+	"bar" : "Kategorie:Begriffsklärung",
+	"bat-smg" : "Kateguorėjė:Nūruodėnē straipsnē",
+	"be" : "Катэгорыя:Неадназначнасці",
+	"be-x-old" : "Катэгорыя:Вікіпэдыя:Неадназначнасьці",
+	"bg" : "Категория:Пояснителни страници",
+	"bh" : "श्रेणी:बहुअर्थी पन्ना",
+	"bn" : "বিষয়শ্রেণী:দ্ব্যর্থতা নিরসন পাতা",
+	"br" : "Rummad:Heñvelstummoù",
+	"bs" : "Kategorija:Čvor članci",
+	"ca" : "Categoria:Pàgines de desambiguació",
+	"cbk-zam" : "Categoría:Desambiguo",
+	"cdo" : "分類:Disambig",
+	"ce" : "Категори:Дуккха маьӀн долу дешнаш",
+	"ceb" : "Kategoriya:Pagklaro",
+	"ckb" : "پۆل:پەڕەکانی ڕوونکردنەوە",
+	"co" : "Categoria:Disambiguazione",
+	"cs" : "Kategorie:Wikipedie:Rozcestníky",
+	"cu" : "Катигорїꙗ:Мъногосъмꙑслиѥ",
+	"cv" : "Категори:Disambig",
+	"cy" : "Categori:Gwahaniaethu",
+	"da" : "Kategori:Flertydig",
+	"de" : "Kategorie:Begriffsklärung",
+	"diq" : "Kategori:Arezekerdış",
+	"dsb" : "Kategorija:Wěcejwóznamowosći",
+	"dv" : "ޤިސްމު:Disambiguation",
+	"el" : "Κατηγορία:Αποσαφήνιση",
+	"eml" : "Categoria:Disambigua",
+	"eo" : "Kategorio:Apartigiloj",
+	"es" : "Categoría:Wikipedia:Desambiguación",
+	"et" : "Kategooria:Täpsustusleheküljed",
+	"eu" : "Kategoria:Wikipediako argipen orriak",
+	"fa" : "رده:صفحه‌های ابهام‌زدایی",
+	"fi" : "Luokka:Täsmennyssivut",
+	"fo" : "Bólkur:Fleiri týdningar",
+	"fr" : "Catégorie:Homonymie",
+	"frr" : "Kategorie:Wikipedia:Muardüüdag artiikel",
+	"fur" : "Categorie:Disambiguazion",
+	"fy" : "Kategory:Trochferwiisside",
+	"ga" : "Catagóir:Idirdhealáin",
+	"gd" : "Roinn-seòrsa:Soilleireachadh",
+	"gl" : "Categoría:Homónimos",
+	"gn" : "Ñemohenda:Vikipetã:Desambiguación",
+	"gu" : "શ્રેણી:સંદિગ્ધ શીર્ષક વાળાં પાનાં",
+	"haw" : "Māhele:Disambig",
+	"he" : "קטגוריה:פירושונים",
+	"hi" : "श्रेणी:बहुविकल्पी शब्द",
+	"hr" : "Kategorija:Razdvojba",
+	"hsb" : "Kategorija:Wjacezmyslnosć",
+	"ht" : "Kategori:Menm non",
+	"hu" : "Kategória:Egyértelműsítő lapok",
+	"hy" : "Կատեգորիա:Բազմիմաստության փարատման էջեր",
+	"ia" : "Categoria:Pagina de disambiguation",
+	"id" : "Kategori:Disambiguasi",
+	"ig" : "Òtù:Disambiguation",
+	"ilo" : "Kategoria:Panangilawlawag a pampanid",
+	"io" : "Kategorio:Homonimi",
+	"is" : "Flokkur:Aðgreiningarsíður",
+	"it" : "Categoria:Pagine di disambiguazione",
+	"ja" : "Category:曖昧さ回避",
+	"jv" : "Kategori:Disambiguasi",
+	"ka" : "კატეგორია:მრავალმნიშვნელოვანი",
+	"kk" : "Санат:Айрық беттер",
+	"kn" : "ವರ್ಗ:ದ್ವಂದ್ವ ನಿವಾರಣೆ",
+	"ko" : "분류:동음이의어 문서",
+	"koi" : "Категория:Уна вежӧртаса терминнэз",
+	"ksh" : "Saachjrupp:Woot met mieh wi ëijnem Senn",
+	"ku" : "Kategorî:Rûpelên cudakirinê",
+	"kv" : "Категория:Уна вежӧртаса терминъяс",
+	"kw" : "Klass:Folennow klerheans",
+	"la" : "Categoria:Discretiva",
+	"lb" : "Kategorie:Homonymie",
+	"lez" : "Категория:Гзаф манадин терминар",
+	"lg" : "Category:Disambig",
+	"li" : "Categorie:Verdudelikingspazjena",
+	"ln" : "Catégorie:Bokokani",
+	"lt" : "Kategorija:Nuorodiniai straipsniai",
+	"ltg" : "Kategoreja:Zeimeibu škiršona",
+	"lv" : "Kategorija:Nozīmju atdalīšana",
+	"map-bms" : "Kategori:Disambiguasi",
+	"mg" : "Sokajy:Pejy mitovy anarana",
+	"mhr" : "Категорий:Шуко ончыктымаш-влак",
+	"mi" : "Category:Tikanga maha",
+	"mk" : "Категорија:Страници за појаснување",
+	"ml" : "വർഗ്ഗം:വിവക്ഷകൾ",
+	"mn" : "Ангилал:Салаа утгатай үгс",
+	"ms" : "Kategori:Laman nyahkekaburan",
+	"mt" : "Kategorija:Diżambigwazzjoni",
+	"my" : "Category:သံတူကြောင်းကွဲ",
+	"myv" : "Категория:Авейкетькс",
+	"nap" : "Categurìa:Disambigua",
+	"nds" : "Kategorie:Mehrdüdig Begreep",
+	"nds-nl" : "Kategorie:Wikipedie:Deurverwiespagina",
+	"ne" : "श्रेणी:बहुविकल्पी शब्द",
+	"nl" : "Categorie:Wikipedia:Doorverwijspagina",
+	"nn" : "Kategori:Fleirtydingssider",
+	"no" : "Kategori:Pekere",
+	"nov" : "Category:Desambiguatione",
+	"nrm" : "Category:Frouque",
+	"nv" : "Tʼááłáhági átʼéego:Ałtsʼáʼáztiin",
+	"oc" : "Categoria:Omonimia",
+	"os" : "Категори:Нысаниуджыты номхыгъдтæ",
+	"pap" : "Category:All article disambiguation pages",
+	"pfl" : "Sachgrubb:Begriffsklärung",
+	"pl" : "Kategoria:Strony ujednoznaczniające",
+	"pt" : "Categoria:Desambiguação",
+	"qu" : "Katiguriya:Wikipidiya:Sut'ichana qillqa",
+	"rm" : "Categoria:Vichipedia:Paginas per sclerir noziuns",
+	"rmy" : "Shopni:Dudalipen",
+	"ro" : "Categorie:Dezambiguizare",
+	"ru" : "Категория:Многозначные термины",
+	"rue" : "Катеґорія:Чеперушкы",
+	"sah" : "Категория:Хас да суолталаах өйдөбүллэр",
+	"sc" : "Categoria:Pàginas disambìguas",
+	"scn" : "Catigurìa:Disambigua",
+	"sco" : "Category:Disambiguation pages",
+	"sd" : "زمرو:سلجھائپ صفحا",
+	"se" : "Kategoriija:Presiserensiiddut",
+	"sh" : "Kategorija:Razvrstavanje",
+	"simple" : "Category:Disambiguation",
+	"sk" : "Kategória:Rozlišovacie stránky",
+	"sl" : "Kategorija:Razločitev",
+	"sq" : "Kategoria:Kthjellime",
+	"sr" : "Категорија:Вишезначна одредница",
+	"stq" : "Kategorie:Begriepskloorenge",
+	"su" : "Kategori:Disambiguasi",
+	"sv" : "Kategori:Förgreningssidor",
+	"sw" : "Jamii:Makala zinazotofautisha maana",
+	"ta" : "பகுப்பு:பக்கவழி நெறிப்படுத்தல்",
+	"te" : "వర్గం:అయోమయ నివృత్తి",
+	"tg" : "Гурӯҳ:Ибҳомзудоӣ",
+	"th" : "หมวดหมู่:การแก้ความกำกวม",
+	"tl" : "Kategorya:Paglilinaw",
+	"to" : "Category:Ngaahi kupu fakaʻuhingakehe",
+	"tpi" : "Grup:Ol pes bilong kliaim ol link",
+	"tr" : "Kategori:Anlam ayrımı sayfaları",
+	"tt" : "Төркем:Күп мәгънәле мәкаләләр",
+	"udm" : "Категория:Трос пуштросъем терминъёс",
+	"uk" : "Категорія:Багатозначні терміни",
+	"ur" : "زمرہ:ضد ابہام صفحات",
+	"uz" : "Turkum:Koʻp maʼnoli atamalar",
+	"vec" : "Categoria:Dixanbigue",
+	"vep" : "Kategorii:Znamoičendad",
+	"vi" : "Thể loại:Trang định hướng",
+	"vo" : "Klad:Telplänovapads",
+	"wa" : "Categoreye:Omonimeye",
+	"war" : "Kaarangay:Pansayod",
+	"wuu" : "Category:消歧义",
+	"xmf" : "კატეგორია:მიარეშანულამი",
+	"yi" : "קאַטעגאָריע:באדייטן",
+	"zea" : "Categorie:Wikipedia:Deurverwiespagina",
+	"zh" : "Category:消歧义",
+	"zh-classical" : "Category:釋義",
+	"zh-min-nan" : "Lūi-pia̍t:Khu-pia̍t-ia̍h",
+	"zh-yue" : "Category:搞清楚版"
 };
 
-/* // Parse language codes
-var x = {};
-var z = {};
-var keys = [];
-for(var i=0; i<LANGUAGES.length; i++){
-x[LANGUAGES[i].lang] = LANGUAGES[i].langname;
-z[LANGUAGES[i].langname] = LANGUAGES[i].lang;
-keys.push(LANGUAGES[i].langname);
-}
-keys.sort();
-var y = {};
-for(var i=0; i<LANGUAGES.length; i++){
-y[z[keys[i]]] = x[z[keys[i]]];
-}
-y['en'] = 'English';
-console.log(JSON.stringify(y));
+/*
+var fetchDisambiguationCategories = function(){
+  // url = https://en.wikipedia.org/w/api.php?action=query&prop=langlinks&format=json&titles=Category:Disambiguation pages&lllimit=max&llprop=langname
+  var json = place json un-encoded json here
+  var out = {};
+  out['en'] = "Category:Disambiguation pages";
+  first(json.query.pages).langlinks.forEach(function(e){
+    out[e.lang] = e['*'];
+  });
+  console.log(JSON.stringify(out));
+}();
+*/
+
+/*
+var parseLanguageCodes = function(){
+  var x = {};
+  var z = {};
+  var keys = [];
+  for(var i=0; i<LANGUAGES.length; i++){
+  x[LANGUAGES[i].lang] = LANGUAGES[i].langname;
+  z[LANGUAGES[i].langname] = LANGUAGES[i].lang;
+  keys.push(LANGUAGES[i].langname);
+  }
+  keys.sort();
+  var y = {};
+  for(var i=0; i<LANGUAGES.length; i++){
+  y[z[keys[i]]] = x[z[keys[i]]];
+  }
+  y['en'] = 'English';
+  console.log(JSON.stringify(y));
+}();
 */
