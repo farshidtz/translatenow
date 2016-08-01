@@ -2,7 +2,7 @@
 app.wikipediaCtrl = function($scope, $http)
 {
 
-  $scope.updateList = function(text){
+  $scope.getWikiList = function(text){
     console.log(text);
     var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=opensearch&redirects=resolve&limit=10&search="+text;
     $http.jsonp(url, {timeout: $scope.canceler.promise, cache: true}).

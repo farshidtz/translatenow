@@ -5,8 +5,8 @@ app.languageCtrl = function($scope, $ionicScrollDelegate)
   $scope.initLangSelection = function(){
     if(!('lang-from' in localStorage)){
       // defaults
-      localStorage['lang-from'] = 'en';
-      localStorage['lang-to'] = 'de';
+      localStorage['lang-from'] = DefaultLang.From;
+      localStorage['lang-to'] = DefaultLang.To;
     }
     $scope.langFromSelected = localStorage['lang-from'];
     $scope.langToSelected = localStorage['lang-to'];
@@ -15,6 +15,7 @@ app.languageCtrl = function($scope, $ionicScrollDelegate)
   $scope.langFromChanged = function(code){
     console.log(code);
     localStorage['lang-from'] = code;
+    $scope.langFromSelected = code;
     $scope.textArea = "";
     $scope.list = {};
     $ionicScrollDelegate.scrollTop();
@@ -24,6 +25,7 @@ app.languageCtrl = function($scope, $ionicScrollDelegate)
   $scope.langToChanged = function(code){
     console.log(code);
     localStorage['lang-to'] = code;
+    $scope.langToSelected  = code;
     $ionicScrollDelegate.scrollTop();
     $scope.updateList($scope.textArea);
   }

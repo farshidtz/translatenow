@@ -62,7 +62,7 @@ app.popupCtrl = function($scope, $ionicPopup, $http){
   $scope.showError = function(title, message) {
     $scope.wait.done("showError");
     if(title==0){
-      console.log("http "+title+": ", message);
+      console.log("Error "+title+": ", message);
       return;
     }
 
@@ -71,10 +71,10 @@ app.popupCtrl = function($scope, $ionicPopup, $http){
       return;
     }
 
-    console.warn("App Error "+title+": ", message);
+    console.warn("Error "+title+": ", message);
     errorPopped = true;
     $ionicPopup.alert({
-      title: 'Error ' + title,
+      title: title,
       template: message
     }).then(function(){
       errorPopped = false;

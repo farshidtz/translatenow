@@ -6,6 +6,7 @@ var ListThumbSize = 100;
 var PopupThumbSize = 400;
 var DefaultThumb = "img/wikipedia.png";
 var BingThumb = "img/bing.png";
+var DefaultLang = {From:'en',  To:'de'};
 var app = angular.module('app.controllers', []);
 
 app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScrollDelegate, focus) {
@@ -42,14 +43,22 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
     }
 
     $scope.inputChangedResponse = setTimeout(function(){
-      if($scope.textArea != ""){
-        $ionicScrollDelegate.scrollTop();
-        $scope.list = {};
-        $scope.wait.add(2);
-        $scope.updateList($scope.textArea);
-        $scope.getBingTranslation($scope.textArea);
-      }
+      $scope.updateList($scope.textArea);
     }, OnChangeTimeout);
+  }
+
+  $scope.updateList = function(input){
+    if($scope.langFromSelected==$scope.langToSelected){
+      $scope.showError("Oops!", "Cannot translate to the same language.");
+      return;
+    }
+    if(typeof input != "undefined" && input != ""){
+      $ionicScrollDelegate.scrollTop();
+      $scope.list = {};
+      $scope.wait.add(2);
+      $scope.getWikiList($scope.textArea);
+      $scope.getBingTranslation($scope.textArea);
+    }
   }
 
   // Keep track of pending tasks
