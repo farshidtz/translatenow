@@ -9771,7 +9771,7 @@ a.button {
 
 .name-it-list .ni-item-header {
   color: white;
-  padding-left: 80px;
+  padding-left: 60px;
   height: 75px !important;
   overflow: hidden;
   border-bottom: 1px dotted rgba(255, 255, 255, 0.2); }
@@ -9806,6 +9806,28 @@ a.button {
   word-wrap: break-word !important;
   white-space: normal; }
 
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit; }
+
+.ni-wikipedia .ni-item-header h2:before {
+  font-family: "fontawesome";
+  content: "\f266";
+  font-size: 9pt;
+  background: rgba(0, 0, 0, 0.7);
+  margin-right: 5px;
+  border-radius: 2px;
+  padding: 3px; }
+
+.ni-wikipedia {
+  -webkit-box-shadow: 0 8px 6px -6px black;
+  -moz-box-shadow: 0 8px 6px -6px black;
+  box-shadow: 0 8px 6px -6px black; }
+
 .name-it-list.ni-bing .ni-item-translations span {
   color: #AAAAAA !important;
   font-style: italic; }
@@ -9814,11 +9836,19 @@ a.button {
   color: #AAAAAA !important;
   font-style: italic; }
 
+.ni-bing .ni-item-header h2:before {
+  font-family: "fontawesome";
+  content: "\f17a";
+  font-size: 9pt;
+  background: rgba(0, 0, 0, 0.7);
+  margin-right: 5px;
+  border-radius: 2px;
+  padding: 3px; }
+
 .name-it-list img {
-  background: white;
   margin: 0px !important;
-  max-width: 64px !important;
-  max-height: 64px !important;
+  max-width: 54px !important;
+  max-height: 54px !important;
   width: 100% !important;
   height: 100% !important; }
 
