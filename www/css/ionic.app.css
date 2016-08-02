@@ -9772,7 +9772,7 @@ a.button {
 .name-it-list .ni-item-header {
   color: white;
   padding-left: 60px;
-  height: 75px !important;
+  height: 65px !important;
   overflow: hidden;
   border-bottom: 1px dotted rgba(255, 255, 255, 0.2); }
 
@@ -9828,22 +9828,17 @@ a.button {
   -moz-box-shadow: 0 8px 6px -6px black;
   box-shadow: 0 8px 6px -6px black; }
 
-.name-it-list.ni-bing .ni-item-translations span {
-  color: #AAAAAA !important;
-  font-style: italic; }
-
 .name-it-list .ni-item-translations.ni-nomatch span {
   color: #AAAAAA !important;
   font-style: italic; }
 
 .ni-bing .ni-item-header h2:before {
   font-family: "fontawesome";
-  content: "\f17a";
-  font-size: 9pt;
+  content: url("/img/bing_icon.png");
+  transform: scale(0.1) !important;
   background: rgba(0, 0, 0, 0.7);
   margin-right: 5px;
-  border-radius: 2px;
-  padding: 3px; }
+  border-radius: 2px; }
 
 .name-it-list img {
   margin: 0px !important;
