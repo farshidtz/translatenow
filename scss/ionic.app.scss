@@ -64,6 +64,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   border: 1px solid rgba(255, 255, 255, 0.0);
   margin-bottom:10px!important;
   padding-left:10px!important;
+  padding-bottom: 10px !important;
   -webkit-background-clip: padding-box; /* for Safari */
   background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
 }
@@ -113,15 +114,15 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   display: inline-block;
   text-decoration: inherit;
 }
-.ni-wikipedia .ni-item-header h2:before{
-  font-family: "fontawesome";
-  content: "\f266";
-  font-size: 9pt;
-  background: rgba(0,0,0,0.7);
-  margin-right: 5px;
-  border-radius: 2px;
-  padding:3px;
-}
+// .ni-wikipedia .ni-item-header h2:before{
+//   font-family: "fontawesome";
+//   content: "\f266";
+//   font-size: 9pt;
+//   background: rgba(0,0,0,0.7);
+//   margin-right: 5px;
+//   border-radius: 2px;
+//   padding:3px;
+// }
 .ni-wikipedia{
   -webkit-box-shadow: 0 8px 6px -6px black;
   -moz-box-shadow: 0 8px 6px -6px black;
@@ -134,22 +135,30 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     font-style: italic;
 }
 
-.ni-bing .ni-item-header h2:before{
-  font-family: "fontawesome";
+// .ni-bing .ni-item-header h2:before{
+//   font-family: "fontawesome";
+//
+//   content: url('/img/bing_icon.png');
+//   transform: scale(0.1)!important;
+//   background: rgba(0,0,0,0.7);
+//   margin-right: 5px;
+//   border-radius: 2px;
+// }
 
-  content: url('/img/bing_icon.png');
-  transform: scale(0.1)!important;
-  background: rgba(0,0,0,0.7);
-  margin-right: 5px;
-  border-radius: 2px;
-}
-
-.name-it-list img{
+.name-it-list img:nth-of-type(1){
   margin: 0px!important;
   max-width:54px!important;
   max-height:54px!important;
   width:100%!important;
   height:100%!important;
+}
+
+.name-it-list img:nth-of-type(2){
+  opacity: 0.2;
+  width: 20px;
+  bottom: 10px;
+  left: 10px;
+  position: absolute;
 }
 
 .fullscreen-text-area {
