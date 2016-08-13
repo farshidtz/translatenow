@@ -5,14 +5,14 @@
       <!--header row for translation language selection-->
       <div id="translation-pannel" class="row">
         <div class="col col-40 horizontal-center">
-            <select id="language-from" class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langFromSelected" ng-change="langFromChanged(langFromSelected)">
+            <select id="language-from" class="no-label-select" ng-options="key as ('('+value+' ('+key) for (key , value) in languages" ng-model="langFromSelected" ng-change="langFromChanged(langFromSelected)">
             </select>
         </div>
         <div class="col col-20">
             <button id="language-swap-btn" ng-click="swapLanguages()" class="button button-small ion-arrow-swap"></button>
         </div>
         <div class="col col-40 horizontal-center">
-          <select id="language-to" class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langToSelected" ng-change="langToChanged(langToSelected)">
+          <select id="language-to" class="no-label-select" ng-options="key as (value+' ('+key+')') for (key , value) in languages" ng-model="langToSelected" ng-change="langToChanged(langToSelected)">
           </select>
         </div>
       </div>
