@@ -2,6 +2,7 @@
 app.popupCtrl = function($scope, $ionicPopup, $http){
   // Local vars
   var errorPopped = false;
+  $http.GetOrJsonp = ionic.Platform.isWebView()? $http.get : $http.jsonp;
 
   // Show popup for wikipedia article
   $scope.showPopup = function(item, lang) {
@@ -15,9 +16,8 @@ app.popupCtrl = function($scope, $ionicPopup, $http){
       title = item.trans[0];
     }
 
-    var url = "https://"+localStorage['lang-'+lang]+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&format=json&action=query&redirects&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize="+PopupThumbSize+"&titles="+title;
-    url = encodeURI(url);
-    $http.jsonp(url, {cache: true}).
+    var url = "https://"+localStorage['lang-'+lang]+".wikipedia.org/w/api.php?format=json&action=query&redirects&prop=extracts|pageimages&exintro=&explaintext=&pithumbsize="+PopupThumbSize+"&titles="+title;
+    $http.GetOrJsonp(urlFormat(url), {cache: true}).
     success(function(res, status, headers, config) {
       var page = first(res.query.pages);
       // Get thumbnail

@@ -47,7 +47,7 @@ app.bingCtrl = function($scope, $http)
 
 
   $scope.getBingTranslation = function(text){
-    console.log("bing", text);
+    //console.log("bing", text);
     if(!ionic.Platform.isWebView()){
       $scope.list["bing:"+text] = {
         rank: -1,
@@ -62,7 +62,6 @@ app.bingCtrl = function($scope, $http)
     }
     var token = encodeURIComponent("Bearer "+localStorage['bingToken']);
     var url = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId="+token+"&from="+localStorage['lang-from']+"&to="+localStorage['lang-to']+"&text="+text;
-    console.log(url);
     $http.get(url, {timeout: $scope.canceler.promise, cache: true}).
     success(function(res, status, headers, config) {
         if(res.includes("Exception")){

@@ -1,10 +1,7 @@
 /* Wikipedia Controller */
 app.wikipediaCtrl = function($scope, $http)
 {
-  $http.GetOrJsonp = $http.get;
-  if(!ionic.Platform.isWebView()){
-    $http.GetOrJsonp = $http.jsonp;
-  }
+  $http.GetOrJsonp = ionic.Platform.isWebView()? $http.get : $http.jsonp;
 
   $scope.getWikiList = function(text){
     console.log(text);
@@ -173,14 +170,15 @@ app.wikipediaCtrl = function($scope, $http)
     return false;
   }
 
-  var urlFormat = function(url){
-    if(!ionic.Platform.isWebView()){
-      return url+"&callback=JSON_CALLBACK";
-    } else {
-      return url;
-    }
-  }
+}
 
+// Encode url and add callback param for jsonp
+var urlFormat = function(url){
+  if(!ionic.Platform.isWebView()){
+    return encodeURI(url+"&callback=JSON_CALLBACK");
+  } else {
+    return encodeURI(url);
+  }
 }
 
 // Returns value of the first object
