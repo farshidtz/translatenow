@@ -50,25 +50,25 @@ gulp.task('git-check', function(done) {
   done();
 });
 
-var replace = require('replace');
-var replaceFiles = ['./www/js/controllers/wikipedia.js'];
-
-gulp.task('add-jsonp', function() {
-  return replace({
-    regex: "http\.get\s?\(",
-    replacement: "http\.jsonp\(",
-    paths: replaceFiles,
-    recursive: false,
-    silent: false,
-  });
-})
-
-gulp.task('remove-jsonp', function() {
-  return replace({
-    regex: "http\.jsonp\s?\(",
-    replacement: "http\.get\(",
-    paths: replaceFiles,
-    recursive: false,
-    silent: false,
-  });
-})
+//var replace = require('replace');
+//var replaceFiles = ['./www/js/controllers/wikipedia.js'];
+//
+//gulp.task('add-jsonp', function() {
+//  return replace({
+//    regex: "http\.get\s?\(",
+//    replacement: "http\.jsonp\(",
+//    paths: replaceFiles,
+//    recursive: false,
+//    silent: false,
+//  });
+//})
+//
+//gulp.task('remove-jsonp', function() {
+//  return replace({
+//    regex: "http\.jsonp\s?\(",
+//    replacement: "http\.get\(",
+//    paths: replaceFiles,
+//    recursive: false,
+//    silent: false,
+//  });
+//})

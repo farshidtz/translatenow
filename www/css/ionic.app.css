@@ -26,6 +26,9 @@ $dark:                            #444 !default;
   font-family: "fontawesome";
   content: "\f11c"; }
 
+.icon-angle-right:before {
+  content: "\f0da"; }
+
 /*!
   Ionicons, v2.0.1
   Created by Ben Sperry for the Ionic Framework, http://ionicons.com/
@@ -9771,6 +9774,8 @@ a.button {
   /* for IE9+, Firefox 4+, Opera, Chrome */ }
 
 .name-it-list .ni-item-header {
+  position: relative;
+  text-align: left;
   color: white;
   padding-left: 60px;
   height: 70px !important;
@@ -9778,21 +9783,42 @@ a.button {
   border-bottom: 1px dotted rgba(255, 255, 255, 0.2); }
 
 .name-it-list .ni-item-header h2 {
+  max-width: 80%;
   color: white;
   opacity: 0.5;
   font-size: 1em;
   margin-bottom: 5pt; }
 
 .name-it-list .ni-item-header p {
+  max-width: 80%;
   color: white;
   opacity: 0.6;
-  display: inline;
+  display: inline-block;
   font-style: italic;
-  font-size: 0.8em;
-  word-break: break-all;
-  white-space: normal; }
+  font-size: 0.8em; }
+
+.name-it-list .ni-item-header .ni-right-panel {
+  position: absolute;
+  top: 5px;
+  right: 5px; }
+
+.name-it-list .ni-item-translations .ni-right-panel {
+  position: absolute;
+  top: -5px;
+  right: 0px; }
+
+.name-it-list .ni-right-panel span {
+  opacity: 0.1 !important;
+  font-size: 15pt !important; }
+
+.name-it-list .ni-right-panel i {
+  opacity: 0.9 !important; }
+
+.ni-bing .ni-right-panel i {
+  display: none; }
 
 .name-it-list .ni-item-translations {
+  position: relative;
   margin-top: 10px; }
 
 .name-it-list .ni-item-translations span {
@@ -9822,7 +9848,8 @@ a.button {
 
 .name-it-list .ni-item-translations.ni-nomatch span {
   color: #AAAAAA !important;
-  font-style: italic; }
+  font-style: italic;
+  font-size: 0.9em; }
 
 .name-it-list img:nth-of-type(1) {
   margin: 0px !important;
@@ -9953,3 +9980,11 @@ a.button {
   text-align: justify;
   -webkit-hyphens: auto;
   hyphens: auto; }
+
+@keyframes superScaleIn {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0; }
+  100% {
+    transform: translateX(0);
+    opacity: 1; } }

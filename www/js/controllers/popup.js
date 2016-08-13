@@ -36,6 +36,7 @@ app.popupCtrl = function($scope, $ionicPopup, $http){
         cssClass:'ni-details-alert',
         templateUrl: 'popup-template.html',
         scope: $scope,
+        animation: 'fade-in',
         buttons: [
           {
             text: 'Close',

@@ -1,6 +1,7 @@
 
 <ion-view title="Name It " hide-nav-bar="true" id="page1" class=" ">
-    <ion-content ng-controller="nameItCtrl" scroll="false" padding="false" style="background: url(img/2.jpg) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
+    <ion-content ng-controller="nameItCtrl" scroll="false" padding="false"
+                 style="background: url(img/bg.png) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
       <p class="row" style="color:yellow;font-size:6pt;padding:0;margin:0;line-height:1em;" ng-repeat="line in log track by $index">{{line}}</p>
       <!--header row for translation language selection-->
       <div id="translation-pannel" class="row">
@@ -35,12 +36,17 @@
                 ng-repeat="item in list| sortByRankFilter" ng-class="{'ni-wikipedia': item.type!='bing', 'ni-bing': item.type=='bing'}">
               <img ng-click="showPopup(item, 'from')" ng-src="{{item.img}}">
               <div ng-click="showPopup(item, 'from')" class="ni-item-header">
-                <p style="float: right">{{langFromSelected}}</p>
+                <div class="ni-right-panel">
+                  <span>{{langFromSelected}}&nbsp<i class="icon-angle-right"></i></span>
+
+                </div>
                 <h2 dir=auto>{{item.title}}</h2>
                 <p dir=auto>{{item.descr}}</p>
               </div>
               <div ng-click="showPopup(item, 'to')" class="ni-item-translations" ng-class="{'ni-nomatch': item.type=='nomatch'}">
-                <p style="float: right">{{langToSelected}}</p>
+                <div class="ni-right-panel">
+                  <span>{{langToSelected}}&nbsp<i class="icon-angle-right"></i></span>
+                </div>
                 <p><span dir=auto ng-repeat="tran in item.trans">{{tran}}</span></p>
               </div>
               <img ng-click="showPopup(item, 'to')" ng-src="img/{{item.type == 'bing' && 'bing.svg' || 'wiki.svg'}}" />

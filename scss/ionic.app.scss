@@ -31,6 +31,9 @@ $dark:                            #444 !default;
   font-family: "fontawesome";
   content: "\f11c";
 }
+.icon-angle-right:before{
+    content:"\f0da";
+}
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -69,6 +72,8 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
 }
 .name-it-list .ni-item-header{
+  position:relative;
+  text-align:left;
   color: white;
   padding-left: 60px;
   height:70px!important;
@@ -76,21 +81,47 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   border-bottom: 1px dotted rgba(255, 255, 255, 0.2);
 }
 .name-it-list .ni-item-header h2{
+  max-width: 80%;
   color:white;
   opacity:0.5;
   font-size:1em;
   margin-bottom: 5pt;
 }
 .name-it-list .ni-item-header p{
+  max-width: 80%;
   color: white;
   opacity: 0.6;
-  display: inline;
+  display: inline-block;
   font-style: italic;
   font-size: 0.8em;
-  word-break: break-all;
-  white-space: normal;
+//  white-space: nowrap;
+//  text-overflow: ellipsis;
+//  word-break: break-all;
+//  white-space: normal;
+}
+.name-it-list .ni-item-header .ni-right-panel{
+  position: absolute;
+  top:5px;
+  right:5px;
+}
+.name-it-list .ni-item-translations .ni-right-panel{
+  position: absolute;
+  top: -5px;
+  right: 0px;
+}
+.name-it-list .ni-right-panel span{
+  opacity: 0.1!important;
+  font-size: 15pt!important;
+}
+.name-it-list .ni-right-panel i{
+  opacity:0.9!important;
+}
+
+.ni-bing .ni-right-panel i{
+  display:none;
 }
 .name-it-list .ni-item-translations{
+  position: relative;
   margin-top: 10px;
 }
 
@@ -106,6 +137,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   word-wrap: break-word!important;
   white-space: normal;
 }
+
 [class^="icon-"]:before,
 [class*=" icon-"]:before {
   font-family: FontAwesome;
@@ -133,6 +165,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .name-it-list .ni-item-translations.ni-nomatch span{
     color: #AAAAAA !important;
     font-style: italic;
+  font-size: 0.9em;
 }
 
 // .ni-bing .ni-item-header h2:before{
@@ -297,4 +330,16 @@ font-size: 11pt!important;
   text-align: justify;
   -webkit-hyphens: auto;
   hyphens: auto;
+}
+
+//custom animation for popup
+@keyframes superScaleIn {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
