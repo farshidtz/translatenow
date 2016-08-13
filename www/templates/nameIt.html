@@ -38,12 +38,12 @@
               <img ng-click="showPopup(item, 'from')" ng-src="{{item.img}}">
               <div ng-click="showPopup(item, 'from')" class="ni-item-header">
                 <p style="float: right">{{langFromSelected}}</p>
-                <h2>{{item.title}}</h2>
-                <p>{{item.descr}}</p>
+                <h2 dir=auto>{{item.title}}</h2>
+                <p dir=auto>{{item.descr}}</p>
               </div>
               <div ng-click="showPopup(item, 'to')" class="ni-item-translations" ng-class="{'ni-nomatch': item.type=='nomatch'}">
                 <p style="float: right">{{langToSelected}}</p>
-                <p><span ng-repeat="tran in item.trans">{{tran}}</span></p>
+                <p><span dir=auto ng-repeat="tran in item.trans">{{tran}}</span></p>
               </div>
               <img ng-click="showPopup(item, 'to')" ng-src="img/{{item.type == 'bing' && 'bing.svg' || 'wiki.svg'}}" />
             </ion-item>
