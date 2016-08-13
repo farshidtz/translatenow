@@ -129,6 +129,7 @@ app.wikipediaCtrl = function($scope, $http)
           //delete $scope.list[title];
           $scope.list[title].trans.push("No match in "+LANGUAGES[localStorage['lang-to']]+" Wikipedia");
           $scope.list[title].type = 'nomatch';
+          $scope.list[title].rank += 100;
         }
         $scope.wait.done("getTranslations");
         //$scope.getBingTranslation(title, word);

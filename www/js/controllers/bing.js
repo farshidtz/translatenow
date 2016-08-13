@@ -34,6 +34,7 @@ app.bingCtrl = function($scope, $http)
     }).
     error(function(data, status, headers, config) {
       if(ionic.Platform.isWebView()){
+        //$scope.wait.done("getBingTranslation");
         $scope.showError(status, data);
       }
     });
@@ -65,7 +66,8 @@ app.bingCtrl = function($scope, $http)
     $http.get(url, {timeout: $scope.canceler.promise, cache: true}).
     success(function(res, status, headers, config) {
         if(res.includes("Exception")){
-          $scope.showError("Bing", res);
+          console.warn("Bing Exception:", res);
+          $scope.wait.done("getBingTranslation"); //$scope.showError("Bing", res);
           return;
         }
 
@@ -81,10 +83,9 @@ app.bingCtrl = function($scope, $http)
         $scope.wait.done("getBingTranslation");
     }).
     error(function(data, status, headers, config) {
-      //$scope.showError("bing "+status, data);
+      $scope.wait.done("getBingTranslation"); //$scope.showError("bing "+status, data);
       //$scope.log.push("getBingTranslation:"+status);
-      console.warn("bing translation error:", data, status);
-      $scope.wait.done("getBingTranslation");
+      console.warn("bing translation error:", status, data);
     });
 
   }
