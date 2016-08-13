@@ -160,6 +160,9 @@ app.wikipediaCtrl = function($scope, $http)
   }
 
   var isDisambiguous = function(page) {
+    if(!page.hasOwnProperty('categories')){
+      return false;
+    }
     var category = DISAMBIGUATIONS[localStorage['lang-from']];
     // Check the categories
     for(var i=0; i<page.categories.length; i++){
