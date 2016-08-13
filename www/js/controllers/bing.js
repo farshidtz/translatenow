@@ -84,7 +84,7 @@ app.bingCtrl = function($scope, $http)
       //$scope.showError("bing "+status, data);
       //$scope.log.push("getBingTranslation:"+status);
       console.warn("bing translation error:", data, status);
-      $scope.wait.done("getBingTranslation");
+      //$scope.wait.done("getBingTranslation");
     });
 
   }
