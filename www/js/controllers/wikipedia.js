@@ -1,11 +1,15 @@
 /* Wikipedia Controller */
 app.wikipediaCtrl = function($scope, $http)
 {
+  $http.GetOrJsonp = $http.get;
+  if(!ionic.Platform.isWebView()){
+    $http.GetOrJsonp = $http.jsonp;
+  }
 
   $scope.getWikiList = function(text){
     console.log(text);
-    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=opensearch&redirects=resolve&limit=10&search="+text;
-    $http.jsonp(url, {timeout: $scope.canceler.promise, cache: true}).
+    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&redirects=resolve&limit=10&search="+text;
+    $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
     success(function(result, status, headers, config) {
       $scope.getProperties(result[1], result[2]);
     }).
@@ -21,8 +25,8 @@ app.wikipediaCtrl = function($scope, $http)
 
     function seq(i){
       //console.log(i);
-      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=pageterms|pageimages|links|categories&format=json&pithumbsize="+ListThumbSize+"&pllimit=max&titles="+titles[i];
-      $http.jsonp(url, {timeout: $scope.canceler.promise, cache: true}).
+      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=pageterms|pageimages|links|categories&format=json&pithumbsize="+ListThumbSize+"&pllimit=max&titles="+titles[i];
+      $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
       success(function(res, status, headers, config) {
         var page = first(res.query.pages)
         // Get page description
@@ -73,8 +77,8 @@ app.wikipediaCtrl = function($scope, $http)
       var matched = re.test(title);
       if(matched){
         $scope.wait.add(1);
-        var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&redirects&prop=pageterms|pageimages&format=json&pithumbsize="+ListThumbSize+"&titles="+title;
-        $http.jsonp(url, {timeout: $scope.canceler.promise, cache: true}).
+        var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&redirects&prop=pageterms|pageimages&format=json&pithumbsize="+ListThumbSize+"&titles="+title;
+        $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
         success(function(res, status, headers, config) {
           var page = first(res.query.pages)
           // Get page description
@@ -107,8 +111,8 @@ app.wikipediaCtrl = function($scope, $http)
   }
 
   $scope.getTranslations = function(title) {
-    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&prop=langlinks&lllang="+localStorage['lang-to']+"&format=json&titles="+title;
-    $http.jsonp(url, {timeout: $scope.canceler.promise, cache: true}).
+    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=langlinks&lllang="+localStorage['lang-to']+"&format=json&titles="+title;
+    $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
     success(function(res, status, headers, config) {
       var page = first(res.query.pages);
       var word = "";
@@ -141,8 +145,8 @@ app.wikipediaCtrl = function($scope, $http)
 
 
   $scope.getSynonyms = function(title, word){
-    var url = "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?callback=JSON_CALLBACK&action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+word;
-    $http.jsonp(url, {timeout: $scope.canceler.promise, cache: true}).
+    var url = "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+word;
+    $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
     success(function(res, status, headers, config) {
       res.query.backlinks.forEach(function(backlink){
         if($scope.list.hasOwnProperty(title)){
@@ -167,6 +171,14 @@ app.wikipediaCtrl = function($scope, $http)
       }
     }
     return false;
+  }
+
+  var urlFormat = function(url){
+    if(!ionic.Platform.isWebView()){
+      return url+"&callback=JSON_CALLBACK";
+    } else {
+      return url;
+    }
   }
 
 }
