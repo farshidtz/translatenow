@@ -9778,7 +9778,7 @@ a.button {
   text-align: left;
   color: white;
   padding-left: 60px;
-  height: 70px !important;
+  height: 65px !important;
   overflow: hidden;
   border-bottom: 1px dotted rgba(255, 255, 255, 0.2); }
 
@@ -9808,11 +9808,8 @@ a.button {
   right: 0px; }
 
 .name-it-list .ni-right-panel span {
-  opacity: 0.1 !important;
-  font-size: 15pt !important; }
-
-.name-it-list .ni-right-panel i {
-  opacity: 0.9 !important; }
+  opacity: 0.3 !important;
+  font-size: 14pt !important; }
 
 .ni-bing .ni-right-panel i {
   display: none; }
