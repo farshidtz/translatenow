@@ -9,7 +9,7 @@ var BingThumb = "img/bing.png";
 var DefaultLang = {From:'en',  To:'de'};
 var app = angular.module('app.controllers', []);
 
-app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScrollDelegate, focus) {
+app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScrollDelegate, $ionicPlatform, $window, focus) {
   // Initialize
   $scope.languages = LANGUAGES;
   $scope.list = {};
@@ -22,6 +22,28 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
   app.wikipediaCtrl($scope, $http);
   app.bingCtrl($scope, $http);
   app.popupCtrl($scope, $ionicPopup, $http);
+
+  $ionicPlatform.ready(function() {
+    if ($window.cordova && $window.cordova.plugins && $window.cordova.plugins.permissions) {
+      var permissions = window.cordova.plugins.permissions;
+      permissions.hasPermission(permissions.INTERNET, checkPermissionCallback, errorCallback);
+    }
+  });
+
+
+  function checkPermissionCallback(status) {
+    if(!status.hasPermission) {
+      var errorCallback = function() {
+        $scope.showError("No Internet", "The application does not work without internet connection.");
+      }
+
+      permissions.requestPermission(permissions.INTERNET, function(status) {
+        if(!status.hasPermission){
+          errorCallback();
+        }
+      }, errorCallback);
+    }
+  }
 
   $scope.bringFocusToSearch = function(){
     //bring focus to input only if list object is empty
