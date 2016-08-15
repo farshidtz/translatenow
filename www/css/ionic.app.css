@@ -9797,6 +9797,9 @@ a.button {
   font-style: italic;
   font-size: 0.8em; }
 
+.ni-list-hover {
+  background: rgba(0, 0, 0, 0.3) !important; }
+
 .name-it-list .ni-item-header .ni-right-panel {
   position: absolute;
   top: 5px;
@@ -9811,7 +9814,7 @@ a.button {
   opacity: 0.3 !important;
   font-size: 14pt !important; }
 
-.ni-bing .ni-right-panel i {
+.ni-bing .ni-right-panel i, .name-it-list .ni-item-translations.ni-nomatch .ni-right-panel i {
   display: none; }
 
 .name-it-list .ni-item-translations {

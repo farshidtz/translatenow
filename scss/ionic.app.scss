@@ -95,6 +95,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   font-style: italic;
   font-size: 0.8em;
 }
+.ni-list-hover{
+  background: rgba(0, 0, 0, 0.3)!important;
+}
 .name-it-list .ni-item-header .ni-right-panel{
   position: absolute;
   top:5px;
@@ -111,7 +114,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 
-.ni-bing .ni-right-panel i{
+.ni-bing .ni-right-panel i,.name-it-list .ni-item-translations.ni-nomatch .ni-right-panel i{
   display:none;
 }
 .name-it-list .ni-item-translations{
@@ -140,15 +143,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   display: inline-block;
   text-decoration: inherit;
 }
-// .ni-wikipedia .ni-item-header h2:before{
-//   font-family: "fontawesome";
-//   content: "\f266";
-//   font-size: 9pt;
-//   background: rgba(0,0,0,0.7);
-//   margin-right: 5px;
-//   border-radius: 2px;
-//   padding:3px;
-// }
+
 .ni-wikipedia{
   -webkit-box-shadow: 0 8px 6px -6px black;
   -moz-box-shadow: 0 8px 6px -6px black;
@@ -161,16 +156,6 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     font-style: italic;
   font-size: 0.9em;
 }
-
-// .ni-bing .ni-item-header h2:before{
-//   font-family: "fontawesome";
-//
-//   content: url('/img/bing_icon.png');
-//   transform: scale(0.1)!important;
-//   background: rgba(0,0,0,0.7);
-//   margin-right: 5px;
-//   border-radius: 2px;
-// }
 
 .name-it-list img:nth-of-type(1){
   margin: 0px!important;

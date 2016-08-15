@@ -52,6 +52,7 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
     }
   }
 
+
   $scope.inputChanged = function() {
     clearTimeout($scope.inputChangedResponse);
     $scope.canceler.resolve();

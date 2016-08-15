@@ -53,7 +53,7 @@ app.bingCtrl = function($scope, $http)
       $scope.list["bing:"+text] = {
         rank: -1,
         title: text,
-        descr: "Directly translated using bing",
+        descr: "",
         img: BingThumb,
         type: 'bing',
         trans: ["bing translation"]
