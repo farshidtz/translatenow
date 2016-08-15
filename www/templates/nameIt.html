@@ -39,14 +39,13 @@
               <div ng-click="showPopup(item, 'from')" class="ni-item-header">
                 <div class="ni-right-panel">
                   <span>{{langFromSelected}}&nbsp<i class="icon-angle-right"></i></span>
-
                 </div>
                 <h2 dir=auto>{{item.title}}</h2>
                 <p dir=auto>{{item.descr}}</p>
               </div>
               <div ng-click="showPopup(item, 'to')" class="ni-item-translations" ng-class="{'ni-nomatch': item.type=='nomatch'}">
                 <div class="ni-right-panel">
-                  <span>{{langToSelected}}&nbsp<i class="icon-angle-right"></i></span>
+                  <span>{{langToSelected}}&nbsp<i class="icon-angle-right" ng-class="{'hidden': item.type=='nomatch'}"></i></span>
                 </div>
                 <p><span dir=auto ng-repeat="tran in item.trans">{{tran}}</span></p>
               </div>

@@ -45,6 +45,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 .invisible{
   visibility: hidden;
 }
+.hidden{
+  display: none;
+}
 .main-bg{
   background: url('../img/background_login.jpg') no-repeat;
   -webkit-background-size: 280% auto;
