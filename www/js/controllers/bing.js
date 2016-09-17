@@ -75,7 +75,7 @@ app.bingCtrl = function($scope, $http)
         $scope.list["bing:"+text] = {
           rank: -1,
           title: text,
-          descr: "translated by Bing",
+          descr: "",
           img: BingThumb,
           type: 'bing',
           trans: [res.replace(/['"]+/g, '')]
