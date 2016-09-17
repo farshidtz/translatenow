@@ -9844,11 +9844,6 @@ a.button {
   display: inline-block;
   text-decoration: inherit; }
 
-.ni-wikipedia {
-  -webkit-box-shadow: 0 8px 6px -6px black;
-  -moz-box-shadow: 0 8px 6px -6px black;
-  box-shadow: 0 8px 6px -6px black; }
-
 .name-it-list .ni-item-translations.ni-nomatch span {
   color: #AAAAAA !important;
   font-style: italic;
@@ -9983,6 +9978,9 @@ a.button {
   text-align: justify;
   -webkit-hyphens: auto;
   hyphens: auto; }
+
+.ni-error-alert .popup-body {
+  text-align: center; }
 
 @keyframes superScaleIn {
   0% {

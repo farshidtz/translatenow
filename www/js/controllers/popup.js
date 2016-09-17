@@ -76,7 +76,8 @@ app.popupCtrl = function($scope, $ionicPopup, $http){
     errorPopped = true;
     $ionicPopup.alert({
       title: title,
-      template: message
+      template: message,
+      cssClass: 'ni-error-alert'
     }).then(function(){
       errorPopped = false;
     });

@@ -147,11 +147,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   text-decoration: inherit;
 }
 
-.ni-wikipedia{
-  -webkit-box-shadow: 0 8px 6px -6px black;
-  -moz-box-shadow: 0 8px 6px -6px black;
-  box-shadow: 0 8px 6px -6px black;
-}
+// .ni-wikipedia{
+//   -webkit-box-shadow: 0 8px 6px -6px black;
+//   -moz-box-shadow: 0 8px 6px -6px black;
+//   box-shadow: 0 8px 6px -6px black;
+// }
 
 //bing specifics
 .name-it-list .ni-item-translations.ni-nomatch span{
@@ -312,6 +312,10 @@ font-size: 11pt!important;
   text-align: justify;
   -webkit-hyphens: auto;
   hyphens: auto;
+}
+
+.ni-error-alert .popup-body{
+  text-align: center;
 }
 
 //custom animation for popup
