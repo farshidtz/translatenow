@@ -45,6 +45,13 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
     }
   }
 
+  $scope.hasConnection = function(){
+    if(ionic.Platform.isWebView() && navigator.connection.type==Connection.NONE){
+      return false;
+    }
+    return true;
+  }
+
   $scope.bringFocusToSearch = function(){
     //bring focus to input only if list object is empty
     if(Object.keys($scope.list).length === 0 && $scope.list.constructor === Object){
@@ -73,6 +80,10 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
   $scope.updateList = function(input){
     if($scope.langFromSelected==$scope.langToSelected){
       $scope.showError("Oops!", "Cannot translate to the same language.");
+      return;
+    }
+    if(!$scope.hasConnection()){
+      $scope.showError("No Connection", "Cannot translate without an internet connection.");
       return;
     }
     if(typeof input != "undefined" && input != ""){
