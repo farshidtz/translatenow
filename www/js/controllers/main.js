@@ -20,7 +20,8 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
   // Sub-Controllers
   app.languageCtrl($scope, $ionicScrollDelegate);
   app.wikipediaCtrl($scope, $http);
-  app.bingCtrl($scope, $http);
+  //app.bingCtrl($scope, $http);
+  app.glosbeCtrl($scope, $http);
   app.popupCtrl($scope, $ionicPopup, $http);
 
   $ionicPlatform.ready(function() {
@@ -91,7 +92,8 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
       $scope.list = {};
       $scope.wait.add(2);
       $scope.getWikiList($scope.textArea);
-      $scope.getBingTranslation($scope.textArea);
+      //$scope.getBingTranslation($scope.textArea);
+      $scope.getGlosbeTranslation($scope.textArea);
     }
   }
 
