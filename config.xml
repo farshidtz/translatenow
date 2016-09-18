@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.starter" version="0.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.anodostech.translateit" version="1.0 Beta" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Translate it</name>
   <description>&#xD;&#xD;&#xD;
         Translate words with Wikipedia.&#xD;&#xD;&#xD;
     </description>
-  <author email="info@anodos-solutions.com" href="http://anodos-solutions.com/">&#xD;&#xD;&#xD;
-      Anodos Solutions&#xD;&#xD;&#xD;
+  <author email="dev@anodostech.com" href="http://anodostech.com/">&#xD;&#xD;&#xD;
+      Anodos Tech&#xD;&#xD;&#xD;
     </author>
   <content src="index.html"/>
   <access origin="*"/>
