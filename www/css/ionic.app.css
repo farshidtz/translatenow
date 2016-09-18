@@ -9780,7 +9780,7 @@ a.button {
   position: relative;
   text-align: left;
   color: white;
-  padding-left: 60px;
+  padding-left: 64px;
   height: 65px !important;
   overflow: hidden;
   border-bottom: 1px dotted rgba(255, 255, 255, 0.2); }
@@ -9790,7 +9790,8 @@ a.button {
   color: white;
   opacity: 0.5;
   font-size: 1em;
-  margin-bottom: 5pt; }
+  margin-bottom: 5pt;
+  margin-top: 3pt; }
 
 .name-it-list .ni-item-header p {
   max-width: 80%;
@@ -9806,25 +9807,29 @@ a.button {
 .name-it-list .ni-item-header .ni-right-panel {
   position: absolute;
   top: 5px;
-  right: 5px; }
+  right: 0px; }
 
 .name-it-list .ni-item-translations .ni-right-panel {
   position: absolute;
-  top: -5px;
+  top: 0px;
   right: 0px; }
 
 .name-it-list .ni-right-panel span {
   opacity: 0.3 !important;
-  font-size: 14pt !important; }
+  font-size: 1em !important;
+  color: white; }
+
+.name-it-list .ni-right-panel span i {
+  font-size: 0.75em !important; }
 
 .ni-bing .ni-right-panel i, .name-it-list .ni-item-translations.ni-nomatch .ni-right-panel i {
-  display: none; }
+  visibility: hidden; }
 
 .name-it-list .ni-item-translations {
   position: relative;
   margin-top: 10px; }
 
-.name-it-list .ni-item-translations span {
+.name-it-list .ni-item-translations .ni-trans-list {
   color: white;
   opacity: 0.9;
   display: block;
@@ -9832,7 +9837,7 @@ a.button {
   text-align: center;
   margin: 2px;
   padding: 5px !important;
-  font-size: 1.2em;
+  font-size: 1em;
   word-wrap: break-word !important;
   white-space: normal; }
 
