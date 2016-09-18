@@ -20,6 +20,12 @@ app.glosbeCtrl = function($scope, $http)
         $scope.wait.done("getGlosbeTranslation: no translation");
         return;
       }
+      var trans = [];
+      for(var i=0; i<res.tuc.length && i<3; i++){
+        if(res.tuc[i].hasOwnProperty('phrase')){
+          trans.push(res.tuc[i].phrase.text);
+        }
+      }
       var descr = "";
       if(res.tuc[0].hasOwnProperty('meanings') && res.tuc[0].meanings.length>0){
         descr = res.tuc[0].meanings[0].text;
@@ -32,7 +38,7 @@ app.glosbeCtrl = function($scope, $http)
         descr: descr,
         img: BingThumb,
         type: 'bing',
-        trans: [res.tuc[0].phrase.text]
+        trans: trans
       };
       $scope.wait.done("getGlosbeTranslation");
     }).
@@ -40,7 +46,7 @@ app.glosbeCtrl = function($scope, $http)
       $scope.wait.done("getGlosbeTranslation");
       $scope.showError(status, data);
       //$scope.log.push("getBingTranslation:"+status);
-      console.warn("glosbe translation error:", status, data);
+      //console.warn("glosbe translation error:", status, data);
     });
 
   }
