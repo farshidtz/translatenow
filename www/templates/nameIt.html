@@ -46,7 +46,7 @@
               <!-- bottom -->
               <div ng-click="showPopup(item, 'to')" class="ni-item-translations" ng-class="{'ni-nomatch': item.type=='nomatch'}">
                 <div class="ni-right-panel">
-                  <span>{{langToSelected}}&nbsp<i class="icon-angle-right" ng-class="{'hidden': item.type=='nomatch'}"></i></span>
+                  <span ng-class="{'hidden': item.type=='nomatch'}">{{langToSelected}}&nbsp<i class="icon-angle-right"></i></span>
                 </div>
                 <span class="ni-trans-list" dir=auto ng-repeat="tran in item.trans">{{tran}}</span>
               </div>
