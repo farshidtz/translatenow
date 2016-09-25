@@ -6,7 +6,6 @@ app.glosbeCtrl = function($scope, $http)
 
   $scope.getGlosbeTranslation = function(text){
     //console.log("bing", text);
-    text = text.toLowerCase().replace(/[^\w\s\']/g,'');
 
     var url = "https://glosbe.com/gapi/translate?format=json&from="+localStorage['lang-from']+"&dest="+localStorage['lang-to']+"&phrase="+text
       +(ionic.Platform.isWebView()?"":"&callback=JSON_CALLBACK");
