@@ -1,0 +1,35 @@
+{
+    "alwaysRun": false,
+    "recursiveFolderSearch": true,
+    "foldersToProcess": [
+        "js",
+        "css",
+        "img"
+    ],
+    "uglifyJsOptions": {
+        "compress": {
+            "drop_console": true
+        },
+        "fromString": true,
+        "mangle": true
+    },
+    "cleanCssOptions": {
+        "noAdvanced": true,
+        "keepSpecialComments": 0
+    },
+    "imageminOptions": {
+        "jpeg": {
+            "progressive": true,
+            "arithmetic": false
+        },
+        "png": {
+            "optimizationLevel": 0
+        },
+        "gif": {
+            "interlaced": false
+        },
+        "svg": {
+            "pretty": false
+        }
+    }
+}
