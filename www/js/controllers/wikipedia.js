@@ -8,6 +8,10 @@ app.wikipediaCtrl = function($scope, $http)
     var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&redirects=resolve&limit=10&search="+text;
     $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
     success(function(result, status, headers, config) {
+      if(result[1].length == 0){
+        $scope.wait.done("getWikiList");
+        return;
+      }
       $scope.getProperties(result[1], result[2]);
     }).
     error(function(data, status, headers, config) {
@@ -21,7 +25,6 @@ app.wikipediaCtrl = function($scope, $http)
     $scope.wait.add(pending-1); // already have one in queue for the parent function
 
     function seq(i){
-      //console.log(i);
       var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=pageterms|pageimages|links|categories&format=json&pithumbsize="+ListThumbSize+"&pllimit=max&titles="+titles[i];
       $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
       success(function(res, status, headers, config) {
@@ -69,15 +72,22 @@ app.wikipediaCtrl = function($scope, $http)
   $scope.disambiguate = function(ambiguousTitle, links, rank){
     links.forEach(function(link, i){
       var title = link['title'];
-      //console.log(title);
-      var re = new RegExp("^"+ambiguousTitle+" [(][a-z|A-Z]+[)]$");
-      var matched = re.test(title);
-      if(matched){
+
+      // var re = new RegExp("^"+ambiguousTitle+" [(][a-z|A-Z]+[)]$");
+      // var matched = re.test(title);
+      // if(matched){
         $scope.wait.add(1);
-        var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&redirects&prop=pageterms|pageimages&format=json&pithumbsize="+ListThumbSize+"&titles="+title;
+        var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&redirects&prop=pageterms|pageimages|categories&format=json&pithumbsize="+ListThumbSize+"&titles="+title;
         $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
         success(function(res, status, headers, config) {
           var page = first(res.query.pages)
+
+          if(isDisambiguous(page)){
+            // don't dig any further
+            $scope.wait.done("disambiguate");
+            return;
+          }
+
           // Get page description
           var descr = "no description";
           if(page.hasOwnProperty('terms') && page.terms.hasOwnProperty('description') && page.terms.description.length>0){
@@ -103,7 +113,7 @@ app.wikipediaCtrl = function($scope, $http)
           $scope.showError(status, data);
         });
 
-      }
+      // }
     });
   }
 
@@ -119,6 +129,12 @@ app.wikipediaCtrl = function($scope, $http)
 
       if(word != ""){
         if($scope.list.hasOwnProperty(title)){
+          //console.log("getTranslations",  title, ":::", word);
+          if($scope.list[title].trans.indexOf(word) > -1){
+            // word is already there
+            $scope.wait.done("getTranslations");
+            return;
+          }
           $scope.list[title].trans.push(word);
           $scope.getSynonyms(title, word);
         }
@@ -143,11 +159,12 @@ app.wikipediaCtrl = function($scope, $http)
 
 
   $scope.getSynonyms = function(title, word){
-    var url = "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?action=query&list=backlinks&format=json&blfilterredir=redirects&bltitle="+word;
+    var url = "https://"+localStorage['lang-to']+".wikipedia.org/w/api.php?action=query&list=backlinks&format=json&blfilterredir=redirects&bllimit=2&bltitle="+word;
     $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
     success(function(res, status, headers, config) {
       res.query.backlinks.forEach(function(backlink){
         if($scope.list.hasOwnProperty(title)){
+          //console.log("getSynonyms", title, ":::", word, ":::", backlink.title);
           $scope.list[title].trans.push(backlink.title);
         }
       });
