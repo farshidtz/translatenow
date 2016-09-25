@@ -20,7 +20,7 @@
       <!--main content area for for text area-->
       <div class="row">
         <div class="col">
-      <form id="nameIt-form6" ng-click="bringFocusToSearch()" class="list">
+      <form id="nameIt-form6" ng-click="bringFocusToSearch()" class="list" ng-submit="inputSubmitted()">
         <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
           <input id="ni-search-input" class="fullscreen-text-area" maxlength="50"
               ng-model="textArea" ng-change="inputChanged()"

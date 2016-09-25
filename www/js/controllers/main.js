@@ -60,6 +60,11 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
     }
   }
 
+  $scope.inputSubmitted = function(){
+    if ($window.cordova && $window.cordova.plugins){
+      window.cordova.plugins.Keyboard.close();
+    }
+  }
 
   $scope.inputChanged = function() {
     clearTimeout($scope.inputChangedResponse);
