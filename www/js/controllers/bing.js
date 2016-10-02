@@ -3,11 +3,17 @@ app.bingCtrl = function($scope, $http)
 {
   // Local vars
   localStorage['bingToken-expires'] = new Date();
-  var clientSec = "q3w6XS7A6qk9asSBePAJr6ZhkrG7YRFZrt4zGad9zPWQ7TgtrWVeSM9wpr6WF4ty";
-  var clientID = "nameit-translator";
+  // // Secret encoder
+  // var clientSec = "q3w6XS7A6qk9asSBePAJr6ZhkrG7YRFZrt4zGad9zPWQ7TgtrWVeSM9wpr6WF4ty";
+  // var clientID = "nameit-translator";
+  // var s = btoa(btoa(clientID).length + btoa(btoa(clientSec)) + btoa(clientID));
+
+  var bing2 = "c5aE0wcElUakZzVTFKc2NIbGtSRkkyVWpKR2EwOVljRkZXTVVVelZrZGtNR05zWkZkYVZrNU9UMW";
 
   $scope.getBingToken = function(){
     var url = "https://datamarket.accesscontrol.windows.net/v2/OAuth2-13/";
+    var s = atob($scope.bing1+bing2+$scope.bing3);
+    var cs = atob(s.substr(2,s.length-s.substr(0,2)-2));
     $http({
       method: 'POST',
       url: url,
@@ -20,8 +26,8 @@ app.bingCtrl = function($scope, $http)
         return str.join("&");
       },
       data: {
-        'client_id': clientID,
-        'client_secret': clientSec,
+        'client_id': atob(s.substr(s.length-s.substr(0,2),s.length)),
+        'client_secret': atob(cs),
         'scope': "http://api.microsofttranslator.com",
         'grant_type': 'client_credentials'
       }
@@ -39,17 +45,9 @@ app.bingCtrl = function($scope, $http)
       }
     });
   };
-  // setInterval(function(){
-  //   if(ionic.Platform.isWebView() && Date.parse(localStorage['bingToken-expires']) < new Date()){
-  //     //$scope.log.push("Expired @"+ localStorage['bingToken-expires']);
-  //     $scope.getBingToken();
-  //   }
-  // }, 1000);
-
 
   $scope.getBingTranslation = function(text){
     //console.log("bing", text);
-
     // in a browser
     if(!ionic.Platform.isWebView()){
       $scope.list["bing:"+text] = {
@@ -65,7 +63,6 @@ app.bingCtrl = function($scope, $http)
     }
 
     if(Date.parse(localStorage['bingToken-expires']) < new Date()){
-      //$scope.log.push("Expired @"+ localStorage['bingToken-expires']);
       $scope.getBingToken();
     }
 
