@@ -82,6 +82,11 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
     }, OnChangeTimeout);
   }
 
+  $scope.clearInput = function() {
+    $scope.textArea = "";
+    $scope.inputChanged();
+  }
+
   $scope.updateList = function(input){
     if($scope.langFromSelected==$scope.langToSelected){
       $scope.showError("Oops!", "Cannot translate to the same language.");

@@ -21,15 +21,20 @@
       <div class="row">
         <div class="col">
       <form id="nameIt-form6" ng-click="bringFocusToSearch()" class="list" ng-submit="inputSubmitted()">
-        <label class="item item-input fullscreen-text-area" id="nameIt-textarea3">
-          <input id="ni-search-input" class="fullscreen-text-area" maxlength="50"
+        <!-- input -->
+        <div class="item item-input fullscreen-text-area" id="nameIt-textarea3">
+          <input type="search" id="ni-search-input" class="fullscreen-text-area" maxlength="50"
               ng-model="textArea" ng-change="inputChanged()"
               focus-on="input" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tap to type text...'"
               placeholder="Tap to type text..." autocapitalize="off" />
-        </label>
+          <button ng-if="textArea.length" type="button"
+            class="input-button button button-icon ion-android-close" ng-click="clearInput()"></button>
+        </div>
+        <!-- spinner -->
         <div class="horizontal-center" style="height: 20px;">
           <ion-spinner id="loading" icon="dots" class="horizontal-center spinner-energized invisible"></ion-spinner>
         </div>
+        <!-- list -->
           <ion-list id="main-search-results">
             <ion-scroll overflow-scroll="false" direction="y"  >
             <ion-item class="item item-thumbnail-left name-it-list ni-{{item.type}}"

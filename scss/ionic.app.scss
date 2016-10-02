@@ -180,7 +180,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   color: white!important;
   background-color: transparent!important;
   border:none;
-  font-size: 25px!important;
+  font-size: 1.4em!important;
   line-height: 1;
   margin-bottom: 0pt;
   padding-top:5pt;
@@ -188,8 +188,17 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 }
 
 .fullscreen-text-area::-webkit-input-placeholder {
-  font-size: 25px;
+  font-size: 1.4em;
   line-height: 1;
+}
+
+// Clear input button
+.fullscreen-text-area .button.button-icon.input-button {
+  font-size: 25px;
+  position: absolute;
+  right: 0;
+  top: 5px;
+  color: #bbb;
 }
 
 .round-button {
