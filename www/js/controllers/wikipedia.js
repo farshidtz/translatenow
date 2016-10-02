@@ -40,7 +40,7 @@ app.wikipediaCtrl = function($scope, $http)
           $scope.disambiguate(titles[i], page.links, i);
         } else {
           // Get thumbnail
-          var thumb = DefaultThumb;
+          var thumb = NoImageThumb;
           if(page.hasOwnProperty('thumbnail')){
             thumb = page.thumbnail.source;
           }
@@ -50,6 +50,7 @@ app.wikipediaCtrl = function($scope, $http)
             title: titles[i],
             descr: descr,
             img: thumb,
+            type: 'wiki',
             trans: []
           };
 
@@ -94,7 +95,7 @@ app.wikipediaCtrl = function($scope, $http)
             descr = page.terms.description[0];
           }
           // Get thumbnail
-          var thumb = DefaultThumb;
+          var thumb = NoImageThumb;
           if(page.hasOwnProperty('thumbnail')){
             thumb = page.thumbnail.source;
           }
@@ -104,6 +105,7 @@ app.wikipediaCtrl = function($scope, $http)
             title: title,
             descr: descr,
             img: thumb,
+            type: 'wiki',
             trans: [],
           } ;
 

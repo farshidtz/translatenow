@@ -32,8 +32,8 @@
         </div>
           <ion-list id="main-search-results">
             <ion-scroll overflow-scroll="false" direction="y"  >
-            <ion-item class="item item-thumbnail-left name-it-list"
-                ng-repeat="item in list| sortByRankFilter" ng-class="{'ni-wikipedia': item.type!='bing', 'ni-bing': item.type=='bing'}">
+            <ion-item class="item item-thumbnail-left name-it-list ni-{{item.type}}"
+                ng-repeat="item in list| sortByRankFilter">
               <!-- top -->
               <img ng-click="showPopup(item, 'from')" ng-src="{{item.img}}">
               <div ng-click="showPopup(item, 'from')" class="ni-item-header">
@@ -44,13 +44,13 @@
                 <p dir=auto>{{item.descr}}</p>
               </div>
               <!-- bottom -->
-              <div ng-click="showPopup(item, 'to')" class="ni-item-translations" ng-class="{'ni-nomatch': item.type=='nomatch'}">
+              <div ng-click="showPopup(item, 'to')" class="ni-item-translations">
                 <div class="ni-right-panel">
-                  <span ng-class="{'hidden': item.type=='nomatch'}">{{langToSelected}}&nbsp<i class="icon-angle-right"></i></span>
+                  <span ng-if="item.type!='nomatch'">{{langToSelected}}&nbsp<i class="icon-angle-right"></i></span>
                 </div>
                 <span class="ni-trans-list" dir=auto ng-repeat="tran in item.trans">{{tran}}</span>
               </div>
-              <img ng-click="showPopup(item, 'to')" ng-src="img/{{item.type == 'bing' && 'glosbe.svg' || 'wiki.svg'}}" />
+              <img ng-if="item.type!='nomatch'" ng-src="img/{{item.type}}.svg" />
             </ion-item>
             </ion-scroll>
           </ion-list>

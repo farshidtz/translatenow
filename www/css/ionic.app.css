@@ -9822,7 +9822,8 @@ a.button {
 .name-it-list .ni-right-panel span i {
   font-size: 0.75em !important; }
 
-.ni-bing .ni-right-panel i, .name-it-list .ni-item-translations.ni-nomatch .ni-right-panel i {
+.name-it-list.ni-bing .ni-right-panel span i,
+.name-it-list.ni-glosbe .ni-right-panel span i {
   visibility: hidden; }
 
 .name-it-list .ni-item-translations {
@@ -9849,7 +9850,7 @@ a.button {
   display: inline-block;
   text-decoration: inherit; }
 
-.name-it-list .ni-item-translations.ni-nomatch span {
+.name-it-list.ni-nomatch .ni-item-translations span {
   color: #AAAAAA !important;
   font-style: italic;
   font-size: 0.9em; }
@@ -9873,7 +9874,7 @@ a.button {
   color: white !important;
   background-color: transparent !important;
   border: none;
-  font-size: 25px;
+  font-size: 25px !important;
   line-height: 1;
   margin-bottom: 0pt;
   padding-top: 5pt;

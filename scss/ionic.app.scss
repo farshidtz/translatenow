@@ -121,9 +121,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   font-size: 0.75em!important;
 }
 
-.ni-bing .ni-right-panel i,.name-it-list .ni-item-translations.ni-nomatch .ni-right-panel i{
+.name-it-list.ni-bing .ni-right-panel span i,
+.name-it-list.ni-glosbe .ni-right-panel span i{
   visibility: hidden;
 }
+
 .name-it-list .ni-item-translations{
   position: relative;
   margin-top: 10px;
@@ -151,16 +153,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   text-decoration: inherit;
 }
 
-// .ni-wikipedia{
-//   -webkit-box-shadow: 0 8px 6px -6px black;
-//   -moz-box-shadow: 0 8px 6px -6px black;
-//   box-shadow: 0 8px 6px -6px black;
-// }
-
-//bing specifics
-.name-it-list .ni-item-translations.ni-nomatch span{
-    color: #AAAAAA !important;
-    font-style: italic;
+.name-it-list.ni-nomatch .ni-item-translations span{
+  color: #AAAAAA !important;
+  font-style: italic;
   font-size: 0.9em;
 }
 
@@ -185,7 +180,7 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
   color: white!important;
   background-color: transparent!important;
   border:none;
-  font-size: 25px;
+  font-size: 25px!important;
   line-height: 1;
   margin-bottom: 0pt;
   padding-top:5pt;

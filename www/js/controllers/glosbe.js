@@ -4,7 +4,7 @@ app.glosbeCtrl = function($scope, $http)
   // Local vars
   $http.GetOrJsonp = ionic.Platform.isWebView()? $http.get : $http.jsonp;
 
-  $scope.getGlosbeTranslation = function(text){
+  $scope.getGlosbeTranslation = function(text, fallback){
     //console.log("bing", text);
 
     var url = "https://glosbe.com/gapi/translate?format=json&from="+localStorage['lang-from']+"&dest="+localStorage['lang-to']+"&phrase="+text
@@ -17,6 +17,7 @@ app.glosbeCtrl = function($scope, $http)
       }
       if(res.tuc.length==0 || !res.tuc[0].hasOwnProperty('phrase')){
         $scope.wait.done("getGlosbeTranslation: no translation");
+        fallback();
         return;
       }
       var trans = [];
@@ -35,8 +36,8 @@ app.glosbeCtrl = function($scope, $http)
         rank: -1,
         title: text,
         descr: descr,
-        img: BingThumb,
-        type: 'bing',
+        img: NoImageThumb,
+        type: 'glosbe',
         trans: trans
       };
       $scope.wait.done("getGlosbeTranslation");

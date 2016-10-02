@@ -4,8 +4,7 @@
 var OnChangeTimeout = 500; // ms
 var ListThumbSize = 100;
 var PopupThumbSize = 400;
-var DefaultThumb = "img/wikipedia.png";
-var BingThumb = "img/bing.png";
+var NoImageThumb = "img/noimage.png";
 var DefaultLang = {From:'en',  To:'de'};
 var app = angular.module('app.controllers', []);
 
@@ -20,7 +19,7 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
   // Sub-Controllers
   app.languageCtrl($scope, $ionicScrollDelegate);
   app.wikipediaCtrl($scope, $http);
-  //app.bingCtrl($scope, $http);
+  app.bingCtrl($scope, $http);
   app.glosbeCtrl($scope, $http);
   app.popupCtrl($scope, $ionicPopup, $http);
 
@@ -98,7 +97,11 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
       $scope.wait.add(2);
       $scope.getWikiList($scope.textArea);
       //$scope.getBingTranslation($scope.textArea);
-      $scope.getGlosbeTranslation($scope.textArea);
+      var cb = $scope.getGlosbeTranslation($scope.textArea, function(){
+        // fallback
+        $scope.wait.add(1);
+        $scope.getBingTranslation($scope.textArea);
+      });
     }
   }
 
@@ -111,7 +114,7 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
     },
     done: function(caller){
       $scope.loading--;
-      //console.log("done",caller, $scope.loading);
+      // console.log("done",caller);
       if($scope.loading<=0){
         $("#loading").addClass("invisible");
       }

@@ -39,28 +39,36 @@ app.bingCtrl = function($scope, $http)
       }
     });
   };
-  setInterval(function(){
-    if(ionic.Platform.isWebView() && Date.parse(localStorage['bingToken-expires']) < new Date()){
-      //$scope.log.push("Expired @"+ localStorage['bingToken-expires']);
-      $scope.getBingToken();
-    }
-  }, 1000);
+  // setInterval(function(){
+  //   if(ionic.Platform.isWebView() && Date.parse(localStorage['bingToken-expires']) < new Date()){
+  //     //$scope.log.push("Expired @"+ localStorage['bingToken-expires']);
+  //     $scope.getBingToken();
+  //   }
+  // }, 1000);
 
 
   $scope.getBingTranslation = function(text){
     //console.log("bing", text);
+
+    // in a browser
     if(!ionic.Platform.isWebView()){
       $scope.list["bing:"+text] = {
         rank: -1,
         title: text,
         descr: "",
-        img: BingThumb,
+        img: NoImageThumb,
         type: 'bing',
         trans: ["bing translation"]
       };
       $scope.wait.done("getBingTranslation");
       return;
     }
+
+    if(Date.parse(localStorage['bingToken-expires']) < new Date()){
+      //$scope.log.push("Expired @"+ localStorage['bingToken-expires']);
+      $scope.getBingToken();
+    }
+
     var token = encodeURIComponent("Bearer "+localStorage['bingToken']);
     var url = "https://api.microsofttranslator.com/V2/Ajax.svc/Translate?appId="+token+"&from="+localStorage['lang-from']+"&to="+localStorage['lang-to']+"&text="+text;
     $http.get(url, {timeout: $scope.canceler.promise, cache: true}).
@@ -76,7 +84,7 @@ app.bingCtrl = function($scope, $http)
           rank: -1,
           title: text,
           descr: "",
-          img: BingThumb,
+          img: NoImageThumb,
           type: 'bing',
           trans: [res.replace(/['"]+/g, '')]
         };
