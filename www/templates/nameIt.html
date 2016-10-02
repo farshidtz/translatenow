@@ -1,79 +1,76 @@
 <ion-view title="Translate it" hide-nav-bar="true" id="page1" class=" ">
-    <ion-content ng-controller="nameItCtrl" scroll="false" padding="false"
-                 style="background: url(img/bg.png) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
-      <p class="row" style="color:yellow;font-size:6pt;padding:0;margin:0;line-height:1em;" ng-repeat="line in log track by $index">{{line}}</p>
-      <!--header row for translation language selection-->
-      <div id="translation-pannel" class="row">
-        <div class="col col-40 horizontal-center">
-            <select id="language-from" class="no-label-select" ng-options="key as value for (key , value) in languages"
-                    ng-model="langFromSelected" ng-change="langFromChanged(langFromSelected)">
-            </select>
-        </div>
-        <div class="col col-30">
-            <button id="language-swap-btn" ng-click="swapLanguages()" class="button button-small ion-arrow-swap"></button>
-        </div>
-        <div class="col col-40 horizontal-center">
-          <select id="language-to" class="no-label-select" ng-options="key as value for (key , value) in languages" ng-model="langToSelected" ng-change="langToChanged(langToSelected)">
-          </select>
-        </div>
+  <ion-content ng-controller="nameItCtrl" scroll="false" padding="false"
+               style="background: url(img/bg.png) no-repeat;-webkit-background-size: 130% auto;" class="manual-ios-statusbar-padding">
+    <p class="row" style="color:yellow;font-size:6pt;padding:0;margin:0;line-height:1em;" ng-repeat="line in log track by $index">{{line}}</p>
+    <!-- language dropdowns  -->
+    <div id="translation-panel" class="row">
+      <div class="col col-40 horizontal-center">
+        <select id="language-from" class="no-label-select" ng-options="key as value for (key , value) in languages"
+            ng-model="langFromSelected" ng-change="langFromChanged(langFromSelected)"></select>
       </div>
-      <!--main content area for for text area-->
-      <div class="row">
-        <div class="col">
-      <form id="nameIt-form6" ng-click="bringFocusToSearch()" class="list" ng-submit="inputSubmitted()">
-        <!-- input -->
-        <div class="item item-input fullscreen-text-area" id="nameIt-textarea3">
-          <input type="search" id="ni-search-input" class="fullscreen-text-area" maxlength="50"
-              ng-model="textArea" ng-change="inputChanged()"
-              focus-on="input" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tap to type text...'"
-              placeholder="Tap to type text..." autocapitalize="off" />
-          <button ng-if="textArea.length" type="button"
-            class="input-button button button-icon ion-android-close" ng-click="clearInput()"></button>
-        </div>
-        <!-- spinner -->
-        <div class="horizontal-center" style="height: 20px;">
-          <ion-spinner id="loading" icon="dots" class="horizontal-center spinner-energized invisible"></ion-spinner>
-        </div>
-        <!-- list -->
+      <div class="col col-30">
+        <button id="language-swap-btn" ng-click="swapLanguages()" class="button button-small ion-arrow-swap"></button>
+      </div>
+      <div class="col col-40 horizontal-center">
+        <select id="language-to" class="no-label-select" ng-options="key as value for (key , value) in languages"
+            ng-model="langToSelected" ng-change="langToChanged(langToSelected)"></select>
+      </div>
+    </div>
+    <!-- input and results -->
+    <div class="row">
+      <div class="col">
+        <form id="nameIt-form6" ng-click="bringFocusToSearch()" class="list" ng-submit="inputSubmitted()">
+          <!-- input -->
+          <div class="item item-input fullscreen-text-area" id="nameIt-textarea3">
+            <input type="search" id="ni-search-input" class="fullscreen-text-area" maxlength="50"
+                ng-model="textArea" ng-change="inputChanged()"
+                focus-on="input" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tap to type text...'"
+                placeholder="Tap to type text..." autocapitalize="off" />
+            <button ng-if="textArea.length" type="button"
+                class="input-button button button-icon ion-android-close" ng-click="clearInput()"></button>
+          </div>
+          <!-- spinner -->
+          <div class="horizontal-center" style="height: 20px;">
+            <ion-spinner id="loading" icon="dots" class="horizontal-center spinner-energized invisible"></ion-spinner>
+          </div>
+          <!-- list -->
           <ion-list id="main-search-results">
-            <ion-scroll overflow-scroll="false" direction="y"  >
-            <ion-item class="item item-thumbnail-left name-it-list ni-{{item.type}}"
-                ng-repeat="item in list| sortByRankFilter">
-              <!-- top -->
-              <img ng-click="showPopup(item, 'from')" ng-src="{{item.img}}">
-              <div ng-click="showPopup(item, 'from')" class="ni-item-header">
-                <div class="ni-right-panel">
-                  <span>{{langFromSelected}}&nbsp<i class="icon-angle-right"></i></span>
+            <ion-scroll overflow-scroll="false" direction="y">
+              <ion-item class="item item-thumbnail-left name-it-list ni-{{item.type}}"
+                  ng-repeat="item in list| sortByRankFilter">
+                <!-- top -->
+                <img ng-click="showPopup(item, 'from')" ng-src="{{item.img}}">
+                <div ng-click="showPopup(item, 'from')" class="ni-item-header">
+                  <div class="ni-right-panel">
+                    <span>{{langFromSelected}}&nbsp<i class="icon-angle-right"></i></span>
+                  </div>
+                  <h2 dir=auto>{{item.title}}</h2>
+                  <p dir=auto>{{item.descr}}</p>
                 </div>
-                <h2 dir=auto>{{item.title}}</h2>
-                <p dir=auto>{{item.descr}}</p>
-              </div>
-              <!-- bottom -->
-              <div ng-click="showPopup(item, 'to')" class="ni-item-translations">
-                <div class="ni-right-panel">
-                  <span ng-if="item.type!='nomatch'">{{langToSelected}}&nbsp<i class="icon-angle-right"></i></span>
+                <!-- bottom -->
+                <div ng-click="showPopup(item, 'to')" class="ni-item-translations">
+                  <div class="ni-right-panel">
+                    <span ng-if="item.type!='nomatch'">{{langToSelected}}&nbsp<i class="icon-angle-right"></i></span>
+                  </div>
+                  <span class="ni-trans-list" dir=auto ng-repeat="tran in item.trans">{{tran}}</span>
                 </div>
-                <span class="ni-trans-list" dir=auto ng-repeat="tran in item.trans">{{tran}}</span>
-              </div>
-              <img ng-if="item.type!='nomatch'" ng-src="img/{{item.type}}.svg" />
-            </ion-item>
+                <img ng-if="item.type!='nomatch'" ng-src="img/{{item.type}}.svg" />
+              </ion-item>
             </ion-scroll>
           </ion-list>
 
-      </form>
-        </div>
+        </form>
       </div>
+    </div>
 
-        <!--<div class="footer hide-on-keyboard-open">-->
-          <!--<div class="footer-content">-->
-            <!--<button id="nameIt-button2" ng-click="kbButtonClicked()" class="hide-on-keyboard-open button button-dark button-block icon-keyboard bulg-button"></button>-->
-          <!--</div>-->
-        <!--</div>-->
-
-    </ion-content>
-  <!--last row for button-->
-
+    <!--<div class="footer hide-on-keyboard-open">-->
+      <!--<div class="footer-content">-->
+        <!--<button id="nameIt-button2" ng-click="kbButtonClicked()" class="hide-on-keyboard-open button button-dark button-block icon-keyboard bulg-button"></button>-->
+      <!--</div>-->
+    <!--</div>-->
+  </ion-content>
 </ion-view>
+
 <script id="popup-template.html" type="text/ng-template">
   <div id="ni-popup-template"  >
     <div class="ni-alert-img-wrapper">

@@ -269,17 +269,14 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 #nameIt-form6 ion-spinner{
   background: transparent;
-font-size: 11pt!important;
+  font-size: 11pt!important;
 }
-#translation-pannel{
+#translation-panel{
   margin-bottom: 5pt;
   background: rgba(0,0,0,0.1);
   padding: 0pt 0pt 0pt 0pt;
 }
 
-.ni-details-alert{
-
-}
 .ni-details-alert .popup-body{
   padding:0px!important;
 }
@@ -310,7 +307,7 @@ font-size: 11pt!important;
   max-height:300px!important;
 }
 .ni-details-alert img:not([src]){
-    visibility: hidden;
+  visibility: hidden;
 }
 
 .ni-details-alert p{
