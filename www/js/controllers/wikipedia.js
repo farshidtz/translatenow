@@ -6,7 +6,7 @@ app.wikipediaCtrl = function($scope, $http)
 
   $scope.getWikiList = function(text){
     console.log(text);
-    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&redirects=resolve&limit=10&search="+text;
+    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&redirects=resolve&limit=5&search="+text;
     $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
     success(function(result, status, headers, config) {
       if(result[1].length == 0){
@@ -46,16 +46,20 @@ app.wikipediaCtrl = function($scope, $http)
             thumb = page.thumbnail.source;
           }
 
-          $scope.list[titles[i]] = {
-            rank: i,
-            title: titles[i],
-            descr: descr,
-            img: thumb,
-            type: 'wiki',
-            trans: []
-          };
+          if($scope.list.hasOwnProperty(titles[i])){
+            $scope.wait.done("getProperties: dublicate");
+          } else {
+            $scope.list[titles[i]] = {
+              rank: i,
+              title: titles[i],
+              descr: descr,
+              img: thumb,
+              type: 'wiki',
+              trans: []
+            };
 
-          $scope.getTranslations(titles[i]);
+            $scope.getTranslations(titles[i]);
+          }
         }
 
         pending--;
@@ -72,12 +76,19 @@ app.wikipediaCtrl = function($scope, $http)
   }
 
   $scope.disambiguate = function(ambiguousTitle, links, rank){
+    // Resolve each link in the disambiguous page
     links.forEach(function(link, i){
       var title = link['title'];
+      if($scope.list.hasOwnProperty(title)){
+        // Dublicate
+        return;
+      }
 
+      // TODO this only works on english alphabet
       // var re = new RegExp("^"+ambiguousTitle+" [(][a-z|A-Z]+[)]$");
-      // var matched = re.test(title);
-      // if(matched){
+      var re = new RegExp("^"+ambiguousTitle+" .*$"); // works on all writing systems
+      var matched = re.test(title);
+      if(matched){
         $scope.wait.add(1);
         var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&redirects&prop=pageterms|pageimages|categories&format=json&pithumbsize="+ListThumbSize+"&titles="+title;
         $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
@@ -116,7 +127,7 @@ app.wikipediaCtrl = function($scope, $http)
           $scope.showError(status, data);
         });
 
-      // }
+      }
     });
   }
 
