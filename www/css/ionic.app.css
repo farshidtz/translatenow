@@ -9828,7 +9828,8 @@ a.button {
 
 .name-it-list .ni-item-translations {
   position: relative;
-  margin-top: 10px; }
+  margin-top: 10px;
+  min-height: 30px; }
 
 .name-it-list .ni-item-translations .ni-trans-list {
   color: white;
