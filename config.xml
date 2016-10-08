@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.anodostech.translateit" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.anodostech.translateit" version="1.0.5" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Translate it</name>
   <description>&#xD;&#xD;&#xD;
         Translate words with Wikipedia.&#xD;&#xD;&#xD;
@@ -7,7 +7,7 @@
   <author email="dev@anodostech.com" href="http://anodostech.com/">&#xD;&#xD;&#xD;
       Anodos Tech&#xD;&#xD;&#xD;
     </author>
-  <content src="http://192.168.1.31:8100" original-src="index.html"/>
+  <content src="index.html"/>
   <access origin="*"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>

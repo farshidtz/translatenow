@@ -6,7 +6,7 @@ app.wikipediaCtrl = function($scope, $http)
 
   $scope.getWikiList = function(text){
     console.log(text);
-    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&redirects=resolve&limit=5&search="+text;
+    var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=opensearch&limit=5&search="+text;
     $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
     success(function(result, status, headers, config) {
       if(result[1].length == 0){
@@ -26,7 +26,7 @@ app.wikipediaCtrl = function($scope, $http)
     $scope.wait.add(pending-1); // already have one in queue for the parent function
 
     function seq(i){
-      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=pageterms|pageimages|links|categories&format=json&pithumbsize="+ListThumbSize+"&pllimit=max&titles="+titles[i];
+      var url = "https://"+localStorage['lang-from']+".wikipedia.org/w/api.php?action=query&prop=pageterms|pageimages|links|categories&format=json&redirects=true&pithumbsize="+ListThumbSize+"&pllimit=max&titles="+titles[i];
       $http.GetOrJsonp(urlFormat(url), {timeout: $scope.canceler.promise, cache: true}).
       success(function(res, status, headers, config) {
         var page = first(res.query.pages)
