@@ -15,7 +15,7 @@ app.controller('nameItCtrl', function($scope, $http, $q, $ionicPopup, $ionicScro
   $scope.log = [];
   $scope.canceler = $q.defer();
   $scope.loading = 0;
-  $scope.bing1 = "MjRZMVJPTTA1c2FGUk9NRVV5WTFkek5WbFlUbFJSYlZaUlVWVndlVTVzY0";
+  $scope.bing1 = "MjRUMWRaZDA1cVRtbFpWR3Q2VDFScmVr";
 
   // Sub-Controllers
   app.languageCtrl($scope, $ionicScrollDelegate);

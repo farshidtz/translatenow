@@ -2,7 +2,7 @@
 app.wikipediaCtrl = function($scope, $http)
 {
   $http.GetOrJsonp = ionic.Platform.isWebView()? $http.get : $http.jsonp;
-  $scope.bing3 = "hrZDJOcVdsaFNhbEl3WlZFOVBRPT1ibUZ0WldsMExYUnlZVzV6YkdGMGIzST0";
+  $scope.bing3 = "U5WFdUMD1ibUZ0WldsMExYUnlZVzV6YkdGMGIzST0";
 
   $scope.getWikiList = function(text){
     console.log(text);
